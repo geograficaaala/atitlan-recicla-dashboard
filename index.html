@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="es">
+<!-- VERSION: ATITLAN_RECICLA_INDEX_V7_SPONSORS_MAP_ZONES -->
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Asociación Amigos del Lago de Atitlán · Tablero dinámico institucional</title>
-  <meta name="description" content="Tablero dinámico de <strong>Atitlán Recicla</strong> de programas y proyectos — Asociación Amigos del Lago de Atitlán">
+  <meta name="description" content="Tablero dinámico de Atitlán Recicla de programas y proyectos — Asociación Amigos del Lago de Atitlán">
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
@@ -294,14 +295,13 @@
 
     /* Hero */
     .hero-shell {
-      padding: 24px 0 18px;
+      padding: 34px 0 24px;
       display: grid;
-      grid-template-columns: minmax(0, 1.28fr) minmax(360px, .9fr);
-      gap: 18px;
-      align-items: stretch;
+      grid-template-columns: minmax(0, 1.5fr) minmax(320px, .9fr);
+      gap: 20px;
     }
     .hero-main {
-      padding: 30px 34px;
+      padding: 38px 42px;
       overflow: hidden;
       position: relative;
       background:
@@ -350,12 +350,12 @@
       background: rgba(255,255,255,.75);
     }
     .hero-title {
-      font-size: clamp(1.9rem, 3.2vw, 3rem);
-      line-height: 1.04;
-      margin-bottom: 14px;
+      font-size: clamp(2.2rem, 4vw, 3.7rem);
+      line-height: 1.03;
+      margin-bottom: 18px;
       font-weight: 800;
       letter-spacing: -.04em;
-      max-width: 18ch;
+      max-width: 12ch;
     }
     .hero-copy {
       max-width: 66ch;
@@ -388,11 +388,10 @@
     }
 
     .hero-side {
-      padding: 16px;
+      padding: 20px;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
-      align-content: stretch;
+      align-content: start;
       background:
         linear-gradient(180deg, rgba(255,255,255,.96) 0%, rgba(243,248,245,.95) 100%);
     }
@@ -400,60 +399,35 @@
       position: relative;
       overflow: hidden;
       border-radius: 22px;
-      min-height: 218px;
-      padding: 18px;
+      min-height: 408px;
+      padding: 24px;
       background:
         radial-gradient(circle at 20% 20%, rgba(76,165,191,.18) 0%, transparent 34%),
         radial-gradient(circle at 82% 18%, rgba(213,163,75,.16) 0%, transparent 26%),
         linear-gradient(180deg, #eef5f2 0%, #ffffff 100%);
       border: 1px solid var(--line);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      text-align: center;
     }
     .hero-logo-card::before {
       content: '';
       position: absolute;
-      width: 150px;
-      height: 150px;
+      width: 220px;
+      height: 220px;
       border-radius: 999px;
       border: 1px solid rgba(28,96,132,.12);
-      box-shadow: 0 0 0 20px rgba(28,96,132,.04), 0 0 0 42px rgba(28,96,132,.02);
-    }
-    .hero-logo-caption {
-      position: relative;
-      z-index: 2;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 34px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.76);
-      border: 1px solid rgba(213,226,220,.92);
-      color: var(--lake-deep);
-      font-size: .75rem;
-      font-weight: 800;
-      letter-spacing: .03em;
-      text-transform: uppercase;
-      box-shadow: 0 6px 16px rgba(18,42,66,.06);
+      box-shadow: 0 0 0 28px rgba(28,96,132,.04), 0 0 0 56px rgba(28,96,132,.02);
     }
     .hero-logo {
       position: relative;
       z-index: 1;
       max-width: 100%;
-      max-height: 132px;
+      max-height: 240px;
       object-fit: contain;
       filter: drop-shadow(0 12px 30px rgba(22,58,95,.12));
       animation: floaty 6.4s ease-in-out infinite;
       transform-origin: center;
-    }
-    .hero-logo-atitlan {
-      max-height: 138px;
-      max-width: 96%;
     }
     .hero-side-note {
       display: grid;
@@ -478,7 +452,7 @@
     .dashboard-ribbon {
       position: relative;
       display: grid;
-      grid-template-columns: minmax(0, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0;
       margin: 4px 0 24px;
       border: 1px solid rgba(213,226,220,.92);
@@ -541,15 +515,6 @@
       color: var(--text-2);
       max-width: 32ch;
       line-height: 1.65;
-    }
-
-    .dashboard-ribbon .ribbon-item {
-      text-align: center;
-      justify-items: center;
-    }
-    .dashboard-ribbon .ribbon-label,
-    .dashboard-ribbon .ribbon-sub {
-      max-width: none;
     }
 
     .storyboard {
@@ -828,12 +793,9 @@
     .program-grid {
 
       display: grid;
-      grid-template-columns: minmax(0, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
       padding: 30px 0 24px;
-      width: 100%;
-      margin: 0 auto;
-      justify-items: center;
     }
     .program-card {
       padding: 28px 28px 24px;
@@ -841,11 +803,6 @@
       gap: 16px;
       background:
         linear-gradient(180deg, rgba(255,255,255,.98) 0%, rgba(241,247,243,.96) 100%);
-    }
-
-    .program-grid > .program-card {
-      width: 100%;
-      max-width: none;
     }
     .program-head {
       display: flex;
@@ -1325,7 +1282,7 @@
         grid-template-columns: 1fr;
       }
       .hero-side {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1.1fr .9fr;
         align-items: stretch;
       }
       .hero-side-note {
@@ -1381,10 +1338,7 @@
         padding: 18px;
       }
       .hero-logo-card {
-        min-height: 200px;
-      }
-      .coverage-summary {
-        grid-template-columns: 1fr;
+        min-height: 270px;
       }
       .dashboard-ribbon {
         border-radius: 24px;
@@ -1503,103 +1457,15 @@
       border-color: rgba(76,165,191,.35);
     }
     .coverage-filter-group {
-      display: block;
-      margin: 18px 0 18px;
-    }
-
-    .coverage-zone-buttons {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 10px;
-      align-items: center;
-      margin-bottom: 16px;
-      width: 100%;
-    }
-    .coverage-summary {
-      display: grid;
-      grid-template-columns: minmax(190px, .45fr) minmax(0, 1fr);
-      gap: 14px;
-      align-items: stretch;
-      margin: 8px 0 18px;
-    }
-    .coverage-summary-stat,
-    .coverage-summary-list {
-      border: 1px solid rgba(213,226,220,.92);
-      border-radius: 20px;
-      background: rgba(255,255,255,.78);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
-      padding: 16px 18px;
-    }
-    .coverage-summary-label {
-      color: var(--muted);
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .coverage-summary-value {
-      color: var(--lake-deep);
-      font-family: var(--font-head);
-      font-size: clamp(1.8rem, 3vw, 2.65rem);
-      font-weight: 800;
-      line-height: 1;
-    }
-    .coverage-summary-copy {
-      color: var(--text-2);
-      font-size: .88rem;
-      line-height: 1.5;
-      margin-top: 8px;
-    }
-    .coverage-municipio-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .coverage-municipio-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: var(--lake-soft);
-      color: var(--lake-deep);
-      font-size: .76rem;
-      font-weight: 800;
-    }
-    .coverage-municipio-chip::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--lake);
-    }
-    .coverage-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 16px;
-      align-items: center;
-      margin: 0 0 14px;
-      color: var(--text-2);
-      font-size: .82rem;
-      font-weight: 700;
-    }
-    .coverage-legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .coverage-legend-swatch {
-      width: 16px;
-      height: 16px;
-      border-radius: 5px;
-      border: 2px solid var(--lake);
-      background: rgba(28,96,132,.35);
-    }
-    .coverage-legend-swatch.muted {
-      border-color: #94a3b8;
-      background: rgba(255,255,255,.7);
+      overflow-x: auto;
+      overflow-y: hidden;
+      margin: 18px 0 18px;
+      padding-bottom: 4px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(28,96,132,.28) transparent;
     }
     .coverage-filter-group::-webkit-scrollbar {
       height: 8px;
@@ -1842,6 +1708,136 @@
   width: 100%;
 }
 
+
+/* Ajustes finales: logos hero, mapa por zonas y cintillo de patrocinadores */
+.hero-shell {
+  grid-template-columns: minmax(0, 1.45fr) minmax(320px, .85fr);
+  align-items: stretch;
+}
+.hero-main {
+  padding: 30px 36px;
+}
+.hero-title {
+  max-width: 15ch;
+}
+.hero-side {
+  padding: 16px;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: stretch;
+}
+.hero-logo-card {
+  min-height: 230px;
+  padding: 18px;
+}
+.hero-logo-card::before {
+  width: 150px;
+  height: 150px;
+  box-shadow: 0 0 0 18px rgba(28,96,132,.04), 0 0 0 38px rgba(28,96,132,.02);
+}
+.hero-logo {
+  max-height: 150px;
+  max-width: 92%;
+}
+.hero-logo.atitlan-logo {
+  max-height: 170px;
+}
+.dashboard-ribbon {
+  grid-template-columns: 1fr;
+}
+.dashboard-ribbon .ribbon-item {
+  text-align: center;
+  justify-items: center;
+}
+.dashboard-ribbon .ribbon-sub {
+  max-width: 72ch;
+  text-align: center;
+}
+.dashboard-ribbon .ribbon-item + .ribbon-item {
+  border-left: none;
+}
+.coverage-filter-group {
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow-x: visible;
+}
+.sponsor-ribbon {
+  margin: 32px auto 0;
+  padding: 30px 0 28px;
+  background: linear-gradient(180deg, rgba(255,255,255,.82) 0%, rgba(245,250,247,.7) 100%);
+  border-top: 1px solid rgba(213,226,220,.95);
+  border-bottom: 1px solid rgba(213,226,220,.95);
+}
+.sponsor-title {
+  text-align: center;
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--forest);
+  margin-bottom: 20px;
+}
+.sponsor-strip {
+  width: min(1380px, calc(100vw - 40px));
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 3.2vw, 44px);
+  flex-wrap: wrap;
+}
+.sponsor-logo-link,
+.sponsor-logo-static {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 86px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .18s ease, filter .18s ease;
+}
+.sponsor-logo-static {
+  cursor: default;
+}
+.sponsor-logo-link:hover {
+  transform: translateY(-3px);
+  filter: drop-shadow(0 12px 18px rgba(18,42,66,.16));
+}
+.sponsor-logo {
+  display: block;
+  height: auto;
+  max-height: 70px;
+  max-width: 190px;
+  object-fit: contain;
+  background: transparent;
+  mix-blend-mode: multiply;
+}
+.sponsor-logo.logo-wide {
+  max-width: 260px;
+  max-height: 76px;
+}
+.sponsor-logo.logo-canada {
+  max-width: 280px;
+  max-height: 78px;
+}
+@media (max-width: 980px) {
+  .hero-shell { grid-template-columns: 1fr; }
+  .hero-side { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .hero-main { padding: 26px 24px; }
+  .hero-side { grid-template-columns: 1fr; }
+  .hero-logo-card { min-height: 190px; }
+  .hero-logo { max-height: 132px; }
+  .sponsor-strip { gap: 18px; }
+  .sponsor-logo { max-width: 150px; max-height: 58px; }
+  .sponsor-logo.logo-wide,
+  .sponsor-logo.logo-canada { max-width: 210px; max-height: 62px; }
+}
+
 </style>
 </head>
 <body>
@@ -1851,13 +1847,13 @@
     <img src="./aala_logo.png" alt="Logo de Asociación Amigos del Lago de Atitlán" class="header-logo-img">
     <span class="brand-text">
       <span class="brand-kicker">Asociación Amigos del Lago de Atitlán</span>
-      <span class="brand-title">Tablero dinámico de <strong>Atitlán Recicla</strong></span>
+      <span class="brand-title">Tablero dinámico de Atitlán Recicla</span>
     </span>
   </a>
 
   <nav class="nav-tabs" role="tablist" aria-label="Secciones del tablero dinámico">
     <button class="nav-tab active" data-page="resumen" role="tab">Resumen</button>
-    <button class="nav-tab" data-page="programas" role="tab"><strong>Atitlán Recicla</strong></button>
+    <button class="nav-tab" data-page="programas" role="tab">Atitlán Recicla</button>
   </nav>
 </header>
 
@@ -1869,35 +1865,33 @@
         <h1 class="hero-title">Asociación Amigos del Lago de Atitlán</h1>
         <p class="hero-copy">
           <strong>La Asociación Amigos del Lago de Atitlán se enfoca en generar una cultura regenerativa en la cuenca Lago</strong>, para que los seres humanos podamos coexistir de forma sostenible y sana con el entorno natural.
-          Esta versión presenta únicamente el seguimiento de <strong>Atitlán Recicla</strong>, el programa de reciclaje y economía circular.
+          Esta versión presenta únicamente el seguimiento de Atitlán Recicla, el programa de reciclaje y economía circular.
         </p>
       </article>
 
-      <aside class="card hero-side stagger-2" aria-label="Logotipos institucionales">
+      <aside class="card hero-side stagger-2" aria-label="Logos institucionales">
         <div class="hero-logo-card">
-          <div class="hero-logo-caption">Amigos del Lago</div>
           <img
             class="hero-logo"
             src="./aala_logo.png"
             alt="Logo de Asociación Amigos del Lago de Atitlán"
-            onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 320 240%22%3E%3Crect width=%22320%22 height=%22240%22 rx=%2224%22 fill=%22%23eef5f2%22/%3E%3Ctext x=%2234%22 y=%2290%22 font-family=%22Arial,sans-serif%22 font-size=%2252%22 font-weight=%22700%22 fill=%22%23163a5f%22%3EAALA%3C/text%3E%3C/svg%3E';"
+            onerror="this.style.display='none'"
           >
         </div>
         <div class="hero-logo-card">
-          <div class="hero-logo-caption"><strong>Atitlán Recicla</strong></div>
           <img
-            class="hero-logo hero-logo-atitlan"
+            class="hero-logo atitlan-logo"
             src="./atitlan-recicla-logo.png"
             alt="Logo de Atitlán Recicla"
-            onerror="this.onerror=null;this.src='./Cooperativa RL logo.png';"
+            onerror="this.style.display='none'"
           >
         </div>
       </aside>
     </section>
 
-    <section class="dashboard-ribbon stagger-3" aria-label="Resumen de periodo publicado">
+    <section class="dashboard-ribbon stagger-3" aria-label="Resumen institucional">
       <article class="ribbon-item">
-        <div class="ribbon-label">Información correspondiente al mes de:</div>
+        <div class="ribbon-label">Avance correspondiente al mes de:</div>
         <div class="ribbon-value" id="kpiLatest">—</div>
         <div class="ribbon-sub" id="kpiLatestSub"></div>
       </article>
@@ -1908,11 +1902,11 @@
         <div class="section-kicker"></div>
         <h2 class="section-title">¿Qué información ofrece este tablero dinámico?</h2>
         <p class="story-lead">
-          Este tablero permite medir el avance de <strong>Atitlán Recicla</strong> en la consecución de sus indicadores, comparando el estado del programa contra sus propias metas.
+          Este tablero permite medir el avance de Atitlán Recicla en la consecución de sus indicadores, comparando el estado del programa contra sus propias metas.
         </p>
         <div class="story-columns">
           <p class="prose">
-            El tablero resume el desempeño de <strong>Atitlán Recicla</strong> frente a sus metas y su avance esperado al presente mes. La lectura se apoya en porcentajes de avance, metas mensuales y metas anuales del propio programa.
+            El tablero resume el desempeño de Atitlán Recicla frente a sus metas y su avance esperado al presente mes. La lectura se apoya en porcentajes de avance, metas mensuales y metas anuales del propio programa.
           </p>
           <div class="story-points" aria-label="Claves de lectura institucional">
             <article class="story-point">
@@ -1921,7 +1915,7 @@
             </article>
             <article class="story-point">
               <span>Comparación</span>
-              <p><strong>Atitlán Recicla</strong> se compara contra su propia ruta de avance y sus propias metas.</p>
+              <p>Atitlán Recicla se compara contra su propia ruta de avance y sus propias metas.</p>
             </article>
             <article class="story-point">
               <span>Lectura rápida</span>
@@ -1936,12 +1930,12 @@
     <section class="panorama-stage">
       <article class="narrative-stage stagger-5">
         <div class="section-kicker">Cómo leer el tablero</div>
-        <h2 class="section-title"><strong>Atitlán Recicla</strong> comparado con su propia ruta</h2>
+        <h2 class="section-title">Atitlán Recicla comparado con su propia ruta</h2>
         <p class="prose">
-          La intención es ofrecer una lectura clara del cumplimiento de <strong>Atitlán Recicla</strong>, mostrando su avance conforme a lo esperado para sus propias metas y cómo se ve el panorama general al presente mes.
+          La intención es ofrecer una lectura clara del cumplimiento de Atitlán Recicla, mostrando su avance conforme a lo esperado para sus propias metas y cómo se ve el panorama general al presente mes.
         </p>
         <div class="capsule-stack" aria-label="Guía rápida de lectura">
-          <div class="capsule">El resumen ejecutivo condensa el estado actual de <strong>Atitlán Recicla</strong>.</div>
+          <div class="capsule">El resumen ejecutivo condensa el estado actual de Atitlán Recicla.</div>
           <div class="capsule">La lectura permite ver el avance del programa de forma inmediata.</div>
         </div>
       </article>
@@ -1949,20 +1943,10 @@
 
     <section class="coverage-section">
       <div class="section-kicker">Territorio</div>
-      <h2 class="section-title">¿En dónde tiene cobertura <strong>Atitlán Recicla</strong>?</h2>
+      <h2 class="section-title">¿En dónde tiene cobertura Atitlán Recicla?</h2>
       <div class="coverage-card stagger-6">
         <div class="coverage-filter-group" id="coverageFilters">
-          <div class="coverage-summary">
-            <div class="coverage-summary-stat">
-              <div class="coverage-summary-label">Cobertura</div>
-              <div class="coverage-summary-value">—</div>
-              <div class="coverage-summary-copy">Cargando distribución municipal de <strong>Atitlán Recicla</strong>…</div>
-            </div>
-          </div>
-        </div>
-        <div class="coverage-legend" aria-label="Leyenda del mapa">
-          <span class="coverage-legend-item"><span class="coverage-legend-swatch"></span>Municipio con cobertura</span>
-          <span class="coverage-legend-item"><span class="coverage-legend-swatch muted"></span>Municipio sin cobertura registrada</span>
+          <button class="coverage-filter" type="button" disabled>Cargando filtros…</button>
         </div>
         <div class="coverage-map-frame">
           <div id="coverageMap" class="coverage-map" aria-label="Mapa de cobertura territorial institucional"></div>
@@ -1977,11 +1961,38 @@
     <div class="program-grid" id="programGrid">
       <div class="loading-state">
         <div class="spinner"></div>
-        <span>Cargando <strong>Atitlán Recicla</strong>...</span>
+        <span>Cargando Atitlán Recicla...</span>
       </div>
     </div>
   </div>
 </div>
+
+<section class="sponsor-ribbon" aria-label="Patrocinadores y aliados">
+  <div class="sponsor-title">Gracias al apoyo de:</div>
+  <div class="sponsor-strip">
+    <a class="sponsor-logo-link" href="https://cbc.co/cooperativa-integral-de-comercializacion-atitlan-recicla/" target="_blank" rel="noreferrer noopener" aria-label="Abrir página de CBC sobre Atitlán Recicla">
+      <img class="sponsor-logo" src="./cbc.png" alt="CBC" onerror="this.parentElement.style.display='none'">
+    </a>
+    <a class="sponsor-logo-link" href="https://latitudr.org/celebramos-la-apertura-del-primer-centro-de-transformacion-de-residuos-solidos-de-la-cooperativa-atitlan-recicla/" target="_blank" rel="noreferrer noopener" aria-label="Abrir página de Latitud R sobre Atitlán Recicla">
+      <img class="sponsor-logo" src="./latitudR.png" alt="Latitud R" onerror="this.parentElement.style.display='none'">
+    </a>
+    <a class="sponsor-logo-link" href="https://marcasmundiales.com.gt/" target="_blank" rel="noreferrer noopener" aria-label="Abrir página de Marcas Mundiales">
+      <img class="sponsor-logo logo-wide" src="./mm.png" alt="Marcas Mundiales" onerror="this.parentElement.style.display='none'">
+    </a>
+    <a class="sponsor-logo-link" href="https://www.avina.net/" target="_blank" rel="noreferrer noopener" aria-label="Abrir página de Fundación Avina">
+      <img class="sponsor-logo" src="./avina.png" alt="Fundación Avina" onerror="this.parentElement.style.display='none'">
+    </a>
+    <a class="sponsor-logo-link" href="https://www.cerveceriaambev.gt/" target="_blank" rel="noreferrer noopener" aria-label="Abrir página de Cervecería Ambev Guatemala">
+      <img class="sponsor-logo" src="./ambev.png" alt="Cervecería Ambev Guatemala" onerror="this.parentElement.style.display='none'">
+    </a>
+    <a class="sponsor-logo-link" href="https://socodevi.org/es/pais/guatemala/" target="_blank" rel="noreferrer noopener" aria-label="Abrir página de SOCODEVI Guatemala">
+      <img class="sponsor-logo" src="./socodevi.png" alt="SOCODEVI" onerror="this.parentElement.style.display='none'">
+    </a>
+    <a class="sponsor-logo-link" href="https://www.international.gc.ca/country-pays/guatemala/index.aspx?lang=eng" target="_blank" rel="noreferrer noopener" aria-label="Abrir página oficial de Canadá y Guatemala">
+      <img class="sponsor-logo logo-canada" src="./CANADA.png" alt="Gobierno de Canadá" onerror="this.parentElement.style.display='none'">
+    </a>
+  </div>
+</section>
 
 <footer class="site-footer">
   <div class="footer-wrap">
@@ -1990,7 +2001,7 @@
         <div class="footer-title">Asociación Amigos del Lago de Atitlán</div>
       </div>
       <p class="footer-copy">
-        La Asociación Amigos del Lago de Atitlán se enfoca en generar una cultura regenerativa en la cuenca Lago, para que los seres humanos podamos coexistir de forma sostenible y sana con el entorno natural. Esta versión presenta únicamente el seguimiento de <strong>Atitlán Recicla</strong>, el programa de reciclaje y economía circular.
+        La Asociación Amigos del Lago de Atitlán se enfoca en generar una cultura regenerativa en la cuenca Lago, para que los seres humanos podamos coexistir de forma sostenible y sana con el entorno natural. Esta versión presenta únicamente el seguimiento de Atitlán Recicla, el programa de reciclaje y economía circular.
       </p>
     </section>
 
@@ -2095,205 +2106,190 @@ function barClass(pct){
 ──────────────────────────────── */
 const COVERAGE_GEOJSON_URL = './municipios2.geojson';
 const COVERAGE_DEFAULT_VIEW = { center: [14.77, -91.18], zoom: 10 };
-const COVERAGE_GREEN = '#2e6a57';
-const COVERAGE_GREEN_DARK = '#1f513f';
-const COVERAGE_MUTED = '#94a3b8';
+const COVERAGE_GREEN = '#2e7a5f';
+const COVERAGE_GREEN_DARK = '#1f5c46';
 
 const ATITLAN_RECICLA_ZONES = {
   general: {
     label: 'Cobertura general',
-    description: 'Municipios con cobertura general de <strong>Atitlán Recicla</strong>.',
     municipios: [
       'Sololá',
-      'San Andrés Semetabaj',
-      'San Antonio Palopó',
       'Santa Catarina Palopó',
-      'Santa Cruz La Laguna',
+      'San Antonio Palopó',
+      'San Andrés Semetabaj',
       'San Juan La Laguna',
       'San Marcos La Laguna',
+      'Santa Cruz La Laguna',
+      'Jaibalito',
+      'Tzununá',
       'Panajachel',
       'Santa Clara La Laguna',
-      'Santa Lucía Utatlán',
       'Santa María Visitación',
-      'San Lucas Tolimán',
-      'Santiago Atitlán'
+      'Santa Lucía Utatlán',
+      'Santiago Atitlán',
+      'San Lucas Tolimán'
     ]
   },
   kaqchiquel: {
     label: 'Zona Kaqchiquel',
-    description: 'Municipios de la zona Kaqchiquel con cobertura de <strong>Atitlán Recicla</strong>.',
-    municipios: ['Sololá', 'San Andrés Semetabaj', 'San Antonio Palopó', 'Santa Catarina Palopó']
+    municipios: ['Sololá', 'Santa Catarina Palopó', 'San Antonio Palopó', 'San Andrés Semetabaj']
   },
-  las_lagunas: {
+  lagunas: {
     label: 'Zona Las Lagunas',
-    description: 'Municipios de la zona Las Lagunas con cobertura de <strong>Atitlán Recicla</strong>. Jaibalito y Tzununá se visualizan dentro de Santa Cruz La Laguna.',
-    municipios: ['Santa Cruz La Laguna', 'San Juan La Laguna', 'San Marcos La Laguna']
+    municipios: ['San Juan La Laguna', 'San Marcos La Laguna', 'Santa Cruz La Laguna', 'Jaibalito', 'Tzununá']
   },
   tzolojya: {
     label: 'Zona Tzolojya',
-    description: 'Municipios de la zona Tzolojya con cobertura de <strong>Atitlán Recicla</strong>.',
-    municipios: ['Panajachel', 'Santa Clara La Laguna', 'Santa Lucía Utatlán', 'Santa María Visitación']
+    municipios: ['Panajachel', 'Santa Clara La Laguna', 'Santa María Visitación', 'Santa Lucía Utatlán']
   },
-  zona_sur: {
+  sur: {
     label: 'Zona Sur',
-    description: 'Municipios de la zona Sur con cobertura de <strong>Atitlán Recicla</strong>.',
-    municipios: ['San Lucas Tolimán', 'Santiago Atitlán']
+    municipios: ['Santiago Atitlán', 'San Lucas Tolimán']
   }
 };
 
+const COVERAGE_ZONE_ORDER = ['general', 'kaqchiquel', 'lagunas', 'tzolojya', 'sur'];
+const COVERAGE_NAME_KEYS = [
+  'municipio', 'Municipio', 'MUNICIPIO', 'nombre', 'Nombre', 'NOMBRE',
+  'NOMGEO', 'NOM_MUN', 'MUNI_NOMBRE', 'NAME_2', 'NAME', 'Name', 'name',
+  'shapeName', 'ADM2_ES', 'ADM2_NAME'
+];
+
 let coverageMap = null;
 let coverageGeojson = null;
-let coverageLayer = null;
-let coverageBounds = null;
+let coverageBaseLayer = null;
+let coverageSelectedLayer = null;
 let activeCoverageZone = 'general';
 
-function normalizeCoverageMunicipio(value){
+function normalizeCoverageText(value){
   return String(value ?? '')
     .trim()
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
-    .replace(/\s+/g, ' ');
+    .replace(/municipio de\s+/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
-function coverageMunicipalitySet(key = activeCoverageZone){
-  const zone = ATITLAN_RECICLA_ZONES[key] || ATITLAN_RECICLA_ZONES.general;
-  return new Set(zone.municipios.map(normalizeCoverageMunicipio));
-}
-function coverageAllMunicipalitySet(){
-  return coverageMunicipalitySet('general');
-}
-function getFeatureMunicipio(feature){
+
+function getCoverageName(feature){
   const props = feature?.properties || {};
-  const preferred = [
-    'municipio', 'Municipio', 'MUNICIPIO', 'MUNI_NOMBRE', 'NOMBRE_MUN',
-    'nombre', 'Nombre', 'NOMBRE', 'name', 'Name', 'NAM', 'ADM2_ES'
-  ];
-  for (const key of preferred){
-    if (props[key] !== undefined && props[key] !== null && String(props[key]).trim()) return String(props[key]).trim();
+  for (const key of COVERAGE_NAME_KEYS){
+    if (props[key] !== undefined && props[key] !== null && String(props[key]).trim()){
+      return String(props[key]).trim();
+    }
   }
-  const fallbackKey = Object.keys(props).find(key => /mun|municip|nombre|name/i.test(key) && String(props[key] ?? '').trim());
-  return fallbackKey ? String(props[fallbackKey]).trim() : '';
+  const fallback = Object.values(props).find(v => typeof v === 'string' && v.trim());
+  return String(fallback || 'Municipio').trim();
 }
-function isExcludedCoverageMunicipio(value){
-  return normalizeCoverageMunicipio(value) === 'santa catarina ixtahuacan';
+
+function buildMunicipioSet(municipios){
+  return new Set(municipios.map(normalizeCoverageText));
 }
-function isFeatureInSet(feature, set){
-  const municipio = getFeatureMunicipio(feature);
-  return set.has(normalizeCoverageMunicipio(municipio));
+
+function getZoneForMunicipio(name){
+  const key = normalizeCoverageText(name);
+  for (const zoneKey of COVERAGE_ZONE_ORDER.filter(z => z !== 'general')){
+    if (buildMunicipioSet(ATITLAN_RECICLA_ZONES[zoneKey].municipios).has(key)){
+      return ATITLAN_RECICLA_ZONES[zoneKey].label;
+    }
+  }
+  if (key === normalizeCoverageText('Jaibalito') || key === normalizeCoverageText('Tzununá')){
+    return ATITLAN_RECICLA_ZONES.lagunas.label;
+  }
+  return '';
 }
+
+function featureMatchesZone(feature, zoneKey){
+  const name = getCoverageName(feature);
+  const key = normalizeCoverageText(name);
+  const municipios = ATITLAN_RECICLA_ZONES[zoneKey]?.municipios || [];
+  const selected = buildMunicipioSet(municipios);
+  if (selected.has(key)) return true;
+
+  if (zoneKey === 'lagunas' || zoneKey === 'general'){
+    if (key === normalizeCoverageText('Santa Cruz La Laguna')) return true;
+  }
+  return false;
+}
+
 function updateCoverageButtons(){
   document.querySelectorAll('.coverage-filter').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.zone === activeCoverageZone);
   });
 }
-function focusCoverageDefaultView(){
-  if (!coverageMap) return;
-  if (coverageBounds?.isValid()){
-    coverageMap.fitBounds(coverageBounds, { padding: [20, 20], maxZoom: 10 });
-    return;
-  }
-  coverageMap.setView(COVERAGE_DEFAULT_VIEW.center, COVERAGE_DEFAULT_VIEW.zoom);
-}
-function clearCoverageLayer(resetView = false){
-  if (coverageLayer && coverageMap){
-    coverageMap.removeLayer(coverageLayer);
-    coverageLayer = null;
-  }
-  if (resetView) focusCoverageDefaultView();
-}
+
 function renderCoverageFilters(){
   const wrap = document.getElementById('coverageFilters');
   if (!wrap) return;
-  const zone = ATITLAN_RECICLA_ZONES[activeCoverageZone] || ATITLAN_RECICLA_ZONES.general;
-  const municipios = [...zone.municipios].sort((a,b) => a.localeCompare(b, 'es'));
-
-  const buttons = Object.entries(ATITLAN_RECICLA_ZONES).map(([key, item]) => `
-    <button class="coverage-filter${key === activeCoverageZone ? ' active' : ''}" type="button" data-zone="${key}">
-      ${item.label}
-    </button>
-  `).join('');
-
-  wrap.innerHTML = `
-    <div class="coverage-zone-buttons" aria-label="Filtros por zona de Atitlán Recicla">
-      ${buttons}
-    </div>
-    <div class="coverage-summary">
-      <div class="coverage-summary-stat">
-        <div class="coverage-summary-label">${zone.label}</div>
-        <div class="coverage-summary-value">${municipios.length}</div>
-        <div class="coverage-summary-copy">${zone.description}</div>
-      </div>
-      <div class="coverage-summary-list">
-        <div class="coverage-summary-label">Municipios resaltados</div>
-        <div class="coverage-municipio-list">
-          ${municipios.map(municipio => `<span class="coverage-municipio-chip">${safe(municipio)}</span>`).join('')}
-        </div>
-      </div>
-    </div>
-  `;
-
+  wrap.innerHTML = COVERAGE_ZONE_ORDER.map(zoneKey => {
+    const label = ATITLAN_RECICLA_ZONES[zoneKey].label;
+    return `<button class="coverage-filter" type="button" data-zone="${zoneKey}">${safe(label)}</button>`;
+  }).join('');
   wrap.querySelectorAll('.coverage-filter').forEach(btn => {
     btn.addEventListener('click', () => applyCoverageZone(btn.dataset.zone || 'general'));
   });
+  updateCoverageButtons();
 }
+
+function clearSelectedCoverage(){
+  if (coverageSelectedLayer && coverageMap){
+    coverageMap.removeLayer(coverageSelectedLayer);
+    coverageSelectedLayer = null;
+  }
+}
+
+function styleBaseFeature(feature){
+  const hasCoverage = featureMatchesZone(feature, 'general');
+  return {
+    color: hasCoverage ? 'rgba(31,92,70,.45)' : 'rgba(22,58,95,.20)',
+    weight: hasCoverage ? 1.3 : .8,
+    opacity: 1,
+    fillColor: hasCoverage ? '#dceee5' : '#f5f7f6',
+    fillOpacity: hasCoverage ? .18 : .05
+  };
+}
+
+function styleSelectedFeature(){
+  return {
+    color: COVERAGE_GREEN_DARK,
+    weight: 2.8,
+    opacity: 1,
+    fillColor: COVERAGE_GREEN,
+    fillOpacity: .58
+  };
+}
+
+function bindCoveragePopup(feature, layer, zoneLabel = ''){
+  const municipio = safe(getCoverageName(feature));
+  const zona = zoneLabel || getZoneForMunicipio(municipio);
+  const detail = zona ? `<br><span>${safe(zona)}</span>` : '';
+  layer.bindTooltip(municipio, { sticky: true, direction: 'top', className: 'coverage-tooltip' });
+  layer.bindPopup(`<strong>${municipio}</strong>${detail}`);
+}
+
 function applyCoverageZone(zoneKey = 'general'){
   if (!coverageMap || !coverageGeojson?.features?.length) return;
   activeCoverageZone = ATITLAN_RECICLA_ZONES[zoneKey] ? zoneKey : 'general';
-  renderCoverageFilters();
-  clearCoverageLayer(false);
+  clearSelectedCoverage();
 
-  const activeSet = coverageMunicipalitySet(activeCoverageZone);
-  const generalSet = coverageAllMunicipalitySet();
-  const zone = ATITLAN_RECICLA_ZONES[activeCoverageZone] || ATITLAN_RECICLA_ZONES.general;
+  const features = coverageGeojson.features.filter(feature => featureMatchesZone(feature, activeCoverageZone));
+  const zoneLabel = ATITLAN_RECICLA_ZONES[activeCoverageZone].label;
 
-  const features = coverageGeojson.features.filter(feature => {
-    const municipio = getFeatureMunicipio(feature);
-    return municipio && !isExcludedCoverageMunicipio(municipio);
-  });
-
-  if (!features.length){
-    updateCoverageButtons();
-    return;
-  }
-
-  coverageLayer = L.geoJSON({ type: 'FeatureCollection', features }, {
-    style(feature){
-      const selected = isFeatureInSet(feature, activeSet);
-      const inGeneralCoverage = isFeatureInSet(feature, generalSet);
-      return {
-        color: selected ? COVERAGE_GREEN_DARK : inGeneralCoverage ? '#769183' : COVERAGE_MUTED,
-        weight: selected ? 3.4 : inGeneralCoverage ? 1.8 : 1.2,
-        opacity: selected ? 1 : .72,
-        fillColor: selected ? COVERAGE_GREEN : inGeneralCoverage ? '#dfeee5' : '#ffffff',
-        fillOpacity: selected ? .44 : inGeneralCoverage ? .24 : .12,
-        dashArray: selected ? null : '4 4'
-      };
-    },
+  coverageSelectedLayer = L.geoJSON({ type: 'FeatureCollection', features }, {
+    style: styleSelectedFeature,
     onEachFeature(feature, layer){
-      const municipio = safe(getFeatureMunicipio(feature));
-      const selected = isFeatureInSet(feature, activeSet);
-      const inGeneralCoverage = isFeatureInSet(feature, generalSet);
-      const estado = selected
-        ? `Municipio resaltado en ${zone.label}`
-        : inGeneralCoverage
-          ? 'Municipio con cobertura de Atitlán Recicla en otra zona'
-          : 'Sin cobertura registrada de Atitlán Recicla';
-      layer.bindTooltip(municipio, { sticky: true, direction: 'top', className: 'coverage-tooltip' });
-      layer.bindPopup(`<strong>${municipio}</strong><br><strong>Atitlán Recicla</strong>: ${estado}`);
+      bindCoveragePopup(feature, layer, zoneLabel);
     }
   }).addTo(coverageMap);
 
-  const selectedFeatures = features.filter(feature => isFeatureInSet(feature, activeSet));
-  const selectedLayer = L.geoJSON({ type: 'FeatureCollection', features: selectedFeatures });
-  const selectedBounds = selectedLayer.getBounds();
-  if (selectedBounds.isValid()){
-    coverageMap.fitBounds(selectedBounds, { padding: [28, 28], maxZoom: activeCoverageZone === 'general' ? 10 : 11 });
-  } else if (coverageLayer.getBounds().isValid()){
-    coverageMap.fitBounds(coverageLayer.getBounds(), { padding: [20, 20], maxZoom: 10 });
+  if (coverageSelectedLayer.getBounds().isValid()){
+    coverageMap.fitBounds(coverageSelectedLayer.getBounds(), { padding: [24, 24], maxZoom: 11 });
   }
-
   updateCoverageButtons();
 }
+
 async function initCoverageMap(){
   const mapNode = document.getElementById('coverageMap');
   if (!mapNode || coverageMap) return;
@@ -2309,6 +2305,8 @@ async function initCoverageMap(){
     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
   }).addTo(coverageMap);
 
+  renderCoverageFilters();
+
   try {
     const res = await fetch(COVERAGE_GEOJSON_URL, { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -2317,29 +2315,20 @@ async function initCoverageMap(){
     const features = Array.isArray(coverageGeojson?.features) ? coverageGeojson.features : [];
     if (!features.length) throw new Error('El GeoJSON no contiene entidades.');
 
-    renderCoverageFilters();
+    coverageBaseLayer = L.geoJSON(coverageGeojson, {
+      style: styleBaseFeature,
+      onEachFeature(feature, layer){
+        bindCoveragePopup(feature, layer);
+      }
+    }).addTo(coverageMap);
 
-    const boundsProbe = L.geoJSON(coverageGeojson);
-    coverageBounds = boundsProbe.getBounds();
-    focusCoverageDefaultView();
     applyCoverageZone('general');
-
     setTimeout(() => coverageMap?.invalidateSize(), 120);
     window.addEventListener('resize', () => coverageMap?.invalidateSize());
   } catch (err) {
     console.error('No fue posible cargar el mapa de cobertura', err);
     const wrap = document.getElementById('coverageFilters');
-    if (wrap){
-      wrap.innerHTML = `
-        <div class="coverage-summary">
-          <div class="coverage-summary-stat">
-            <div class="coverage-summary-label">Mapa no disponible</div>
-            <div class="coverage-summary-value">—</div>
-            <div class="coverage-summary-copy">No fue posible cargar <code>municipios2.geojson</code>. Confirmá que el archivo esté en la raíz de la repo.</div>
-          </div>
-        </div>
-      `;
-    }
+    if (wrap) wrap.innerHTML = '<button class="coverage-filter" type="button" disabled>No fue posible cargar municipios2.geojson</button>';
   }
 }
 
@@ -2357,76 +2346,6 @@ const PROGRAMS = [
 ];
 
 
-/* ────────────────────────────────
-   REFORESTACIÓN · KPIs COMPLEMENTARIOS (respaldo temporal)
-──────────────────────────────── */
-const REFORESTACION_KPI_COMPLEMENTARIOS_SEED = [
-  { periodo_clave:'2026-01', mes_num:1, componente:'SIG', kpi_id:'sig_mapas_generados', kpi_nombre:'Mapas generados', unidad:'mapas', meta_mensual:12, valor_mes:9 },
-  { periodo_clave:'2026-01', mes_num:1, componente:'SIG', kpi_id:'sig_lineas_codigo', kpi_nombre:'Líneas de código SIG generadas', unidad:'líneas', meta_mensual:5000, valor_mes:3800 },
-  { periodo_clave:'2026-01', mes_num:1, componente:'SIG', kpi_id:'sig_servicios_digitales', kpi_nombre:'Servicios digitales creados', unidad:'servicios', meta_mensual:3, valor_mes:2 },
-  { periodo_clave:'2026-01', mes_num:1, componente:'SIG', kpi_id:'sig_capas_actualizadas', kpi_nombre:'Capas geoespaciales actualizadas', unidad:'capas', meta_mensual:8, valor_mes:6 },
-  { periodo_clave:'2026-01', mes_num:1, componente:'SIG', kpi_id:'sig_analisis_entregados', kpi_nombre:'Análisis espaciales entregados', unidad:'análisis', meta_mensual:6, valor_mes:5 },
-  { periodo_clave:'2026-01', mes_num:1, componente:'Vivero', kpi_id:'vivero_mantenimiento', kpi_nombre:'Actividades de mantenimiento de vivero', unidad:'actividades', meta_mensual:12, valor_mes:9 },
-  { periodo_clave:'2026-01', mes_num:1, componente:'Vivero', kpi_id:'vivero_bolsas_llenadas', kpi_nombre:'Bolsas llenadas', unidad:'bolsas', meta_mensual:200, valor_mes:150 },
-  { periodo_clave:'2026-01', mes_num:1, componente:'Vivero', kpi_id:'vivero_semillas_germinadas', kpi_nombre:'Semillas germinadas', unidad:'semillas', meta_mensual:100, valor_mes:72 },
-  { periodo_clave:'2026-01', mes_num:1, componente:'Otras actividades', kpi_id:'otras_actividades_estrategicas', kpi_nombre:'Actividades estratégicas realizadas', unidad:'actividades', meta_mensual:4, valor_mes:3 },
-
-  { periodo_clave:'2026-02', mes_num:2, componente:'SIG', kpi_id:'sig_mapas_generados', kpi_nombre:'Mapas generados', unidad:'mapas', meta_mensual:12, valor_mes:10 },
-  { periodo_clave:'2026-02', mes_num:2, componente:'SIG', kpi_id:'sig_lineas_codigo', kpi_nombre:'Líneas de código SIG generadas', unidad:'líneas', meta_mensual:5000, valor_mes:4100 },
-  { periodo_clave:'2026-02', mes_num:2, componente:'SIG', kpi_id:'sig_servicios_digitales', kpi_nombre:'Servicios digitales creados', unidad:'servicios', meta_mensual:3, valor_mes:2 },
-  { periodo_clave:'2026-02', mes_num:2, componente:'SIG', kpi_id:'sig_capas_actualizadas', kpi_nombre:'Capas geoespaciales actualizadas', unidad:'capas', meta_mensual:8, valor_mes:6 },
-  { periodo_clave:'2026-02', mes_num:2, componente:'SIG', kpi_id:'sig_analisis_entregados', kpi_nombre:'Análisis espaciales entregados', unidad:'análisis', meta_mensual:6, valor_mes:4 },
-  { periodo_clave:'2026-02', mes_num:2, componente:'Vivero', kpi_id:'vivero_mantenimiento', kpi_nombre:'Actividades de mantenimiento de vivero', unidad:'actividades', meta_mensual:12, valor_mes:10 },
-  { periodo_clave:'2026-02', mes_num:2, componente:'Vivero', kpi_id:'vivero_bolsas_llenadas', kpi_nombre:'Bolsas llenadas', unidad:'bolsas', meta_mensual:200, valor_mes:160 },
-  { periodo_clave:'2026-02', mes_num:2, componente:'Vivero', kpi_id:'vivero_semillas_germinadas', kpi_nombre:'Semillas germinadas', unidad:'semillas', meta_mensual:100, valor_mes:78 },
-  { periodo_clave:'2026-02', mes_num:2, componente:'Otras actividades', kpi_id:'otras_actividades_estrategicas', kpi_nombre:'Actividades estratégicas realizadas', unidad:'actividades', meta_mensual:4, valor_mes:3 },
-
-  { periodo_clave:'2026-03', mes_num:3, componente:'SIG', kpi_id:'sig_mapas_generados', kpi_nombre:'Mapas generados', unidad:'mapas', meta_mensual:12, valor_mes:10 },
-  { periodo_clave:'2026-03', mes_num:3, componente:'SIG', kpi_id:'sig_lineas_codigo', kpi_nombre:'Líneas de código SIG generadas', unidad:'líneas', meta_mensual:5000, valor_mes:4200 },
-  { periodo_clave:'2026-03', mes_num:3, componente:'SIG', kpi_id:'sig_servicios_digitales', kpi_nombre:'Servicios digitales creados', unidad:'servicios', meta_mensual:3, valor_mes:2 },
-  { periodo_clave:'2026-03', mes_num:3, componente:'SIG', kpi_id:'sig_capas_actualizadas', kpi_nombre:'Capas geoespaciales actualizadas', unidad:'capas', meta_mensual:8, valor_mes:7 },
-  { periodo_clave:'2026-03', mes_num:3, componente:'SIG', kpi_id:'sig_analisis_entregados', kpi_nombre:'Análisis espaciales entregados', unidad:'análisis', meta_mensual:6, valor_mes:5 },
-  { periodo_clave:'2026-03', mes_num:3, componente:'Vivero', kpi_id:'vivero_mantenimiento', kpi_nombre:'Actividades de mantenimiento de vivero', unidad:'actividades', meta_mensual:12, valor_mes:9 },
-  { periodo_clave:'2026-03', mes_num:3, componente:'Vivero', kpi_id:'vivero_bolsas_llenadas', kpi_nombre:'Bolsas llenadas', unidad:'bolsas', meta_mensual:200, valor_mes:155 },
-  { periodo_clave:'2026-03', mes_num:3, componente:'Vivero', kpi_id:'vivero_semillas_germinadas', kpi_nombre:'Semillas germinadas', unidad:'semillas', meta_mensual:100, valor_mes:80 },
-  { periodo_clave:'2026-03', mes_num:3, componente:'Otras actividades', kpi_id:'otras_actividades_estrategicas', kpi_nombre:'Actividades estratégicas realizadas', unidad:'actividades', meta_mensual:4, valor_mes:3 }
-];
-
-function buildReforestacionComplementaryRows(seed){
-  const accum = {};
-  return seed.map(item => {
-    const prev = accum[item.kpi_id] || 0;
-    const valorAcumulado = prev + Number(item.valor_mes || 0);
-    accum[item.kpi_id] = valorAcumulado;
-    const metaAcumulada = Number(item.meta_mensual || 0) * Number(item.mes_num || 0);
-    const pctMes = Number(item.meta_mensual || 0) > 0 ? (Number(item.valor_mes || 0) / Number(item.meta_mensual || 1)) * 100 : 0;
-    const pctAcum = metaAcumulada > 0 ? (valorAcumulado / metaAcumulada) * 100 : 0;
-    return {
-      ...item,
-      valor_acumulado: valorAcumulado,
-      meta_acumulada: metaAcumulada,
-      pct_cumpl_mes: pctMes,
-      pct_cumpl_acum: pctAcum
-    };
-  });
-}
-const REFORESTACION_KPI_COMPLEMENTARIOS = buildReforestacionComplementaryRows(REFORESTACION_KPI_COMPLEMENTARIOS_SEED);
-
-function summarizeReforestacionComplementary(periodKey){
-  const rows = REFORESTACION_KPI_COMPLEMENTARIOS.filter(r => String(r.periodo_clave) === String(periodKey));
-  return {
-    rows,
-    avgCumplMes: avg(rows.map(r => Number(r.pct_cumpl_mes || 0))),
-    avgCumplAcum: avg(rows.map(r => Number(r.pct_cumpl_acum || 0)))
-  };
-}
-
-
-/* ────────────────────────────────
-   LOADERS
-──────────────────────────────── */
-
-// Mapa mes abreviado → nombre completo
 const MES_LARGO = {ENE:'Enero',FEB:'Febrero',MAR:'Marzo',ABR:'Abril',MAY:'Mayo',JUN:'Junio',JUL:'Julio',AGO:'Agosto',SEP:'Septiembre',OCT:'Octubre',NOV:'Noviembre',DIC:'Diciembre'};
 
 // METAS ANUALES ATITLÁN RECICLA (basadas en los CSV de la repo)
@@ -2500,401 +2419,6 @@ async function loadAtitlan(cfg){
   };
 }
 
-async function loadConservando(cfg){
-  // Sincronizado con index_conservando_atitlan.html · abril 2026.
-  const aceiteAcum = 27810.828;
-  const aguaAcum = 27810828;
-  const jabonesProdAcum = 26680;
-  const jabonesVendAcum = 7394;
-
-  const metaAceite = 80000;
-  const metaAgua = 80000000;
-  const metaJabonesProd = 65040;
-  const metaJabonesVend = 51600;
-
-  const aceiteMes = 7340;
-  const aceiteMetaMes = 6666.67;
-  const aguaMes = 7340000;
-  const aguaMetaMes = 6666666.67;
-  const jabonesProdMes = 4850;
-  const jabonesProdMetaMes = 5420;
-  const jabonesVendMes = 2314;
-  const jabonesVendMetaMes = 4300;
-
-  const pctAceite = (aceiteAcum / metaAceite) * 100;
-  const pctAgua = (aguaAcum / metaAgua) * 100;
-  const pctJabonesProd = (jabonesProdAcum / metaJabonesProd) * 100;
-  const pctJabonesVend = (jabonesVendAcum / metaJabonesVend) * 100;
-
-  const pctAceiteMes = (aceiteMes / aceiteMetaMes) * 100;
-  const pctAguaMes = (aguaMes / aguaMetaMes) * 100;
-  const pctJabonesProdMes = (jabonesProdMes / jabonesProdMetaMes) * 100;
-  const pctJabonesVendMes = (jabonesVendMes / jabonesVendMetaMes) * 100;
-  const score = avg([pctAceiteMes, pctAguaMes, pctJabonesProdMes, pctJabonesVendMes]);
-
-  const keyMetrics = [
-    {
-      label:'Recolección de 80,000 litros de aceite usado de cocina.',
-      acumDisplay:`${fmt(aceiteAcum)} / ${fmt(metaAceite)} litros recolectados`,
-      pct:pctAceite,
-      pctDisplay:`${fmtPct(pctAceite)} de avance acumulado hasta abril contra la meta anual`,
-      barPct:pctAceite,
-      monthlyDisplay:`${fmt(aceiteMes)} / ${fmt(aceiteMetaMes,2)} litros en abril · ${fmtPct(pctAceiteMes)}`,
-      monthlyPct:pctAceiteMes,
-      temporality: 'Este indicador tiene por temporalidad desde enero a diciembre de 2026'
-    },
-    {
-      label:'Protección de 80,000,000 litros de agua por manejo adecuado de aceite usado.',
-      acumDisplay:`${fmt(aguaAcum)} / ${fmt(metaAgua)} litros de agua protegidos`,
-      pct:pctAgua,
-      pctDisplay:`${fmtPct(pctAgua)} de avance acumulado hasta abril contra la meta anual`,
-      barPct:pctAgua,
-      monthlyDisplay:`${fmt(aguaMes)} / ${fmt(aguaMetaMes,2)} litros en abril · ${fmtPct(pctAguaMes)}`,
-      monthlyPct:pctAguaMes,
-      temporality: 'Este indicador tiene por temporalidad desde enero a diciembre de 2026'
-    },
-    {
-      label:'Producción de 65,040 jabones durante 2026.',
-      acumDisplay:`${fmt(jabonesProdAcum)} / ${fmt(metaJabonesProd)} jabones producidos`,
-      pct:pctJabonesProd,
-      pctDisplay:`${fmtPct(pctJabonesProd)} de avance acumulado hasta abril contra la meta anual`,
-      barPct:pctJabonesProd,
-      monthlyDisplay:`${fmt(jabonesProdMes)} / ${fmt(jabonesProdMetaMes)} jabones en abril · ${fmtPct(pctJabonesProdMes)}`,
-      monthlyPct:pctJabonesProdMes,
-      temporality: 'Este indicador tiene por temporalidad desde enero a diciembre de 2026'
-    },
-    {
-      label:'Venta de 51,600 jabones durante 2026.',
-      acumDisplay:`${fmt(jabonesVendAcum)} / ${fmt(metaJabonesVend)} jabones vendidos`,
-      pct:pctJabonesVend,
-      pctDisplay:`${fmtPct(pctJabonesVend)} de avance acumulado hasta abril contra la meta anual`,
-      barPct:pctJabonesVend,
-      monthlyDisplay:`${fmt(jabonesVendMes)} / ${fmt(jabonesVendMetaMes)} jabones en abril · ${fmtPct(pctJabonesVendMes)}`,
-      monthlyPct:pctJabonesVendMes,
-      temporality: 'Este indicador tiene por temporalidad desde enero a diciembre de 2026'
-    }
-  ];
-
-  return {
-    ...cfg,
-    latestLabel:'Abril',
-    periodKey:'2026-04',
-    score:score || 0,
-    scoreLabel:'Promedio vs metas mensuales',
-    metrics:keyMetrics,
-    sourceSummary:'Kobo · abril 2026'
-  };
-}
-
-async function loadFM(cfg){
-  const vigenciaMunicipal = 'Este indicador tiene por periodo de enero a diciembre de 2026, considerando los plazos y procedimientos administrativos propios de las municipalidades';
-
-  const keyMetrics = [
-    {
-      label:'15 municipalidades de la Cuenca del Lago de Atitlán con capacidad instalada en los temas de SNIP (Sistema nacional de inversión pública), SIG (Sistemas de Información Geográfica), recolección digital de datos y cumplimiento legal ambiental.',
-      acumDisplay:'1/15 municipalidades',
-      pct:(1/15)*100,
-      pctDisplay:`${fmtPct((1/15)*100)} de avance`,
-      barPct:(1/15)*100,
-      temporality: vigenciaMunicipal,
-      temporalFullRow:true
-    },
-    {
-      label:'6 Estudios de caracterización de desechos y residuos sólidos y o aguas residuales.',
-      acumDisplay:'5/6 estudios',
-      pct:(5/6)*100,
-      pctDisplay:`${fmtPct((5/6)*100)} de avance`,
-      barPct:(5/6)*100,
-      temporality: vigenciaMunicipal,
-      temporalFullRow:true
-    },
-    {
-      label:'5 PIRDES Municipales (Planes de Manejo integrales de residuos y desechos sólidos)',
-      acumDisplay:'2/5 planes integrales',
-      pct:(2/5)*100,
-      pctDisplay:`${fmtPct((2/5)*100)} de avance`,
-      barPct:(2/5)*100,
-      temporality: vigenciaMunicipal,
-      temporalFullRow:true
-    },
-    {
-      label:'20 Asistencias técnicas municipales en aguas residuales.',
-      acumDisplay:'6/20 asistencias técnicas',
-      pct:(6/20)*100,
-      pctDisplay:`${fmtPct((6/20)*100)} de avance`,
-      barPct:(6/20)*100,
-      temporality: vigenciaMunicipal,
-      temporalFullRow:true
-    }
-  ];
-
-  const score = avg(keyMetrics.map(metric => Number(metric.pct || 0)));
-
-  return {
-    ...cfg,
-    latestLabel:'Mayo',
-    periodKey:'2026-05',
-    score:score || 0,
-    scoreLabel:'Cumplimiento promedio con respecto a meta anual',
-    scoreHeader:'Cumplimiento promedio con respecto a meta anual',
-    hasMonthlyColumn:false,
-    metrics:keyMetrics,
-    sourceSummary:'Google Sheets · mayo 2026'
-  };
-}
-
-async function loadEPC(cfg){
-  // Sincronizado con index_epc.html · mayo 2026.
-  const modulosDesarrollados = 3;
-  const modulosMeta = 7;
-  const pctDocentes = (modulosDesarrollados / modulosMeta) * 100;
-  const pctEstudiantes = (modulosDesarrollados / modulosMeta) * 100;
-
-  const momentosDiplomadoDesarrollados = 5;
-  const momentosDiplomadoAnuales = 12;
-  const pctAvanceFormacion = (momentosDiplomadoDesarrollados / momentosDiplomadoAnuales) * 100;
-
-  const actividadesVal = 40;
-  const actividadesMeta = 128;
-  const pctActividades = (actividadesVal / actividadesMeta) * 100;
-
-  const docentesMes = 120;
-  const docentesMetaMes = 121;
-  const estudiantesMes = 3487;
-  const estudiantesMetaMes = 3514;
-  const jovenesMes = 60;
-  const jovenesMetaMes = 60;
-  const actividadesMes = 16;
-  const actividadesMetaMes = 16;
-
-  const pctDocentesMes = (docentesMes / docentesMetaMes) * 100;
-  const pctEstudiantesMes = (estudiantesMes / estudiantesMetaMes) * 100;
-  const pctJovenesMes = (jovenesMes / jovenesMetaMes) * 100;
-  const pctActividadesMes = (actividadesMes / actividadesMetaMes) * 100;
-  const score = avg([pctDocentesMes, pctEstudiantesMes, pctJovenesMes, pctActividadesMes]);
-
-  const keyMetrics = [
-    {
-      label:'Capacidades pedagógicas instaladas de los 7 módulos del Material de Referencia Educando para Conservar en 121 docentes de los niveles ordinario, básico y diversificado de 50 centros educativos de 13 municipios de la cuenca del Lago de Atitlán.',
-      acumDisplay:`${modulosDesarrollados}/${modulosMeta} módulos desarrollados`,
-      pct:pctDocentes,
-      pctDisplay:`${fmtPct(pctDocentes)} de avance acumulado hasta mayo contra la meta anual`,
-      barPct:pctDocentes,
-      monthlyDisplay:`${fmt(docentesMes)} / ${fmt(docentesMetaMes)} docentes en mayo · ${fmtPct(pctDocentesMes)}`,
-      monthlyPct:pctDocentesMes,
-      temporality: 'Este indicador tiene por temporalidad desde marzo a septiembre de 2026'
-    },
-    {
-      label:'3,514 estudiantes de los niveles ordinario, básico y diversificado de 50 centros educativos de la Cuenca del Lago de Atitlán, capacitados en los 7 módulos del Material de Referencia Educando para Conservar.',
-      acumDisplay:`${modulosDesarrollados}/${modulosMeta} módulos desarrollados`,
-      pct:pctEstudiantes,
-      pctDisplay:`${fmtPct(pctEstudiantes)} de avance acumulado hasta mayo contra la meta anual`,
-      barPct:pctEstudiantes,
-      monthlyDisplay:`${fmt(estudiantesMes)} / ${fmt(estudiantesMetaMes)} estudiantes en mayo · ${fmtPct(pctEstudiantesMes)}`,
-      monthlyPct:pctEstudiantesMes,
-      temporality: 'Este indicador tiene por temporalidad desde marzo a septiembre de 2026'
-    },
-    {
-      label:'Participación de 120 jóvenes de 12 municipios de la cuenca del Lago de Atitlán en el Diplomado de Gestión Ambiental y Liderazgo Juvenil.',
-      acumDisplay:`${momentosDiplomadoDesarrollados}/${momentosDiplomadoAnuales} momentos formativos desarrollados`,
-      pct:pctAvanceFormacion,
-      pctDisplay:`${fmtPct(pctAvanceFormacion)} de avance acumulado hasta mayo contra la meta anual`,
-      barPct:pctAvanceFormacion,
-      monthlyDisplay:`${fmt(jovenesMes)} / ${fmt(jovenesMetaMes)} jóvenes asistentes en mayo · ${fmtPct(pctJovenesMes)}`,
-      monthlyPct:pctJovenesMes,
-      temporality: 'Este indicador tiene por temporalidad desde marzo a octubre de 2026'
-    },
-    {
-      label:'128 actividades en campo de educación ambiental y aprendizaje práctico durante 2026.',
-      acumDisplay:`${fmt(actividadesVal)} / ${fmt(actividadesMeta)} actividades`,
-      pct:pctActividades,
-      pctDisplay:`${fmtPct(pctActividades)} de avance acumulado hasta mayo contra la meta anual`,
-      barPct:pctActividades,
-      monthlyDisplay:`${fmt(actividadesMes)} / ${fmt(actividadesMetaMes)} actividades en mayo · ${fmtPct(pctActividadesMes)}`,
-      monthlyPct:pctActividadesMes,
-      temporality: 'Este indicador tiene por temporalidad desde enero a octubre de 2026'
-    }
-  ];
-
-  return {
-    ...cfg,
-    latestLabel:'Mayo',
-    periodKey:'2026-05',
-    score:score || 0,
-    scoreLabel:'Promedio vs metas mensuales',
-    metrics:keyMetrics,
-    sourceSummary:'Kobo · mayo 2026'
-  };
-}
-
-async function loadReforestacion(cfg){
-  // Lectura actualizada a mayo de 2026 con el mismo criterio mensual usado en el tablero de Reforestación.
-  const haAcum = 11.15;
-  const haMeta = 35;
-  const haMes = 0.53;
-  const haMetaMesOperativa = 0.53;
-
-  const arbolesAcum = 200;
-  const arbolesMeta = 90000;
-  const arbolesMes = 200;
-  const arbolesMetaMes = 200;
-
-  const sigPct = 100;
-  const sigMetaMes = 4;
-  const sigMes = 4;
-  const sigPctMes = 100;
-
-  const plantasAcum = 2310;
-  const plantasMeta = 10000;
-  const especiesAcum = 9;
-  const especiesMeta = 10;
-  const plantasMes = 110;
-  const plantasMetaMes = 110;
-  const plantasPctMes = 100;
-
-  const pctHa = (haAcum / haMeta) * 100;
-  const pctCart = pctHa;
-  const pctArboles = (arbolesAcum / arbolesMeta) * 100;
-  const pctArbolesMes = (arbolesMes / arbolesMetaMes) * 100;
-  const pctPlantas = (plantasAcum / plantasMeta) * 100;
-  const pctEspecies = (especiesAcum / especiesMeta) * 100;
-  const pctViveroIntegral = Math.min(pctPlantas, pctEspecies);
-  const score = avg([100, pctArbolesMes, sigPctMes, plantasPctMes]);
-
-  const keyMetrics = [
-    {
-      label: '35 hectáreas monitoreadas de las reforestaciones realizadas en 2025 en Sololá y la Cuenca del Lago de Atitlán, con su respectiva cartografía.',
-      acumDisplay: `${fmt(haAcum, 2)} / ${fmt(haMeta)} ha monitoreadas`,
-      pct: pctHa,
-      pctDisplay: `${fmtPct(pctHa)} de avance acumulado hasta mayo contra la meta anual`,
-      barPct: pctHa,
-      monthlyDisplay: `${fmt(haMes,2)} / ${fmt(haMetaMesOperativa,2)} ha monitoreadas en mayo · ${fmtPct(100)}`,
-      monthlyPct: 100,
-      temporality: 'Este indicador tiene por temporalidad desde enero a julio de 2026',
-      subIndicators: [
-        { label: 'Hectáreas monitoreadas', valueDisplay: `${fmt(haAcum, 2)} / ${fmt(haMeta)} ha`, barPct: pctHa },
-        { label: 'Cobertura cartográfica de monitoreo', valueDisplay: `${fmt(haAcum, 2)} / ${fmt(haMeta)} ha`, barPct: pctCart }
-      ]
-    },
-    {
-      label: '90,000 árboles reforestados durante 2026 en el departamento de Sololá y la Cuenca del Lago de Atitlán.',
-      acumDisplay: `${fmt(arbolesAcum)} / ${fmt(arbolesMeta)} árboles`,
-      pct: pctArboles,
-      pctDisplay: `${fmtPct(pctArboles)} de avance acumulado hasta mayo contra la meta anual`,
-      barPct: pctArboles,
-      monthlyDisplay: `${fmt(arbolesMes)} / ${fmt(arbolesMetaMes)} árboles reforestados en mayo · ${fmtPct(pctArbolesMes)}`,
-      monthlyPct: pctArbolesMes,
-      temporality: 'Este indicador tiene por temporalidad desde junio a noviembre de 2026'
-    },
-    {
-      label: '1 unidad de análisis SIG creada con especialización en cartografía forestal temática a través del eje de la CODEMA-Sololá.',
-      acumDisplay: `${fmtPct(sigPct)} de consolidación acumulada`,
-      pct: sigPct,
-      pctDisplay: `${fmtPct(sigPct)} de avance acumulado de consolidación`,
-      barPct: sigPct,
-      monthlyDisplay: `${fmt(sigMes)} / ${fmt(sigMetaMes)} hitos SIG en mayo · ${fmtPct(sigPctMes)}`,
-      monthlyPct: sigPctMes,
-      fullWidthBar: false,
-      hideAcumBar: false,
-      temporality: 'Este indicador tiene por temporalidad desde enero a diciembre de 2026'
-    },
-    {
-      label: '10,000 plantas forestales de 10 especies nativas producidas en el vivero AALA durante 2026.',
-      acumDisplay: `${fmt(plantasAcum)} / ${fmt(plantasMeta)} plantas`,
-      pct: pctViveroIntegral,
-      pctDisplay: `${fmtPct(pctPlantas)} en plantas y ${fmtPct(pctEspecies)} en especies`,
-      barPct: pctViveroIntegral,
-      monthlyDisplay: `${fmt(plantasMes)} / ${fmt(plantasMetaMes)} plantas netas en mayo · ${fmtPct(plantasPctMes)}`,
-      monthlyPct: plantasPctMes,
-      temporality: 'Este indicador tiene por temporalidad desde enero a noviembre de 2026',
-      subIndicators: [
-        { label: 'Plantas forestales', valueDisplay: `${fmt(plantasAcum)} / ${fmt(plantasMeta)} plantas`, barPct: pctPlantas },
-        { label: 'Especies nativas activas', valueDisplay: `${fmt(especiesAcum)} / ${fmt(especiesMeta)} especies`, barPct: pctEspecies }
-      ]
-    }
-  ];
-
-  return {
-    ...cfg,
-    latestLabel:'Mayo',
-    periodKey:'2026-05',
-    score:score || 0,
-    scoreLabel:'Cumplimiento promedio vs metas mensuales',
-    metrics: keyMetrics,
-    sourceSummary: 'Google Sheets · Reforestación · mayo 2026'
-  };
-}
-
-/* ────────────────────────────────
-   Siembra de tul · DATOS EMBEBIDOS (Survey123 · mayo 2026)
-──────────────────────────────── */
-const TUL_DATA = [
-  { fecha:'2026-02-09', municipio:'San Marcos La Laguna',    tipo:'Siembra',       metros:30  },
-  { fecha:'2026-02-13', municipio:'Santa Cruz La Laguna',    tipo:'Siembra',       metros:115 },
-  { fecha:'2026-02-27', municipio:'San Antonio Palopó',      tipo:'Siembra',       metros:110 },
-  { fecha:'2026-03-09', municipio:'Santa Catarina Palopó',   tipo:'Mantenimiento', metros:20  },
-  { fecha:'2026-03-13', municipio:'San Pedro La Laguna',     tipo:'Siembra',       metros:95  },
-  { fecha:'2026-03-27', municipio:'San Antonio Palopó',      tipo:'Siembra',       metros:130 },
-  { fecha:'2026-04-10', municipio:'San Juan La Laguna',      tipo:'Siembra',       metros:113 },
-  { fecha:'2026-04-24', municipio:'San Juan La Laguna',      tipo:'Siembra',       metros:112 },
-  { fecha:'2026-05-08', municipio:'San Pedro La Laguna',     tipo:'Siembra',       metros:99  },
-  { fecha:'2026-05-22', municipio:'San Pedro La Laguna',     tipo:'Siembra',       metros:99  },
-];
-
-async function loadTul(cfg){
-  const META_ML_ANUAL = 1300;
-  const META_JORNADAS_ANUAL = 21;
-
-  const acumMetrosSiembra = 903;
-  const acumJornadas = 8;
-  const jornadasMes = 2;
-  const jornadasMetaMes = 2;
-  const metrosMes = 198;
-  const metrosMetaMes = 225;
-
-  const pctJornadas = (acumJornadas / META_JORNADAS_ANUAL) * 100;
-  const pctAnual = (acumMetrosSiembra / META_ML_ANUAL) * 100;
-  const pctJornadasMes = (jornadasMes / jornadasMetaMes) * 100;
-  const pctMetrosMes = (metrosMes / metrosMetaMes) * 100;
-  const score = avg([pctJornadasMes, pctMetrosMes]);
-
-  const keyMetrics = [
-    {
-      label: '21 jornadas anuales de siembra y mantenimiento de tul en los municipios ribereños del Lago de Atitlán.',
-      acumDisplay: `${fmt(acumJornadas)} / ${fmt(META_JORNADAS_ANUAL)} jornadas anuales`,
-      pct: pctJornadas,
-      pctDisplay: `${fmtPct(pctJornadas)} de avance acumulado hasta mayo contra la meta anual`,
-      barPct: pctJornadas,
-      monthlyDisplay: `${fmt(jornadasMes)} / ${fmt(jornadasMetaMes)} jornadas en mayo · ${fmtPct(pctJornadasMes)}`,
-      monthlyPct: pctJornadasMes,
-      temporality: 'Este indicador tiene por temporalidad desde febrero a diciembre de 2026'
-    },
-    {
-      label: '1,300 metros lineales de tul sembrados a lo largo de las orillas del Lago de Atitlán durante 2026.',
-      acumDisplay: `${fmt(acumMetrosSiembra)} / ${fmt(META_ML_ANUAL)} metros lineales sembrados`,
-      pct: pctAnual,
-      pctDisplay: `${fmtPct(pctAnual)} de avance acumulado hasta mayo contra la meta anual`,
-      barPct: pctAnual,
-      monthlyDisplay: `${fmt(metrosMes)} / ${fmt(metrosMetaMes)} metros lineales en mayo · ${fmtPct(pctMetrosMes)}`,
-      monthlyPct: pctMetrosMes,
-      temporality: 'Este indicador tiene por temporalidad desde febrero a diciembre de 2026'
-    }
-  ];
-
-  return {
-    ...cfg,
-    latestLabel: 'Mayo',
-    periodKey: '2026-05',
-    score: score || 0,
-    scoreLabel: 'Cumplimiento promedio vs metas mensuales',
-    metrics: keyMetrics,
-    sourceSummary: 'ArcGIS Survey123 · mayo 2026'
-  };
-}
-
-/* ────────────────────────────────
-   RENDER MÉTRICAS
-──────────────────────────────── */
 function metricRow(m, index = 0, hasMonthlyColumn = true){
   const objectiveNumber = `${index + 1}`;
   const temporalFullMarkup = m.temporality
@@ -2956,7 +2480,6 @@ function metricRow(m, index = 0, hasMonthlyColumn = true){
 ──────────────────────────────── */
 function programCard(p){
   const scoreFill = Math.min(Math.max(Number(p.score || 0), 0), 100);
-  const programTitle = p.id === 'atitlan_recicla' ? '<strong>Atitlán Recicla</strong>' : safe(p.name);
   const hasMonthlyColumn = p.hasMonthlyColumn !== false;
   const cardClass = hasMonthlyColumn ? 'card program-card' : 'card program-card no-monthly';
   const scoreHeader = p.scoreHeader || 'Cumplimiento promedio con respecto a metas mensuales';
@@ -2965,7 +2488,7 @@ function programCard(p){
       <div class="program-head">
         <div>
           <div class="program-kicker">Indicadores priorizados</div>
-          <div class="program-title">${programTitle}</div>
+          <div class="program-title">${p.name}</div>
         </div>
       </div>
       <div class="prog-score-wrap">
@@ -3018,8 +2541,7 @@ function renderSummary(programs){
   const visitLabel = 'Mayo';
   const [, chipText] = statusClass(avgScore);
 
-  const kpiPrograms = document.getElementById('kpiPrograms');
-  if (kpiPrograms) kpiPrograms.textContent = String(programs.length);
+  document.getElementById('kpiPrograms').textContent = String(programs.length);
   document.getElementById('kpiLatest').textContent = visitLabel;
   document.getElementById('kpiLatestSub').textContent = '';
   const kpiHealth = document.getElementById('kpiHealth');
@@ -3039,7 +2561,7 @@ function renderSummary(programs){
   const healthMeterFill = document.getElementById('healthMeterFill');
   if (kpiHealthHero) kpiHealthHero.textContent = fmtPct(avgScore);
   if (kpiHealthStatus) kpiHealthStatus.textContent = 'Lectura del avance del programa';
-  if (kpiHealthContext) kpiHealthContext.innerHTML = 'Cumplimiento de <strong>Atitlán Recicla</strong> al presente mes';
+  if (kpiHealthContext) kpiHealthContext.textContent = 'Cumplimiento de Atitlán Recicla al presente mes';
   if (kpiLatestHero) kpiLatestHero.textContent = visitLabel;
   if (kpiLatestHeroSub) kpiLatestHeroSub.textContent = '';
   if (healthMeterFill) healthMeterFill.style.width = `${Math.max(0, Math.min(avgScore, 100))}%`;
