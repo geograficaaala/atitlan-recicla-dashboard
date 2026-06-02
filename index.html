@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Asociación Amigos del Lago de Atitlán · Tablero dinámico institucional</title>
-  <meta name="description" content="Tablero dinámico de Atitlán Recicla de programas y proyectos — Asociación Amigos del Lago de Atitlán">
+  <meta name="description" content="Tablero dinámico de <strong>Atitlán Recicla</strong> de programas y proyectos — Asociación Amigos del Lago de Atitlán">
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
@@ -294,13 +294,14 @@
 
     /* Hero */
     .hero-shell {
-      padding: 34px 0 24px;
+      padding: 24px 0 18px;
       display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(320px, .9fr);
-      gap: 20px;
+      grid-template-columns: minmax(0, 1.28fr) minmax(360px, .9fr);
+      gap: 18px;
+      align-items: stretch;
     }
     .hero-main {
-      padding: 38px 42px;
+      padding: 30px 34px;
       overflow: hidden;
       position: relative;
       background:
@@ -349,12 +350,12 @@
       background: rgba(255,255,255,.75);
     }
     .hero-title {
-      font-size: clamp(2.2rem, 4vw, 3.7rem);
-      line-height: 1.03;
-      margin-bottom: 18px;
+      font-size: clamp(1.9rem, 3.2vw, 3rem);
+      line-height: 1.04;
+      margin-bottom: 14px;
       font-weight: 800;
       letter-spacing: -.04em;
-      max-width: 12ch;
+      max-width: 18ch;
     }
     .hero-copy {
       max-width: 66ch;
@@ -387,10 +388,11 @@
     }
 
     .hero-side {
-      padding: 20px;
+      padding: 16px;
       display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
-      align-content: start;
+      align-content: stretch;
       background:
         linear-gradient(180deg, rgba(255,255,255,.96) 0%, rgba(243,248,245,.95) 100%);
     }
@@ -398,35 +400,60 @@
       position: relative;
       overflow: hidden;
       border-radius: 22px;
-      min-height: 408px;
-      padding: 24px;
+      min-height: 218px;
+      padding: 18px;
       background:
         radial-gradient(circle at 20% 20%, rgba(76,165,191,.18) 0%, transparent 34%),
         radial-gradient(circle at 82% 18%, rgba(213,163,75,.16) 0%, transparent 26%),
         linear-gradient(180deg, #eef5f2 0%, #ffffff 100%);
       border: 1px solid var(--line);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 12px;
+      text-align: center;
     }
     .hero-logo-card::before {
       content: '';
       position: absolute;
-      width: 220px;
-      height: 220px;
+      width: 150px;
+      height: 150px;
       border-radius: 999px;
       border: 1px solid rgba(28,96,132,.12);
-      box-shadow: 0 0 0 28px rgba(28,96,132,.04), 0 0 0 56px rgba(28,96,132,.02);
+      box-shadow: 0 0 0 20px rgba(28,96,132,.04), 0 0 0 42px rgba(28,96,132,.02);
+    }
+    .hero-logo-caption {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.76);
+      border: 1px solid rgba(213,226,220,.92);
+      color: var(--lake-deep);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      box-shadow: 0 6px 16px rgba(18,42,66,.06);
     }
     .hero-logo {
       position: relative;
       z-index: 1;
       max-width: 100%;
-      max-height: 240px;
+      max-height: 132px;
       object-fit: contain;
       filter: drop-shadow(0 12px 30px rgba(22,58,95,.12));
       animation: floaty 6.4s ease-in-out infinite;
       transform-origin: center;
+    }
+    .hero-logo-atitlan {
+      max-height: 138px;
+      max-width: 96%;
     }
     .hero-side-note {
       display: grid;
@@ -1298,7 +1325,7 @@
         grid-template-columns: 1fr;
       }
       .hero-side {
-        grid-template-columns: 1.1fr .9fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         align-items: stretch;
       }
       .hero-side-note {
@@ -1354,7 +1381,10 @@
         padding: 18px;
       }
       .hero-logo-card {
-        min-height: 270px;
+        min-height: 200px;
+      }
+      .coverage-summary {
+        grid-template-columns: 1fr;
       }
       .dashboard-ribbon {
         border-radius: 24px;
@@ -1482,6 +1512,92 @@
       padding-bottom: 4px;
       scrollbar-width: thin;
       scrollbar-color: rgba(28,96,132,.28) transparent;
+    }
+    .coverage-summary {
+      display: grid;
+      grid-template-columns: minmax(190px, .45fr) minmax(0, 1fr);
+      gap: 14px;
+      align-items: stretch;
+      margin: 8px 0 18px;
+    }
+    .coverage-summary-stat,
+    .coverage-summary-list {
+      border: 1px solid rgba(213,226,220,.92);
+      border-radius: 20px;
+      background: rgba(255,255,255,.78);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
+      padding: 16px 18px;
+    }
+    .coverage-summary-label {
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .coverage-summary-value {
+      color: var(--lake-deep);
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3vw, 2.65rem);
+      font-weight: 800;
+      line-height: 1;
+    }
+    .coverage-summary-copy {
+      color: var(--text-2);
+      font-size: .88rem;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+    .coverage-municipio-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .coverage-municipio-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--lake-soft);
+      color: var(--lake-deep);
+      font-size: .76rem;
+      font-weight: 800;
+    }
+    .coverage-municipio-chip::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--lake);
+    }
+    .coverage-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      align-items: center;
+      margin: 0 0 14px;
+      color: var(--text-2);
+      font-size: .82rem;
+      font-weight: 700;
+    }
+    .coverage-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .coverage-legend-swatch {
+      width: 16px;
+      height: 16px;
+      border-radius: 5px;
+      border: 2px solid var(--lake);
+      background: rgba(28,96,132,.35);
+    }
+    .coverage-legend-swatch.muted {
+      border-color: #94a3b8;
+      background: rgba(255,255,255,.7);
     }
     .coverage-filter-group::-webkit-scrollbar {
       height: 8px;
@@ -1733,13 +1849,13 @@
     <img src="./aala_logo.png" alt="Logo de Asociación Amigos del Lago de Atitlán" class="header-logo-img">
     <span class="brand-text">
       <span class="brand-kicker">Asociación Amigos del Lago de Atitlán</span>
-      <span class="brand-title">Tablero dinámico de Atitlán Recicla</span>
+      <span class="brand-title">Tablero dinámico de <strong>Atitlán Recicla</strong></span>
     </span>
   </a>
 
   <nav class="nav-tabs" role="tablist" aria-label="Secciones del tablero dinámico">
     <button class="nav-tab active" data-page="resumen" role="tab">Resumen</button>
-    <button class="nav-tab" data-page="programas" role="tab">Atitlán Recicla</button>
+    <button class="nav-tab" data-page="programas" role="tab"><strong>Atitlán Recicla</strong></button>
   </nav>
 </header>
 
@@ -1751,17 +1867,27 @@
         <h1 class="hero-title">Asociación Amigos del Lago de Atitlán</h1>
         <p class="hero-copy">
           <strong>La Asociación Amigos del Lago de Atitlán se enfoca en generar una cultura regenerativa en la cuenca Lago</strong>, para que los seres humanos podamos coexistir de forma sostenible y sana con el entorno natural.
-          Esta versión presenta únicamente el seguimiento de Atitlán Recicla, el programa de reciclaje y economía circular.
+          Esta versión presenta únicamente el seguimiento de <strong>Atitlán Recicla</strong>, el programa de reciclaje y economía circular.
         </p>
       </article>
 
-      <aside class="card hero-side stagger-2">
+      <aside class="card hero-side stagger-2" aria-label="Logotipos institucionales">
         <div class="hero-logo-card">
+          <div class="hero-logo-caption">Amigos del Lago</div>
           <img
             class="hero-logo"
             src="./aala_logo.png"
             alt="Logo de Asociación Amigos del Lago de Atitlán"
-            onerror="if(!this.dataset.tryLocalDocs){this.dataset.tryLocalDocs='1';this.src='./aala_logo.png';}else if(!this.dataset.trySibling){this.dataset.trySibling='1';this.src='./aala_logo.png';}else if(!this.dataset.tryProjectDocs){this.dataset.tryProjectDocs='1';this.src='/AALA-dashboard/docs/aala_logo.png';}else if(!this.dataset.tryProject){this.dataset.tryProject='1';this.src='/AALA-dashboard/aala_logo.png';}else{this.onerror=null;this.src='data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 320 240%22%3E%3Crect width=%22320%22 height=%22240%22 rx=%2224%22 fill=%22%23eef5f2%22/%3E%3Ccircle cx=%2260%22 cy=%2254%22 r=%2220%22 fill=%22%234ca5bf%22 opacity=%22.22%22/%3E%3Cpath d=%22M30 168c36-34 74-52 114-52 39 0 76 18 114 52%22 fill=%22none%22 stroke=%22%231c6084%22 stroke-width=%2214%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M44 192c26-20 56-30 88-30 32 0 64 10 96 30%22 fill=%22none%22 stroke=%22%232e6a57%22 stroke-width=%229%22 stroke-linecap=%22round%22/%3E%3Ctext x=%2234%22 y=%2290%22 font-family=%22Arial,sans-serif%22 font-size=%2252%22 font-weight=%22700%22 fill=%22%23163a5f%22%3EAALA%3C/text%3E%3Ctext x=%2234%22 y=%22124%22 font-family=%22Arial,sans-serif%22 font-size=%2216%22 fill=%22%23163a5f%22%3EAsociaci%C3%B3n Amigos del Lago de Atitl%C3%A1n%3C/text%3E%3C/svg%3E';}"
+            onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 320 240%22%3E%3Crect width=%22320%22 height=%22240%22 rx=%2224%22 fill=%22%23eef5f2%22/%3E%3Ctext x=%2234%22 y=%2290%22 font-family=%22Arial,sans-serif%22 font-size=%2252%22 font-weight=%22700%22 fill=%22%23163a5f%22%3EAALA%3C/text%3E%3C/svg%3E';"
+          >
+        </div>
+        <div class="hero-logo-card">
+          <div class="hero-logo-caption"><strong>Atitlán Recicla</strong></div>
+          <img
+            class="hero-logo hero-logo-atitlan"
+            src="./Cooperativa%20RL%20logo.png"
+            alt="Logo de Atitlán Recicla"
+            onerror="this.onerror=null;this.src='./Cooperativa RL logo.png';"
           >
         </div>
       </aside>
@@ -1780,11 +1906,11 @@
         <div class="section-kicker"></div>
         <h2 class="section-title">¿Qué información ofrece este tablero dinámico?</h2>
         <p class="story-lead">
-          Este tablero permite medir el avance de Atitlán Recicla en la consecución de sus indicadores, comparando el estado del programa contra sus propias metas.
+          Este tablero permite medir el avance de <strong>Atitlán Recicla</strong> en la consecución de sus indicadores, comparando el estado del programa contra sus propias metas.
         </p>
         <div class="story-columns">
           <p class="prose">
-            El tablero resume el desempeño de Atitlán Recicla frente a sus metas y su avance esperado al presente mes. La lectura se apoya en porcentajes de avance, metas mensuales y metas anuales del propio programa.
+            El tablero resume el desempeño de <strong>Atitlán Recicla</strong> frente a sus metas y su avance esperado al presente mes. La lectura se apoya en porcentajes de avance, metas mensuales y metas anuales del propio programa.
           </p>
           <div class="story-points" aria-label="Claves de lectura institucional">
             <article class="story-point">
@@ -1793,7 +1919,7 @@
             </article>
             <article class="story-point">
               <span>Comparación</span>
-              <p>Atitlán Recicla se compara contra su propia ruta de avance y sus propias metas.</p>
+              <p><strong>Atitlán Recicla</strong> se compara contra su propia ruta de avance y sus propias metas.</p>
             </article>
             <article class="story-point">
               <span>Lectura rápida</span>
@@ -1808,12 +1934,12 @@
     <section class="panorama-stage">
       <article class="narrative-stage stagger-5">
         <div class="section-kicker">Cómo leer el tablero</div>
-        <h2 class="section-title">Atitlán Recicla comparado con su propia ruta</h2>
+        <h2 class="section-title"><strong>Atitlán Recicla</strong> comparado con su propia ruta</h2>
         <p class="prose">
-          La intención es ofrecer una lectura clara del cumplimiento de Atitlán Recicla, mostrando su avance conforme a lo esperado para sus propias metas y cómo se ve el panorama general al presente mes.
+          La intención es ofrecer una lectura clara del cumplimiento de <strong>Atitlán Recicla</strong>, mostrando su avance conforme a lo esperado para sus propias metas y cómo se ve el panorama general al presente mes.
         </p>
         <div class="capsule-stack" aria-label="Guía rápida de lectura">
-          <div class="capsule">El resumen ejecutivo condensa el estado actual de Atitlán Recicla.</div>
+          <div class="capsule">El resumen ejecutivo condensa el estado actual de <strong>Atitlán Recicla</strong>.</div>
           <div class="capsule">La lectura permite ver el avance del programa de forma inmediata.</div>
         </div>
       </article>
@@ -1821,10 +1947,20 @@
 
     <section class="coverage-section">
       <div class="section-kicker">Territorio</div>
-      <h2 class="section-title">¿En dónde tiene cobertura Atitlán Recicla?</h2>
+      <h2 class="section-title">¿En dónde tiene cobertura <strong>Atitlán Recicla</strong>?</h2>
       <div class="coverage-card stagger-6">
         <div class="coverage-filter-group" id="coverageFilters">
-          <button class="coverage-filter" type="button" disabled>Cargando filtros…</button>
+          <div class="coverage-summary">
+            <div class="coverage-summary-stat">
+              <div class="coverage-summary-label">Cobertura</div>
+              <div class="coverage-summary-value">—</div>
+              <div class="coverage-summary-copy">Cargando distribución municipal de <strong>Atitlán Recicla</strong>…</div>
+            </div>
+          </div>
+        </div>
+        <div class="coverage-legend" aria-label="Leyenda del mapa">
+          <span class="coverage-legend-item"><span class="coverage-legend-swatch"></span>Municipio con cobertura</span>
+          <span class="coverage-legend-item"><span class="coverage-legend-swatch muted"></span>Municipio sin cobertura registrada</span>
         </div>
         <div class="coverage-map-frame">
           <div id="coverageMap" class="coverage-map" aria-label="Mapa de cobertura territorial institucional"></div>
@@ -1839,7 +1975,7 @@
     <div class="program-grid" id="programGrid">
       <div class="loading-state">
         <div class="spinner"></div>
-        <span>Cargando Atitlán Recicla...</span>
+        <span>Cargando <strong>Atitlán Recicla</strong>...</span>
       </div>
     </div>
   </div>
@@ -1852,7 +1988,7 @@
         <div class="footer-title">Asociación Amigos del Lago de Atitlán</div>
       </div>
       <p class="footer-copy">
-        La Asociación Amigos del Lago de Atitlán se enfoca en generar una cultura regenerativa en la cuenca Lago, para que los seres humanos podamos coexistir de forma sostenible y sana con el entorno natural. Esta versión presenta únicamente el seguimiento de Atitlán Recicla, el programa de reciclaje y economía circular.
+        La Asociación Amigos del Lago de Atitlán se enfoca en generar una cultura regenerativa en la cuenca Lago, para que los seres humanos podamos coexistir de forma sostenible y sana con el entorno natural. Esta versión presenta únicamente el seguimiento de <strong>Atitlán Recicla</strong>, el programa de reciclaje y economía circular.
       </p>
     </section>
 
@@ -2014,21 +2150,38 @@ function clearCoverageLayer(resetView = false){
 function renderCoverageFilters(fields){
   const wrap = document.getElementById('coverageFilters');
   if (!wrap) return;
-  if (!fields.length){
-    wrap.innerHTML = '<button class="coverage-filter" type="button" disabled>No hay filtros disponibles</button>';
+  const field = fields[0] || 'Atitlan Recicla';
+  const fieldLabel = coverageFieldLabel(field);
+  const features = Array.isArray(coverageGeojson?.features) ? coverageGeojson.features : [];
+  const usable = features.filter(feature => {
+    const municipio = feature?.properties?.municipio || '';
+    return !isExcludedCoverageMunicipio(municipio);
+  });
+  const covered = usable
+    .filter(feature => normalizeCoverageValue(feature?.properties?.[field]))
+    .map(feature => safe(feature?.properties?.municipio))
+    .sort((a,b) => a.localeCompare(b, 'es'));
+
+  if (!covered.length){
+    wrap.innerHTML = '<button class="coverage-filter" type="button" disabled>No hay cobertura registrada</button>';
     return;
   }
-  wrap.innerHTML = fields.map(field => `<button class="coverage-filter" type="button" data-field="${field}">${coverageFieldLabel(field)}</button>`).join('');
-  wrap.querySelectorAll('.coverage-filter').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const field = btn.dataset.field || '';
-      if (field === activeCoverageField){
-        return;
-      }
-      applyCoverageField(field);
-    });
-  });
-  updateCoverageButtons();
+
+  wrap.innerHTML = `
+    <div class="coverage-summary">
+      <div class="coverage-summary-stat">
+        <div class="coverage-summary-label">Municipios con cobertura</div>
+        <div class="coverage-summary-value">${covered.length}</div>
+        <div class="coverage-summary-copy">Distribución territorial de <strong>${fieldLabel}</strong> según el GeoJSON institucional.</div>
+      </div>
+      <div class="coverage-summary-list">
+        <div class="coverage-summary-label">Municipios de <strong>${fieldLabel}</strong></div>
+        <div class="coverage-municipio-list">
+          ${covered.map(municipio => `<span class="coverage-municipio-chip">${municipio}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+  `;
 }
 function applyCoverageField(field){
   if (!coverageMap || !coverageGeojson?.features?.length || !field) return;
@@ -2036,32 +2189,35 @@ function applyCoverageField(field){
   clearCoverageLayer(false);
 
   const fieldLabel = coverageFieldLabel(field);
-  const matches = coverageGeojson.features.filter(feature => {
+  const features = coverageGeojson.features.filter(feature => {
     const municipio = feature?.properties?.municipio || '';
-    if (isExcludedCoverageMunicipio(municipio)) return false;
-    if (field === 'Siembra de tul' &&
-        normalizeCoverageMunicipio(municipio).includes('nahua')) return false;
-    return normalizeCoverageValue(feature?.properties?.[field]);
+    return !isExcludedCoverageMunicipio(municipio);
   });
   const color = coverageColor(field);
 
-  if (!matches.length){
+  if (!features.length){
     updateCoverageButtons();
     return;
   }
 
-  coverageLayer = L.geoJSON({ type: 'FeatureCollection', features: matches }, {
-    style: {
-      color,
-      weight: 3.2,
-      opacity: 1,
-      fillColor: color,
-      fillOpacity: 0.08
+  coverageLayer = L.geoJSON({ type: 'FeatureCollection', features }, {
+    style(feature){
+      const hasCoverage = normalizeCoverageValue(feature?.properties?.[field]);
+      return {
+        color: hasCoverage ? color : '#94a3b8',
+        weight: hasCoverage ? 3.2 : 1.4,
+        opacity: hasCoverage ? 1 : .68,
+        fillColor: hasCoverage ? color : '#ffffff',
+        fillOpacity: hasCoverage ? .34 : .18,
+        dashArray: hasCoverage ? null : '4 4'
+      };
     },
     onEachFeature(feature, layer){
       const municipio = safe(feature?.properties?.municipio);
+      const hasCoverage = normalizeCoverageValue(feature?.properties?.[field]);
+      const estado = hasCoverage ? 'Municipio con cobertura' : 'Sin cobertura registrada';
       layer.bindTooltip(municipio, { sticky: true, direction: 'top', className: 'coverage-tooltip' });
-      layer.bindPopup(`<strong>${municipio}</strong><br>${fieldLabel}: 1`);
+      layer.bindPopup(`<strong>${municipio}</strong><br><strong>${fieldLabel}</strong>: ${estado}`);
     }
   }).addTo(coverageMap);
 
@@ -2725,6 +2881,7 @@ function metricRow(m, index = 0, hasMonthlyColumn = true){
 ──────────────────────────────── */
 function programCard(p){
   const scoreFill = Math.min(Math.max(Number(p.score || 0), 0), 100);
+  const programTitle = p.id === 'atitlan_recicla' ? '<strong>Atitlán Recicla</strong>' : safe(p.name);
   const hasMonthlyColumn = p.hasMonthlyColumn !== false;
   const cardClass = hasMonthlyColumn ? 'card program-card' : 'card program-card no-monthly';
   const scoreHeader = p.scoreHeader || 'Cumplimiento promedio con respecto a metas mensuales';
@@ -2733,7 +2890,7 @@ function programCard(p){
       <div class="program-head">
         <div>
           <div class="program-kicker">Indicadores priorizados</div>
-          <div class="program-title">${p.name}</div>
+          <div class="program-title">${programTitle}</div>
         </div>
       </div>
       <div class="prog-score-wrap">
@@ -2807,7 +2964,7 @@ function renderSummary(programs){
   const healthMeterFill = document.getElementById('healthMeterFill');
   if (kpiHealthHero) kpiHealthHero.textContent = fmtPct(avgScore);
   if (kpiHealthStatus) kpiHealthStatus.textContent = 'Lectura del avance del programa';
-  if (kpiHealthContext) kpiHealthContext.textContent = 'Cumplimiento de Atitlán Recicla al presente mes';
+  if (kpiHealthContext) kpiHealthContext.innerHTML = 'Cumplimiento de <strong>Atitlán Recicla</strong> al presente mes';
   if (kpiLatestHero) kpiLatestHero.textContent = visitLabel;
   if (kpiLatestHeroSub) kpiLatestHeroSub.textContent = '';
   if (healthMeterFill) healthMeterFill.style.width = `${Math.max(0, Math.min(avgScore, 100))}%`;
