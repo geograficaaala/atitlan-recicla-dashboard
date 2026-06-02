@@ -451,7 +451,7 @@
     .dashboard-ribbon {
       position: relative;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1fr);
       gap: 0;
       margin: 4px 0 24px;
       border: 1px solid rgba(213,226,220,.92);
@@ -514,6 +514,15 @@
       color: var(--text-2);
       max-width: 32ch;
       line-height: 1.65;
+    }
+
+    .dashboard-ribbon .ribbon-item {
+      text-align: center;
+      justify-items: center;
+    }
+    .dashboard-ribbon .ribbon-label,
+    .dashboard-ribbon .ribbon-sub {
+      max-width: none;
     }
 
     .storyboard {
@@ -792,9 +801,12 @@
     .program-grid {
 
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1fr);
       gap: 20px;
       padding: 30px 0 24px;
+      width: 100%;
+      margin: 0 auto;
+      justify-items: center;
     }
     .program-card {
       padding: 28px 28px 24px;
@@ -802,6 +814,11 @@
       gap: 16px;
       background:
         linear-gradient(180deg, rgba(255,255,255,.98) 0%, rgba(241,247,243,.96) 100%);
+    }
+
+    .program-grid > .program-card {
+      width: 100%;
+      max-width: none;
     }
     .program-head {
       display: flex;
@@ -1750,14 +1767,9 @@
       </aside>
     </section>
 
-    <section class="dashboard-ribbon stagger-3" aria-label="Resumen institucional">
+    <section class="dashboard-ribbon stagger-3" aria-label="Resumen de periodo publicado">
       <article class="ribbon-item">
-        <div class="ribbon-label">Programa activo</div>
-        <div class="ribbon-value" id="kpiPrograms">1</div>
-        <div class="ribbon-sub">Atitlán Recicla con datos publicados y seguimiento continuo.</div>
-      </article>
-      <article class="ribbon-item">
-        <div class="ribbon-label">Avance correspondiente al mes de:</div>
+        <div class="ribbon-label">Información correspondiente al mes de:</div>
         <div class="ribbon-value" id="kpiLatest">—</div>
         <div class="ribbon-sub" id="kpiLatestSub"></div>
       </article>
@@ -1963,7 +1975,11 @@ function coverageColor(field){
   return COVERAGE_COLORS[index % COVERAGE_COLORS.length];
 }
 function coverageFieldLabel(field){
-  return field === 'Atitlan Recicla' ? 'Atitlán Recicla' : field;
+  const labels = {
+    'Atitlan Recicla': 'Atitlán Recicla',
+    'Fortalecimiento': 'Fortalecimiento Municipal'
+  };
+  return labels[field] || field;
 }
 function normalizeCoverageMunicipio(value){
   return String(value ?? '')
@@ -2007,9 +2023,6 @@ function renderCoverageFilters(fields){
     btn.addEventListener('click', () => {
       const field = btn.dataset.field || '';
       if (field === activeCoverageField){
-        activeCoverageField = '';
-        clearCoverageLayer(true);
-        updateCoverageButtons();
         return;
       }
       applyCoverageField(field);
@@ -2026,6 +2039,8 @@ function applyCoverageField(field){
   const matches = coverageGeojson.features.filter(feature => {
     const municipio = feature?.properties?.municipio || '';
     if (isExcludedCoverageMunicipio(municipio)) return false;
+    if (field === 'Siembra de tul' &&
+        normalizeCoverageMunicipio(municipio).includes('nahua')) return false;
     return normalizeCoverageValue(feature?.properties?.[field]);
   });
   const color = coverageColor(field);
@@ -2080,12 +2095,14 @@ async function initCoverageMap(){
     if (!features.length) throw new Error('El GeoJSON no contiene entidades.');
 
     const props = features[0]?.properties || {};
-    coverageFields = Object.keys(props).filter(key => key !== 'municipio');
+    const atitlanField = Object.keys(props).find(key => normalizeCoverageMunicipio(key) === 'atitlan recicla');
+    coverageFields = atitlanField ? [atitlanField] : [];
     renderCoverageFilters(coverageFields);
 
     const boundsProbe = L.geoJSON(coverageGeojson);
     coverageBounds = boundsProbe.getBounds();
     focusCoverageDefaultView();
+    if (coverageFields[0]) applyCoverageField(coverageFields[0]);
 
     setTimeout(() => coverageMap?.invalidateSize(), 120);
     window.addEventListener('resize', () => coverageMap?.invalidateSize());
@@ -2109,6 +2126,76 @@ const PROGRAMS = [
 ];
 
 
+/* ────────────────────────────────
+   REFORESTACIÓN · KPIs COMPLEMENTARIOS (respaldo temporal)
+──────────────────────────────── */
+const REFORESTACION_KPI_COMPLEMENTARIOS_SEED = [
+  { periodo_clave:'2026-01', mes_num:1, componente:'SIG', kpi_id:'sig_mapas_generados', kpi_nombre:'Mapas generados', unidad:'mapas', meta_mensual:12, valor_mes:9 },
+  { periodo_clave:'2026-01', mes_num:1, componente:'SIG', kpi_id:'sig_lineas_codigo', kpi_nombre:'Líneas de código SIG generadas', unidad:'líneas', meta_mensual:5000, valor_mes:3800 },
+  { periodo_clave:'2026-01', mes_num:1, componente:'SIG', kpi_id:'sig_servicios_digitales', kpi_nombre:'Servicios digitales creados', unidad:'servicios', meta_mensual:3, valor_mes:2 },
+  { periodo_clave:'2026-01', mes_num:1, componente:'SIG', kpi_id:'sig_capas_actualizadas', kpi_nombre:'Capas geoespaciales actualizadas', unidad:'capas', meta_mensual:8, valor_mes:6 },
+  { periodo_clave:'2026-01', mes_num:1, componente:'SIG', kpi_id:'sig_analisis_entregados', kpi_nombre:'Análisis espaciales entregados', unidad:'análisis', meta_mensual:6, valor_mes:5 },
+  { periodo_clave:'2026-01', mes_num:1, componente:'Vivero', kpi_id:'vivero_mantenimiento', kpi_nombre:'Actividades de mantenimiento de vivero', unidad:'actividades', meta_mensual:12, valor_mes:9 },
+  { periodo_clave:'2026-01', mes_num:1, componente:'Vivero', kpi_id:'vivero_bolsas_llenadas', kpi_nombre:'Bolsas llenadas', unidad:'bolsas', meta_mensual:200, valor_mes:150 },
+  { periodo_clave:'2026-01', mes_num:1, componente:'Vivero', kpi_id:'vivero_semillas_germinadas', kpi_nombre:'Semillas germinadas', unidad:'semillas', meta_mensual:100, valor_mes:72 },
+  { periodo_clave:'2026-01', mes_num:1, componente:'Otras actividades', kpi_id:'otras_actividades_estrategicas', kpi_nombre:'Actividades estratégicas realizadas', unidad:'actividades', meta_mensual:4, valor_mes:3 },
+
+  { periodo_clave:'2026-02', mes_num:2, componente:'SIG', kpi_id:'sig_mapas_generados', kpi_nombre:'Mapas generados', unidad:'mapas', meta_mensual:12, valor_mes:10 },
+  { periodo_clave:'2026-02', mes_num:2, componente:'SIG', kpi_id:'sig_lineas_codigo', kpi_nombre:'Líneas de código SIG generadas', unidad:'líneas', meta_mensual:5000, valor_mes:4100 },
+  { periodo_clave:'2026-02', mes_num:2, componente:'SIG', kpi_id:'sig_servicios_digitales', kpi_nombre:'Servicios digitales creados', unidad:'servicios', meta_mensual:3, valor_mes:2 },
+  { periodo_clave:'2026-02', mes_num:2, componente:'SIG', kpi_id:'sig_capas_actualizadas', kpi_nombre:'Capas geoespaciales actualizadas', unidad:'capas', meta_mensual:8, valor_mes:6 },
+  { periodo_clave:'2026-02', mes_num:2, componente:'SIG', kpi_id:'sig_analisis_entregados', kpi_nombre:'Análisis espaciales entregados', unidad:'análisis', meta_mensual:6, valor_mes:4 },
+  { periodo_clave:'2026-02', mes_num:2, componente:'Vivero', kpi_id:'vivero_mantenimiento', kpi_nombre:'Actividades de mantenimiento de vivero', unidad:'actividades', meta_mensual:12, valor_mes:10 },
+  { periodo_clave:'2026-02', mes_num:2, componente:'Vivero', kpi_id:'vivero_bolsas_llenadas', kpi_nombre:'Bolsas llenadas', unidad:'bolsas', meta_mensual:200, valor_mes:160 },
+  { periodo_clave:'2026-02', mes_num:2, componente:'Vivero', kpi_id:'vivero_semillas_germinadas', kpi_nombre:'Semillas germinadas', unidad:'semillas', meta_mensual:100, valor_mes:78 },
+  { periodo_clave:'2026-02', mes_num:2, componente:'Otras actividades', kpi_id:'otras_actividades_estrategicas', kpi_nombre:'Actividades estratégicas realizadas', unidad:'actividades', meta_mensual:4, valor_mes:3 },
+
+  { periodo_clave:'2026-03', mes_num:3, componente:'SIG', kpi_id:'sig_mapas_generados', kpi_nombre:'Mapas generados', unidad:'mapas', meta_mensual:12, valor_mes:10 },
+  { periodo_clave:'2026-03', mes_num:3, componente:'SIG', kpi_id:'sig_lineas_codigo', kpi_nombre:'Líneas de código SIG generadas', unidad:'líneas', meta_mensual:5000, valor_mes:4200 },
+  { periodo_clave:'2026-03', mes_num:3, componente:'SIG', kpi_id:'sig_servicios_digitales', kpi_nombre:'Servicios digitales creados', unidad:'servicios', meta_mensual:3, valor_mes:2 },
+  { periodo_clave:'2026-03', mes_num:3, componente:'SIG', kpi_id:'sig_capas_actualizadas', kpi_nombre:'Capas geoespaciales actualizadas', unidad:'capas', meta_mensual:8, valor_mes:7 },
+  { periodo_clave:'2026-03', mes_num:3, componente:'SIG', kpi_id:'sig_analisis_entregados', kpi_nombre:'Análisis espaciales entregados', unidad:'análisis', meta_mensual:6, valor_mes:5 },
+  { periodo_clave:'2026-03', mes_num:3, componente:'Vivero', kpi_id:'vivero_mantenimiento', kpi_nombre:'Actividades de mantenimiento de vivero', unidad:'actividades', meta_mensual:12, valor_mes:9 },
+  { periodo_clave:'2026-03', mes_num:3, componente:'Vivero', kpi_id:'vivero_bolsas_llenadas', kpi_nombre:'Bolsas llenadas', unidad:'bolsas', meta_mensual:200, valor_mes:155 },
+  { periodo_clave:'2026-03', mes_num:3, componente:'Vivero', kpi_id:'vivero_semillas_germinadas', kpi_nombre:'Semillas germinadas', unidad:'semillas', meta_mensual:100, valor_mes:80 },
+  { periodo_clave:'2026-03', mes_num:3, componente:'Otras actividades', kpi_id:'otras_actividades_estrategicas', kpi_nombre:'Actividades estratégicas realizadas', unidad:'actividades', meta_mensual:4, valor_mes:3 }
+];
+
+function buildReforestacionComplementaryRows(seed){
+  const accum = {};
+  return seed.map(item => {
+    const prev = accum[item.kpi_id] || 0;
+    const valorAcumulado = prev + Number(item.valor_mes || 0);
+    accum[item.kpi_id] = valorAcumulado;
+    const metaAcumulada = Number(item.meta_mensual || 0) * Number(item.mes_num || 0);
+    const pctMes = Number(item.meta_mensual || 0) > 0 ? (Number(item.valor_mes || 0) / Number(item.meta_mensual || 1)) * 100 : 0;
+    const pctAcum = metaAcumulada > 0 ? (valorAcumulado / metaAcumulada) * 100 : 0;
+    return {
+      ...item,
+      valor_acumulado: valorAcumulado,
+      meta_acumulada: metaAcumulada,
+      pct_cumpl_mes: pctMes,
+      pct_cumpl_acum: pctAcum
+    };
+  });
+}
+const REFORESTACION_KPI_COMPLEMENTARIOS = buildReforestacionComplementaryRows(REFORESTACION_KPI_COMPLEMENTARIOS_SEED);
+
+function summarizeReforestacionComplementary(periodKey){
+  const rows = REFORESTACION_KPI_COMPLEMENTARIOS.filter(r => String(r.periodo_clave) === String(periodKey));
+  return {
+    rows,
+    avgCumplMes: avg(rows.map(r => Number(r.pct_cumpl_mes || 0))),
+    avgCumplAcum: avg(rows.map(r => Number(r.pct_cumpl_acum || 0)))
+  };
+}
+
+
+/* ────────────────────────────────
+   LOADERS
+──────────────────────────────── */
+
+// Mapa mes abreviado → nombre completo
 const MES_LARGO = {ENE:'Enero',FEB:'Febrero',MAR:'Marzo',ABR:'Abril',MAY:'Mayo',JUN:'Junio',JUL:'Julio',AGO:'Agosto',SEP:'Septiembre',OCT:'Octubre',NOV:'Noviembre',DIC:'Diciembre'};
 
 // METAS ANUALES ATITLÁN RECICLA (basadas en los CSV de la repo)
@@ -2182,6 +2269,401 @@ async function loadAtitlan(cfg){
   };
 }
 
+async function loadConservando(cfg){
+  // Sincronizado con index_conservando_atitlan.html · abril 2026.
+  const aceiteAcum = 27810.828;
+  const aguaAcum = 27810828;
+  const jabonesProdAcum = 26680;
+  const jabonesVendAcum = 7394;
+
+  const metaAceite = 80000;
+  const metaAgua = 80000000;
+  const metaJabonesProd = 65040;
+  const metaJabonesVend = 51600;
+
+  const aceiteMes = 7340;
+  const aceiteMetaMes = 6666.67;
+  const aguaMes = 7340000;
+  const aguaMetaMes = 6666666.67;
+  const jabonesProdMes = 4850;
+  const jabonesProdMetaMes = 5420;
+  const jabonesVendMes = 2314;
+  const jabonesVendMetaMes = 4300;
+
+  const pctAceite = (aceiteAcum / metaAceite) * 100;
+  const pctAgua = (aguaAcum / metaAgua) * 100;
+  const pctJabonesProd = (jabonesProdAcum / metaJabonesProd) * 100;
+  const pctJabonesVend = (jabonesVendAcum / metaJabonesVend) * 100;
+
+  const pctAceiteMes = (aceiteMes / aceiteMetaMes) * 100;
+  const pctAguaMes = (aguaMes / aguaMetaMes) * 100;
+  const pctJabonesProdMes = (jabonesProdMes / jabonesProdMetaMes) * 100;
+  const pctJabonesVendMes = (jabonesVendMes / jabonesVendMetaMes) * 100;
+  const score = avg([pctAceiteMes, pctAguaMes, pctJabonesProdMes, pctJabonesVendMes]);
+
+  const keyMetrics = [
+    {
+      label:'Recolección de 80,000 litros de aceite usado de cocina.',
+      acumDisplay:`${fmt(aceiteAcum)} / ${fmt(metaAceite)} litros recolectados`,
+      pct:pctAceite,
+      pctDisplay:`${fmtPct(pctAceite)} de avance acumulado hasta abril contra la meta anual`,
+      barPct:pctAceite,
+      monthlyDisplay:`${fmt(aceiteMes)} / ${fmt(aceiteMetaMes,2)} litros en abril · ${fmtPct(pctAceiteMes)}`,
+      monthlyPct:pctAceiteMes,
+      temporality: 'Este indicador tiene por temporalidad desde enero a diciembre de 2026'
+    },
+    {
+      label:'Protección de 80,000,000 litros de agua por manejo adecuado de aceite usado.',
+      acumDisplay:`${fmt(aguaAcum)} / ${fmt(metaAgua)} litros de agua protegidos`,
+      pct:pctAgua,
+      pctDisplay:`${fmtPct(pctAgua)} de avance acumulado hasta abril contra la meta anual`,
+      barPct:pctAgua,
+      monthlyDisplay:`${fmt(aguaMes)} / ${fmt(aguaMetaMes,2)} litros en abril · ${fmtPct(pctAguaMes)}`,
+      monthlyPct:pctAguaMes,
+      temporality: 'Este indicador tiene por temporalidad desde enero a diciembre de 2026'
+    },
+    {
+      label:'Producción de 65,040 jabones durante 2026.',
+      acumDisplay:`${fmt(jabonesProdAcum)} / ${fmt(metaJabonesProd)} jabones producidos`,
+      pct:pctJabonesProd,
+      pctDisplay:`${fmtPct(pctJabonesProd)} de avance acumulado hasta abril contra la meta anual`,
+      barPct:pctJabonesProd,
+      monthlyDisplay:`${fmt(jabonesProdMes)} / ${fmt(jabonesProdMetaMes)} jabones en abril · ${fmtPct(pctJabonesProdMes)}`,
+      monthlyPct:pctJabonesProdMes,
+      temporality: 'Este indicador tiene por temporalidad desde enero a diciembre de 2026'
+    },
+    {
+      label:'Venta de 51,600 jabones durante 2026.',
+      acumDisplay:`${fmt(jabonesVendAcum)} / ${fmt(metaJabonesVend)} jabones vendidos`,
+      pct:pctJabonesVend,
+      pctDisplay:`${fmtPct(pctJabonesVend)} de avance acumulado hasta abril contra la meta anual`,
+      barPct:pctJabonesVend,
+      monthlyDisplay:`${fmt(jabonesVendMes)} / ${fmt(jabonesVendMetaMes)} jabones en abril · ${fmtPct(pctJabonesVendMes)}`,
+      monthlyPct:pctJabonesVendMes,
+      temporality: 'Este indicador tiene por temporalidad desde enero a diciembre de 2026'
+    }
+  ];
+
+  return {
+    ...cfg,
+    latestLabel:'Abril',
+    periodKey:'2026-04',
+    score:score || 0,
+    scoreLabel:'Promedio vs metas mensuales',
+    metrics:keyMetrics,
+    sourceSummary:'Kobo · abril 2026'
+  };
+}
+
+async function loadFM(cfg){
+  const vigenciaMunicipal = 'Este indicador tiene por periodo de enero a diciembre de 2026, considerando los plazos y procedimientos administrativos propios de las municipalidades';
+
+  const keyMetrics = [
+    {
+      label:'15 municipalidades de la Cuenca del Lago de Atitlán con capacidad instalada en los temas de SNIP (Sistema nacional de inversión pública), SIG (Sistemas de Información Geográfica), recolección digital de datos y cumplimiento legal ambiental.',
+      acumDisplay:'1/15 municipalidades',
+      pct:(1/15)*100,
+      pctDisplay:`${fmtPct((1/15)*100)} de avance`,
+      barPct:(1/15)*100,
+      temporality: vigenciaMunicipal,
+      temporalFullRow:true
+    },
+    {
+      label:'6 Estudios de caracterización de desechos y residuos sólidos y o aguas residuales.',
+      acumDisplay:'5/6 estudios',
+      pct:(5/6)*100,
+      pctDisplay:`${fmtPct((5/6)*100)} de avance`,
+      barPct:(5/6)*100,
+      temporality: vigenciaMunicipal,
+      temporalFullRow:true
+    },
+    {
+      label:'5 PIRDES Municipales (Planes de Manejo integrales de residuos y desechos sólidos)',
+      acumDisplay:'2/5 planes integrales',
+      pct:(2/5)*100,
+      pctDisplay:`${fmtPct((2/5)*100)} de avance`,
+      barPct:(2/5)*100,
+      temporality: vigenciaMunicipal,
+      temporalFullRow:true
+    },
+    {
+      label:'20 Asistencias técnicas municipales en aguas residuales.',
+      acumDisplay:'6/20 asistencias técnicas',
+      pct:(6/20)*100,
+      pctDisplay:`${fmtPct((6/20)*100)} de avance`,
+      barPct:(6/20)*100,
+      temporality: vigenciaMunicipal,
+      temporalFullRow:true
+    }
+  ];
+
+  const score = avg(keyMetrics.map(metric => Number(metric.pct || 0)));
+
+  return {
+    ...cfg,
+    latestLabel:'Mayo',
+    periodKey:'2026-05',
+    score:score || 0,
+    scoreLabel:'Cumplimiento promedio con respecto a meta anual',
+    scoreHeader:'Cumplimiento promedio con respecto a meta anual',
+    hasMonthlyColumn:false,
+    metrics:keyMetrics,
+    sourceSummary:'Google Sheets · mayo 2026'
+  };
+}
+
+async function loadEPC(cfg){
+  // Sincronizado con index_epc.html · mayo 2026.
+  const modulosDesarrollados = 3;
+  const modulosMeta = 7;
+  const pctDocentes = (modulosDesarrollados / modulosMeta) * 100;
+  const pctEstudiantes = (modulosDesarrollados / modulosMeta) * 100;
+
+  const momentosDiplomadoDesarrollados = 5;
+  const momentosDiplomadoAnuales = 12;
+  const pctAvanceFormacion = (momentosDiplomadoDesarrollados / momentosDiplomadoAnuales) * 100;
+
+  const actividadesVal = 40;
+  const actividadesMeta = 128;
+  const pctActividades = (actividadesVal / actividadesMeta) * 100;
+
+  const docentesMes = 120;
+  const docentesMetaMes = 121;
+  const estudiantesMes = 3487;
+  const estudiantesMetaMes = 3514;
+  const jovenesMes = 60;
+  const jovenesMetaMes = 60;
+  const actividadesMes = 16;
+  const actividadesMetaMes = 16;
+
+  const pctDocentesMes = (docentesMes / docentesMetaMes) * 100;
+  const pctEstudiantesMes = (estudiantesMes / estudiantesMetaMes) * 100;
+  const pctJovenesMes = (jovenesMes / jovenesMetaMes) * 100;
+  const pctActividadesMes = (actividadesMes / actividadesMetaMes) * 100;
+  const score = avg([pctDocentesMes, pctEstudiantesMes, pctJovenesMes, pctActividadesMes]);
+
+  const keyMetrics = [
+    {
+      label:'Capacidades pedagógicas instaladas de los 7 módulos del Material de Referencia Educando para Conservar en 121 docentes de los niveles ordinario, básico y diversificado de 50 centros educativos de 13 municipios de la cuenca del Lago de Atitlán.',
+      acumDisplay:`${modulosDesarrollados}/${modulosMeta} módulos desarrollados`,
+      pct:pctDocentes,
+      pctDisplay:`${fmtPct(pctDocentes)} de avance acumulado hasta mayo contra la meta anual`,
+      barPct:pctDocentes,
+      monthlyDisplay:`${fmt(docentesMes)} / ${fmt(docentesMetaMes)} docentes en mayo · ${fmtPct(pctDocentesMes)}`,
+      monthlyPct:pctDocentesMes,
+      temporality: 'Este indicador tiene por temporalidad desde marzo a septiembre de 2026'
+    },
+    {
+      label:'3,514 estudiantes de los niveles ordinario, básico y diversificado de 50 centros educativos de la Cuenca del Lago de Atitlán, capacitados en los 7 módulos del Material de Referencia Educando para Conservar.',
+      acumDisplay:`${modulosDesarrollados}/${modulosMeta} módulos desarrollados`,
+      pct:pctEstudiantes,
+      pctDisplay:`${fmtPct(pctEstudiantes)} de avance acumulado hasta mayo contra la meta anual`,
+      barPct:pctEstudiantes,
+      monthlyDisplay:`${fmt(estudiantesMes)} / ${fmt(estudiantesMetaMes)} estudiantes en mayo · ${fmtPct(pctEstudiantesMes)}`,
+      monthlyPct:pctEstudiantesMes,
+      temporality: 'Este indicador tiene por temporalidad desde marzo a septiembre de 2026'
+    },
+    {
+      label:'Participación de 120 jóvenes de 12 municipios de la cuenca del Lago de Atitlán en el Diplomado de Gestión Ambiental y Liderazgo Juvenil.',
+      acumDisplay:`${momentosDiplomadoDesarrollados}/${momentosDiplomadoAnuales} momentos formativos desarrollados`,
+      pct:pctAvanceFormacion,
+      pctDisplay:`${fmtPct(pctAvanceFormacion)} de avance acumulado hasta mayo contra la meta anual`,
+      barPct:pctAvanceFormacion,
+      monthlyDisplay:`${fmt(jovenesMes)} / ${fmt(jovenesMetaMes)} jóvenes asistentes en mayo · ${fmtPct(pctJovenesMes)}`,
+      monthlyPct:pctJovenesMes,
+      temporality: 'Este indicador tiene por temporalidad desde marzo a octubre de 2026'
+    },
+    {
+      label:'128 actividades en campo de educación ambiental y aprendizaje práctico durante 2026.',
+      acumDisplay:`${fmt(actividadesVal)} / ${fmt(actividadesMeta)} actividades`,
+      pct:pctActividades,
+      pctDisplay:`${fmtPct(pctActividades)} de avance acumulado hasta mayo contra la meta anual`,
+      barPct:pctActividades,
+      monthlyDisplay:`${fmt(actividadesMes)} / ${fmt(actividadesMetaMes)} actividades en mayo · ${fmtPct(pctActividadesMes)}`,
+      monthlyPct:pctActividadesMes,
+      temporality: 'Este indicador tiene por temporalidad desde enero a octubre de 2026'
+    }
+  ];
+
+  return {
+    ...cfg,
+    latestLabel:'Mayo',
+    periodKey:'2026-05',
+    score:score || 0,
+    scoreLabel:'Promedio vs metas mensuales',
+    metrics:keyMetrics,
+    sourceSummary:'Kobo · mayo 2026'
+  };
+}
+
+async function loadReforestacion(cfg){
+  // Lectura actualizada a mayo de 2026 con el mismo criterio mensual usado en el tablero de Reforestación.
+  const haAcum = 11.15;
+  const haMeta = 35;
+  const haMes = 0.53;
+  const haMetaMesOperativa = 0.53;
+
+  const arbolesAcum = 200;
+  const arbolesMeta = 90000;
+  const arbolesMes = 200;
+  const arbolesMetaMes = 200;
+
+  const sigPct = 100;
+  const sigMetaMes = 4;
+  const sigMes = 4;
+  const sigPctMes = 100;
+
+  const plantasAcum = 2310;
+  const plantasMeta = 10000;
+  const especiesAcum = 9;
+  const especiesMeta = 10;
+  const plantasMes = 110;
+  const plantasMetaMes = 110;
+  const plantasPctMes = 100;
+
+  const pctHa = (haAcum / haMeta) * 100;
+  const pctCart = pctHa;
+  const pctArboles = (arbolesAcum / arbolesMeta) * 100;
+  const pctArbolesMes = (arbolesMes / arbolesMetaMes) * 100;
+  const pctPlantas = (plantasAcum / plantasMeta) * 100;
+  const pctEspecies = (especiesAcum / especiesMeta) * 100;
+  const pctViveroIntegral = Math.min(pctPlantas, pctEspecies);
+  const score = avg([100, pctArbolesMes, sigPctMes, plantasPctMes]);
+
+  const keyMetrics = [
+    {
+      label: '35 hectáreas monitoreadas de las reforestaciones realizadas en 2025 en Sololá y la Cuenca del Lago de Atitlán, con su respectiva cartografía.',
+      acumDisplay: `${fmt(haAcum, 2)} / ${fmt(haMeta)} ha monitoreadas`,
+      pct: pctHa,
+      pctDisplay: `${fmtPct(pctHa)} de avance acumulado hasta mayo contra la meta anual`,
+      barPct: pctHa,
+      monthlyDisplay: `${fmt(haMes,2)} / ${fmt(haMetaMesOperativa,2)} ha monitoreadas en mayo · ${fmtPct(100)}`,
+      monthlyPct: 100,
+      temporality: 'Este indicador tiene por temporalidad desde enero a julio de 2026',
+      subIndicators: [
+        { label: 'Hectáreas monitoreadas', valueDisplay: `${fmt(haAcum, 2)} / ${fmt(haMeta)} ha`, barPct: pctHa },
+        { label: 'Cobertura cartográfica de monitoreo', valueDisplay: `${fmt(haAcum, 2)} / ${fmt(haMeta)} ha`, barPct: pctCart }
+      ]
+    },
+    {
+      label: '90,000 árboles reforestados durante 2026 en el departamento de Sololá y la Cuenca del Lago de Atitlán.',
+      acumDisplay: `${fmt(arbolesAcum)} / ${fmt(arbolesMeta)} árboles`,
+      pct: pctArboles,
+      pctDisplay: `${fmtPct(pctArboles)} de avance acumulado hasta mayo contra la meta anual`,
+      barPct: pctArboles,
+      monthlyDisplay: `${fmt(arbolesMes)} / ${fmt(arbolesMetaMes)} árboles reforestados en mayo · ${fmtPct(pctArbolesMes)}`,
+      monthlyPct: pctArbolesMes,
+      temporality: 'Este indicador tiene por temporalidad desde junio a noviembre de 2026'
+    },
+    {
+      label: '1 unidad de análisis SIG creada con especialización en cartografía forestal temática a través del eje de la CODEMA-Sololá.',
+      acumDisplay: `${fmtPct(sigPct)} de consolidación acumulada`,
+      pct: sigPct,
+      pctDisplay: `${fmtPct(sigPct)} de avance acumulado de consolidación`,
+      barPct: sigPct,
+      monthlyDisplay: `${fmt(sigMes)} / ${fmt(sigMetaMes)} hitos SIG en mayo · ${fmtPct(sigPctMes)}`,
+      monthlyPct: sigPctMes,
+      fullWidthBar: false,
+      hideAcumBar: false,
+      temporality: 'Este indicador tiene por temporalidad desde enero a diciembre de 2026'
+    },
+    {
+      label: '10,000 plantas forestales de 10 especies nativas producidas en el vivero AALA durante 2026.',
+      acumDisplay: `${fmt(plantasAcum)} / ${fmt(plantasMeta)} plantas`,
+      pct: pctViveroIntegral,
+      pctDisplay: `${fmtPct(pctPlantas)} en plantas y ${fmtPct(pctEspecies)} en especies`,
+      barPct: pctViveroIntegral,
+      monthlyDisplay: `${fmt(plantasMes)} / ${fmt(plantasMetaMes)} plantas netas en mayo · ${fmtPct(plantasPctMes)}`,
+      monthlyPct: plantasPctMes,
+      temporality: 'Este indicador tiene por temporalidad desde enero a noviembre de 2026',
+      subIndicators: [
+        { label: 'Plantas forestales', valueDisplay: `${fmt(plantasAcum)} / ${fmt(plantasMeta)} plantas`, barPct: pctPlantas },
+        { label: 'Especies nativas activas', valueDisplay: `${fmt(especiesAcum)} / ${fmt(especiesMeta)} especies`, barPct: pctEspecies }
+      ]
+    }
+  ];
+
+  return {
+    ...cfg,
+    latestLabel:'Mayo',
+    periodKey:'2026-05',
+    score:score || 0,
+    scoreLabel:'Cumplimiento promedio vs metas mensuales',
+    metrics: keyMetrics,
+    sourceSummary: 'Google Sheets · Reforestación · mayo 2026'
+  };
+}
+
+/* ────────────────────────────────
+   Siembra de tul · DATOS EMBEBIDOS (Survey123 · mayo 2026)
+──────────────────────────────── */
+const TUL_DATA = [
+  { fecha:'2026-02-09', municipio:'San Marcos La Laguna',    tipo:'Siembra',       metros:30  },
+  { fecha:'2026-02-13', municipio:'Santa Cruz La Laguna',    tipo:'Siembra',       metros:115 },
+  { fecha:'2026-02-27', municipio:'San Antonio Palopó',      tipo:'Siembra',       metros:110 },
+  { fecha:'2026-03-09', municipio:'Santa Catarina Palopó',   tipo:'Mantenimiento', metros:20  },
+  { fecha:'2026-03-13', municipio:'San Pedro La Laguna',     tipo:'Siembra',       metros:95  },
+  { fecha:'2026-03-27', municipio:'San Antonio Palopó',      tipo:'Siembra',       metros:130 },
+  { fecha:'2026-04-10', municipio:'San Juan La Laguna',      tipo:'Siembra',       metros:113 },
+  { fecha:'2026-04-24', municipio:'San Juan La Laguna',      tipo:'Siembra',       metros:112 },
+  { fecha:'2026-05-08', municipio:'San Pedro La Laguna',     tipo:'Siembra',       metros:99  },
+  { fecha:'2026-05-22', municipio:'San Pedro La Laguna',     tipo:'Siembra',       metros:99  },
+];
+
+async function loadTul(cfg){
+  const META_ML_ANUAL = 1300;
+  const META_JORNADAS_ANUAL = 21;
+
+  const acumMetrosSiembra = 903;
+  const acumJornadas = 8;
+  const jornadasMes = 2;
+  const jornadasMetaMes = 2;
+  const metrosMes = 198;
+  const metrosMetaMes = 225;
+
+  const pctJornadas = (acumJornadas / META_JORNADAS_ANUAL) * 100;
+  const pctAnual = (acumMetrosSiembra / META_ML_ANUAL) * 100;
+  const pctJornadasMes = (jornadasMes / jornadasMetaMes) * 100;
+  const pctMetrosMes = (metrosMes / metrosMetaMes) * 100;
+  const score = avg([pctJornadasMes, pctMetrosMes]);
+
+  const keyMetrics = [
+    {
+      label: '21 jornadas anuales de siembra y mantenimiento de tul en los municipios ribereños del Lago de Atitlán.',
+      acumDisplay: `${fmt(acumJornadas)} / ${fmt(META_JORNADAS_ANUAL)} jornadas anuales`,
+      pct: pctJornadas,
+      pctDisplay: `${fmtPct(pctJornadas)} de avance acumulado hasta mayo contra la meta anual`,
+      barPct: pctJornadas,
+      monthlyDisplay: `${fmt(jornadasMes)} / ${fmt(jornadasMetaMes)} jornadas en mayo · ${fmtPct(pctJornadasMes)}`,
+      monthlyPct: pctJornadasMes,
+      temporality: 'Este indicador tiene por temporalidad desde febrero a diciembre de 2026'
+    },
+    {
+      label: '1,300 metros lineales de tul sembrados a lo largo de las orillas del Lago de Atitlán durante 2026.',
+      acumDisplay: `${fmt(acumMetrosSiembra)} / ${fmt(META_ML_ANUAL)} metros lineales sembrados`,
+      pct: pctAnual,
+      pctDisplay: `${fmtPct(pctAnual)} de avance acumulado hasta mayo contra la meta anual`,
+      barPct: pctAnual,
+      monthlyDisplay: `${fmt(metrosMes)} / ${fmt(metrosMetaMes)} metros lineales en mayo · ${fmtPct(pctMetrosMes)}`,
+      monthlyPct: pctMetrosMes,
+      temporality: 'Este indicador tiene por temporalidad desde febrero a diciembre de 2026'
+    }
+  ];
+
+  return {
+    ...cfg,
+    latestLabel: 'Mayo',
+    periodKey: '2026-05',
+    score: score || 0,
+    scoreLabel: 'Cumplimiento promedio vs metas mensuales',
+    metrics: keyMetrics,
+    sourceSummary: 'ArcGIS Survey123 · mayo 2026'
+  };
+}
+
+/* ────────────────────────────────
+   RENDER MÉTRICAS
+──────────────────────────────── */
 function metricRow(m, index = 0, hasMonthlyColumn = true){
   const objectiveNumber = `${index + 1}`;
   const temporalFullMarkup = m.temporality
@@ -2304,7 +2786,8 @@ function renderSummary(programs){
   const visitLabel = 'Mayo';
   const [, chipText] = statusClass(avgScore);
 
-  document.getElementById('kpiPrograms').textContent = String(programs.length);
+  const kpiPrograms = document.getElementById('kpiPrograms');
+  if (kpiPrograms) kpiPrograms.textContent = String(programs.length);
   document.getElementById('kpiLatest').textContent = visitLabel;
   document.getElementById('kpiLatestSub').textContent = '';
   const kpiHealth = document.getElementById('kpiHealth');
