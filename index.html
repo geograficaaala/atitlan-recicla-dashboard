@@ -1503,15 +1503,17 @@
       border-color: rgba(76,165,191,.35);
     }
     .coverage-filter-group {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 10px;
-      overflow-x: auto;
-      overflow-y: hidden;
+      display: block;
       margin: 18px 0 18px;
-      padding-bottom: 4px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(28,96,132,.28) transparent;
+    }
+
+    .coverage-zone-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 16px;
+      width: 100%;
     }
     .coverage-summary {
       display: grid;
@@ -1885,7 +1887,7 @@
           <div class="hero-logo-caption"><strong>Atitlán Recicla</strong></div>
           <img
             class="hero-logo hero-logo-atitlan"
-            src="./Cooperativa%20RL%20logo.png"
+            src="./atitlan-recicla-logo.png"
             alt="Logo de Atitlán Recicla"
             onerror="this.onerror=null;this.src='./Cooperativa RL logo.png';"
           >
@@ -2091,45 +2093,97 @@ function barClass(pct){
 /* ────────────────────────────────
    MAPA DE COBERTURA TERRITORIAL
 ──────────────────────────────── */
-const COVERAGE_GEOJSON_URL = './Cobertura_programas_y_proyectos_AALA_01.geojson';
+const COVERAGE_GEOJSON_URL = './municipios2.geojson';
 const COVERAGE_DEFAULT_VIEW = { center: [14.77, -91.18], zoom: 10 };
-const COVERAGE_COLORS = ['#1c6084', '#2e6a57', '#d5a34b', '#7b5cc7', '#c45f2d', '#1c7c86', '#a24760'];
+const COVERAGE_GREEN = '#2e6a57';
+const COVERAGE_GREEN_DARK = '#1f513f';
+const COVERAGE_MUTED = '#94a3b8';
+
+const ATITLAN_RECICLA_ZONES = {
+  general: {
+    label: 'Cobertura general',
+    description: 'Municipios con cobertura general de <strong>Atitlán Recicla</strong>.',
+    municipios: [
+      'Sololá',
+      'San Andrés Semetabaj',
+      'San Antonio Palopó',
+      'Santa Catarina Palopó',
+      'Santa Cruz La Laguna',
+      'San Juan La Laguna',
+      'San Marcos La Laguna',
+      'Panajachel',
+      'Santa Clara La Laguna',
+      'Santa Lucía Utatlán',
+      'Santa María Visitación',
+      'San Lucas Tolimán',
+      'Santiago Atitlán'
+    ]
+  },
+  kaqchiquel: {
+    label: 'Zona Kaqchiquel',
+    description: 'Municipios de la zona Kaqchiquel con cobertura de <strong>Atitlán Recicla</strong>.',
+    municipios: ['Sololá', 'San Andrés Semetabaj', 'San Antonio Palopó', 'Santa Catarina Palopó']
+  },
+  las_lagunas: {
+    label: 'Zona Las Lagunas',
+    description: 'Municipios de la zona Las Lagunas con cobertura de <strong>Atitlán Recicla</strong>. Jaibalito y Tzununá se visualizan dentro de Santa Cruz La Laguna.',
+    municipios: ['Santa Cruz La Laguna', 'San Juan La Laguna', 'San Marcos La Laguna']
+  },
+  tzolojya: {
+    label: 'Zona Tzolojya',
+    description: 'Municipios de la zona Tzolojya con cobertura de <strong>Atitlán Recicla</strong>.',
+    municipios: ['Panajachel', 'Santa Clara La Laguna', 'Santa Lucía Utatlán', 'Santa María Visitación']
+  },
+  zona_sur: {
+    label: 'Zona Sur',
+    description: 'Municipios de la zona Sur con cobertura de <strong>Atitlán Recicla</strong>.',
+    municipios: ['San Lucas Tolimán', 'Santiago Atitlán']
+  }
+};
 
 let coverageMap = null;
 let coverageGeojson = null;
 let coverageLayer = null;
 let coverageBounds = null;
-let coverageFields = [];
-let activeCoverageField = '';
+let activeCoverageZone = 'general';
 
-function normalizeCoverageValue(value){
-  const raw = String(value ?? '').trim().toLowerCase();
-  return raw === '1' || raw === 'si' || raw === 'sí' || raw === 'true' || raw === 'x';
-}
-function coverageColor(field){
-  const index = Math.max(0, coverageFields.indexOf(field));
-  return COVERAGE_COLORS[index % COVERAGE_COLORS.length];
-}
-function coverageFieldLabel(field){
-  const labels = {
-    'Atitlan Recicla': 'Atitlán Recicla',
-    'Fortalecimiento': 'Fortalecimiento Municipal'
-  };
-  return labels[field] || field;
-}
 function normalizeCoverageMunicipio(value){
   return String(value ?? '')
     .trim()
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ');
+}
+function coverageMunicipalitySet(key = activeCoverageZone){
+  const zone = ATITLAN_RECICLA_ZONES[key] || ATITLAN_RECICLA_ZONES.general;
+  return new Set(zone.municipios.map(normalizeCoverageMunicipio));
+}
+function coverageAllMunicipalitySet(){
+  return coverageMunicipalitySet('general');
+}
+function getFeatureMunicipio(feature){
+  const props = feature?.properties || {};
+  const preferred = [
+    'municipio', 'Municipio', 'MUNICIPIO', 'MUNI_NOMBRE', 'NOMBRE_MUN',
+    'nombre', 'Nombre', 'NOMBRE', 'name', 'Name', 'NAM', 'ADM2_ES'
+  ];
+  for (const key of preferred){
+    if (props[key] !== undefined && props[key] !== null && String(props[key]).trim()) return String(props[key]).trim();
+  }
+  const fallbackKey = Object.keys(props).find(key => /mun|municip|nombre|name/i.test(key) && String(props[key] ?? '').trim());
+  return fallbackKey ? String(props[fallbackKey]).trim() : '';
 }
 function isExcludedCoverageMunicipio(value){
   return normalizeCoverageMunicipio(value) === 'santa catarina ixtahuacan';
 }
+function isFeatureInSet(feature, set){
+  const municipio = getFeatureMunicipio(feature);
+  return set.has(normalizeCoverageMunicipio(municipio));
+}
 function updateCoverageButtons(){
   document.querySelectorAll('.coverage-filter').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.field === activeCoverageField);
+    btn.classList.toggle('active', btn.dataset.zone === activeCoverageZone);
   });
 }
 function focusCoverageDefaultView(){
@@ -2147,53 +2201,55 @@ function clearCoverageLayer(resetView = false){
   }
   if (resetView) focusCoverageDefaultView();
 }
-function renderCoverageFilters(fields){
+function renderCoverageFilters(){
   const wrap = document.getElementById('coverageFilters');
   if (!wrap) return;
-  const field = fields[0] || 'Atitlan Recicla';
-  const fieldLabel = coverageFieldLabel(field);
-  const features = Array.isArray(coverageGeojson?.features) ? coverageGeojson.features : [];
-  const usable = features.filter(feature => {
-    const municipio = feature?.properties?.municipio || '';
-    return !isExcludedCoverageMunicipio(municipio);
-  });
-  const covered = usable
-    .filter(feature => normalizeCoverageValue(feature?.properties?.[field]))
-    .map(feature => safe(feature?.properties?.municipio))
-    .sort((a,b) => a.localeCompare(b, 'es'));
+  const zone = ATITLAN_RECICLA_ZONES[activeCoverageZone] || ATITLAN_RECICLA_ZONES.general;
+  const municipios = [...zone.municipios].sort((a,b) => a.localeCompare(b, 'es'));
 
-  if (!covered.length){
-    wrap.innerHTML = '<button class="coverage-filter" type="button" disabled>No hay cobertura registrada</button>';
-    return;
-  }
+  const buttons = Object.entries(ATITLAN_RECICLA_ZONES).map(([key, item]) => `
+    <button class="coverage-filter${key === activeCoverageZone ? ' active' : ''}" type="button" data-zone="${key}">
+      ${item.label}
+    </button>
+  `).join('');
 
   wrap.innerHTML = `
+    <div class="coverage-zone-buttons" aria-label="Filtros por zona de Atitlán Recicla">
+      ${buttons}
+    </div>
     <div class="coverage-summary">
       <div class="coverage-summary-stat">
-        <div class="coverage-summary-label">Municipios con cobertura</div>
-        <div class="coverage-summary-value">${covered.length}</div>
-        <div class="coverage-summary-copy">Distribución territorial de <strong>${fieldLabel}</strong> según el GeoJSON institucional.</div>
+        <div class="coverage-summary-label">${zone.label}</div>
+        <div class="coverage-summary-value">${municipios.length}</div>
+        <div class="coverage-summary-copy">${zone.description}</div>
       </div>
       <div class="coverage-summary-list">
-        <div class="coverage-summary-label">Municipios de <strong>${fieldLabel}</strong></div>
+        <div class="coverage-summary-label">Municipios resaltados</div>
         <div class="coverage-municipio-list">
-          ${covered.map(municipio => `<span class="coverage-municipio-chip">${municipio}</span>`).join('')}
+          ${municipios.map(municipio => `<span class="coverage-municipio-chip">${safe(municipio)}</span>`).join('')}
         </div>
       </div>
     </div>
   `;
+
+  wrap.querySelectorAll('.coverage-filter').forEach(btn => {
+    btn.addEventListener('click', () => applyCoverageZone(btn.dataset.zone || 'general'));
+  });
 }
-function applyCoverageField(field){
-  if (!coverageMap || !coverageGeojson?.features?.length || !field) return;
-  activeCoverageField = field;
+function applyCoverageZone(zoneKey = 'general'){
+  if (!coverageMap || !coverageGeojson?.features?.length) return;
+  activeCoverageZone = ATITLAN_RECICLA_ZONES[zoneKey] ? zoneKey : 'general';
+  renderCoverageFilters();
   clearCoverageLayer(false);
 
-  const fieldLabel = coverageFieldLabel(field);
+  const activeSet = coverageMunicipalitySet(activeCoverageZone);
+  const generalSet = coverageAllMunicipalitySet();
+  const zone = ATITLAN_RECICLA_ZONES[activeCoverageZone] || ATITLAN_RECICLA_ZONES.general;
+
   const features = coverageGeojson.features.filter(feature => {
-    const municipio = feature?.properties?.municipio || '';
-    return !isExcludedCoverageMunicipio(municipio);
+    const municipio = getFeatureMunicipio(feature);
+    return municipio && !isExcludedCoverageMunicipio(municipio);
   });
-  const color = coverageColor(field);
 
   if (!features.length){
     updateCoverageButtons();
@@ -2202,27 +2258,38 @@ function applyCoverageField(field){
 
   coverageLayer = L.geoJSON({ type: 'FeatureCollection', features }, {
     style(feature){
-      const hasCoverage = normalizeCoverageValue(feature?.properties?.[field]);
+      const selected = isFeatureInSet(feature, activeSet);
+      const inGeneralCoverage = isFeatureInSet(feature, generalSet);
       return {
-        color: hasCoverage ? color : '#94a3b8',
-        weight: hasCoverage ? 3.2 : 1.4,
-        opacity: hasCoverage ? 1 : .68,
-        fillColor: hasCoverage ? color : '#ffffff',
-        fillOpacity: hasCoverage ? .34 : .18,
-        dashArray: hasCoverage ? null : '4 4'
+        color: selected ? COVERAGE_GREEN_DARK : inGeneralCoverage ? '#769183' : COVERAGE_MUTED,
+        weight: selected ? 3.4 : inGeneralCoverage ? 1.8 : 1.2,
+        opacity: selected ? 1 : .72,
+        fillColor: selected ? COVERAGE_GREEN : inGeneralCoverage ? '#dfeee5' : '#ffffff',
+        fillOpacity: selected ? .44 : inGeneralCoverage ? .24 : .12,
+        dashArray: selected ? null : '4 4'
       };
     },
     onEachFeature(feature, layer){
-      const municipio = safe(feature?.properties?.municipio);
-      const hasCoverage = normalizeCoverageValue(feature?.properties?.[field]);
-      const estado = hasCoverage ? 'Municipio con cobertura' : 'Sin cobertura registrada';
+      const municipio = safe(getFeatureMunicipio(feature));
+      const selected = isFeatureInSet(feature, activeSet);
+      const inGeneralCoverage = isFeatureInSet(feature, generalSet);
+      const estado = selected
+        ? `Municipio resaltado en ${zone.label}`
+        : inGeneralCoverage
+          ? 'Municipio con cobertura de Atitlán Recicla en otra zona'
+          : 'Sin cobertura registrada de Atitlán Recicla';
       layer.bindTooltip(municipio, { sticky: true, direction: 'top', className: 'coverage-tooltip' });
-      layer.bindPopup(`<strong>${municipio}</strong><br><strong>${fieldLabel}</strong>: ${estado}`);
+      layer.bindPopup(`<strong>${municipio}</strong><br><strong>Atitlán Recicla</strong>: ${estado}`);
     }
   }).addTo(coverageMap);
 
-  if (coverageLayer.getBounds().isValid()){
-    coverageMap.fitBounds(coverageLayer.getBounds(), { padding: [20, 20], maxZoom: 11 });
+  const selectedFeatures = features.filter(feature => isFeatureInSet(feature, activeSet));
+  const selectedLayer = L.geoJSON({ type: 'FeatureCollection', features: selectedFeatures });
+  const selectedBounds = selectedLayer.getBounds();
+  if (selectedBounds.isValid()){
+    coverageMap.fitBounds(selectedBounds, { padding: [28, 28], maxZoom: activeCoverageZone === 'general' ? 10 : 11 });
+  } else if (coverageLayer.getBounds().isValid()){
+    coverageMap.fitBounds(coverageLayer.getBounds(), { padding: [20, 20], maxZoom: 10 });
   }
 
   updateCoverageButtons();
@@ -2250,21 +2317,29 @@ async function initCoverageMap(){
     const features = Array.isArray(coverageGeojson?.features) ? coverageGeojson.features : [];
     if (!features.length) throw new Error('El GeoJSON no contiene entidades.');
 
-    const props = features[0]?.properties || {};
-    const atitlanField = Object.keys(props).find(key => normalizeCoverageMunicipio(key) === 'atitlan recicla');
-    coverageFields = atitlanField ? [atitlanField] : [];
-    renderCoverageFilters(coverageFields);
+    renderCoverageFilters();
 
     const boundsProbe = L.geoJSON(coverageGeojson);
     coverageBounds = boundsProbe.getBounds();
     focusCoverageDefaultView();
-    if (coverageFields[0]) applyCoverageField(coverageFields[0]);
+    applyCoverageZone('general');
 
     setTimeout(() => coverageMap?.invalidateSize(), 120);
     window.addEventListener('resize', () => coverageMap?.invalidateSize());
   } catch (err) {
     console.error('No fue posible cargar el mapa de cobertura', err);
-    renderCoverageFilters([]);
+    const wrap = document.getElementById('coverageFilters');
+    if (wrap){
+      wrap.innerHTML = `
+        <div class="coverage-summary">
+          <div class="coverage-summary-stat">
+            <div class="coverage-summary-label">Mapa no disponible</div>
+            <div class="coverage-summary-value">—</div>
+            <div class="coverage-summary-copy">No fue posible cargar <code>municipios2.geojson</code>. Confirmá que el archivo esté en la raíz de la repo.</div>
+          </div>
+        </div>
+      `;
+    }
   }
 }
 
