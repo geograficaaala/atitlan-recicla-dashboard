@@ -2,6 +2,7 @@
 <html lang="es">
 <!-- VERSION: ATITLAN_RECICLA_INDEX_V7_SPONSORS_MAP_ZONES -->
 <head>
+  <!-- VERSION: ATITLAN_RECICLA_INDEX_V8_RESTORED_MAYO_MAP_FIX -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Asociación Amigos del Lago de Atitlán · Tablero dinámico institucional</title>
@@ -1892,7 +1893,7 @@
     <section class="dashboard-ribbon stagger-3" aria-label="Resumen institucional">
       <article class="ribbon-item">
         <div class="ribbon-label">Avance correspondiente al mes de:</div>
-        <div class="ribbon-value" id="kpiLatest">—</div>
+        <div class="ribbon-value" id="kpiLatest">Mayo</div>
         <div class="ribbon-sub" id="kpiLatestSub"></div>
       </article>
     </section>
@@ -2188,6 +2189,22 @@ function buildMunicipioSet(municipios){
   return new Set(municipios.map(normalizeCoverageText));
 }
 
+const COVERAGE_ZONE_SETS = Object.fromEntries(
+  Object.entries(ATITLAN_RECICLA_ZONES).map(([key, value]) => [key, buildMunicipioSet(value.municipios || [])])
+);
+
+function municipioNameMatches(name, selectedSet){
+  const key = normalizeCoverageText(name);
+  if (!key) return false;
+  if (selectedSet.has(key)) return true;
+  // Soporta nombres de GeoJSON con sufijos/prefijos, por ejemplo: "Municipio de Sololá" o "Sololá, Guatemala".
+  for (const selected of selectedSet){
+    if (!selected) continue;
+    if (key.includes(selected) || selected.includes(key)) return true;
+  }
+  return false;
+}
+
 function getZoneForMunicipio(name){
   const key = normalizeCoverageText(name);
   for (const zoneKey of COVERAGE_ZONE_ORDER.filter(z => z !== 'general')){
@@ -2204,10 +2221,11 @@ function getZoneForMunicipio(name){
 function featureMatchesZone(feature, zoneKey){
   const name = getCoverageName(feature);
   const key = normalizeCoverageText(name);
-  const municipios = ATITLAN_RECICLA_ZONES[zoneKey]?.municipios || [];
-  const selected = buildMunicipioSet(municipios);
-  if (selected.has(key)) return true;
+  const selected = COVERAGE_ZONE_SETS[zoneKey] || new Set();
+  if (municipioNameMatches(name, selected)) return true;
 
+  // Jaibalito y Tzununá son comunidades dentro de Santa Cruz La Laguna;
+  // por eso el municipio se representa con Santa Cruz La Laguna.
   if (zoneKey === 'lagunas' || zoneKey === 'general'){
     if (key === normalizeCoverageText('Santa Cruz La Laguna')) return true;
   }
@@ -2541,7 +2559,8 @@ function renderSummary(programs){
   const visitLabel = 'Mayo';
   const [, chipText] = statusClass(avgScore);
 
-  document.getElementById('kpiPrograms').textContent = String(programs.length);
+  const kpiPrograms = document.getElementById('kpiPrograms');
+  if (kpiPrograms) kpiPrograms.textContent = String(programs.length);
   document.getElementById('kpiLatest').textContent = visitLabel;
   document.getElementById('kpiLatestSub').textContent = '';
   const kpiHealth = document.getElementById('kpiHealth');
