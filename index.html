@@ -5,6 +5,7 @@
   <!-- VERSION: ATITLAN_RECICLA_INDEX_V8_RESTORED_MAYO_MAP_FIX -->
   <!-- VERSION: ATITLAN_RECICLA_INDEX_V9_BOLD_PROGRAM_NAME -->
   <!-- VERSION: ATITLAN_RECICLA_INDEX_V10_FULL_WIDTH_PROGRAM_CARD -->
+  <!-- VERSION: ATITLAN_RECICLA_INDEX_V12_SPONSOR_LOGOS_UNIFORM_LARGE -->
   <!-- VERSION: ATITLAN_RECICLA_INDEX_V11_ZONAS_LOGOS -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -1870,6 +1871,51 @@
 #page-programas .program-card .program-title,
 #page-programas .program-card .program-kicker{
   text-align: center !important;
+}
+
+
+
+/* V12: cintillo de patrocinadores con logos grandes y cajas uniformes */
+.sponsor-strip{
+  gap: clamp(20px, 2.4vw, 36px) !important;
+  align-items: center !important;
+}
+.sponsor-logo-link,
+.sponsor-logo-static{
+  width: 210px !important;
+  height: 108px !important;
+  min-height: 108px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+}
+.sponsor-logo,
+.sponsor-logo.logo-wide,
+.sponsor-logo.logo-canada{
+  width: 190px !important;
+  height: 88px !important;
+  max-width: 190px !important;
+  max-height: 88px !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  display: block !important;
+}
+@media (max-width: 760px){
+  .sponsor-logo-link,
+  .sponsor-logo-static{
+    width: 168px !important;
+    height: 90px !important;
+    min-height: 90px !important;
+  }
+  .sponsor-logo,
+  .sponsor-logo.logo-wide,
+  .sponsor-logo.logo-canada{
+    width: 150px !important;
+    height: 70px !important;
+    max-width: 150px !important;
+    max-height: 70px !important;
+  }
 }
 
 </style>
