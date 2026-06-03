@@ -5,6 +5,7 @@
   <!-- VERSION: ATITLAN_RECICLA_INDEX_V8_RESTORED_MAYO_MAP_FIX -->
   <!-- VERSION: ATITLAN_RECICLA_INDEX_V9_BOLD_PROGRAM_NAME -->
   <!-- VERSION: ATITLAN_RECICLA_INDEX_V10_FULL_WIDTH_PROGRAM_CARD -->
+  <!-- VERSION: ATITLAN_RECICLA_INDEX_V11_ZONAS_LOGOS -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Asociación Amigos del Lago de Atitlán · Tablero dinámico institucional</title>
@@ -1811,20 +1812,19 @@
 }
 .sponsor-logo {
   display: block;
-  height: auto;
-  max-height: 70px;
+  height: 64px;
+  width: auto;
   max-width: 190px;
   object-fit: contain;
   background: transparent;
   mix-blend-mode: multiply;
 }
-.sponsor-logo.logo-wide {
-  max-width: 260px;
-  max-height: 76px;
-}
+.sponsor-logo.logo-wide,
 .sponsor-logo.logo-canada {
-  max-width: 280px;
-  max-height: 78px;
+  height: 64px;
+  width: auto;
+  max-width: 190px;
+  max-height: 64px;
 }
 @media (max-width: 980px) {
   .hero-shell { grid-template-columns: 1fr; }
@@ -1836,9 +1836,14 @@
   .hero-logo-card { min-height: 190px; }
   .hero-logo { max-height: 132px; }
   .sponsor-strip { gap: 18px; }
-  .sponsor-logo { max-width: 150px; max-height: 58px; }
+  .sponsor-logo,
   .sponsor-logo.logo-wide,
-  .sponsor-logo.logo-canada { max-width: 210px; max-height: 62px; }
+  .sponsor-logo.logo-canada {
+    height: 56px;
+    width: auto;
+    max-width: 160px;
+    max-height: 56px;
+  }
 }
 
 .program-bold {
@@ -2142,42 +2147,59 @@ const ATITLAN_RECICLA_ZONES = {
   general: {
     label: 'Cobertura general',
     municipios: [
-      'Sololá',
+      'Panajachel',
       'Santa Catarina Palopó',
       'San Antonio Palopó',
-      'San Andrés Semetabaj',
-      'San Juan La Laguna',
-      'San Marcos La Laguna',
+      'Santiago Atitlán',
+      'San Lucas Tolimán',
       'Santa Cruz La Laguna',
-      'Jaibalito',
       'Tzununá',
-      'Panajachel',
+      'San Marcos La Laguna',
+      'Jaibalito',
+      'Sololá',
+      'San Andrés Semetabaj',
       'Santa Clara La Laguna',
-      'Santa María Visitación',
       'Santa Lucía Utatlán',
+      'Santa María Visitación'
+    ]
+  },
+  kaqchiquel: {
+    label: 'Zona Kaqchikel',
+    municipios: [
+      'Panajachel',
+      'Santa Catarina Palopó',
+      'San Antonio Palopó'
+    ]
+  },
+  sur: {
+    label: 'Zona Sur',
+    municipios: [
       'Santiago Atitlán',
       'San Lucas Tolimán'
     ]
   },
-  kaqchiquel: {
-    label: 'Zona Kaqchiquel',
-    municipios: ['Sololá', 'Santa Catarina Palopó', 'San Antonio Palopó', 'San Andrés Semetabaj']
-  },
   lagunas: {
     label: 'Zona Las Lagunas',
-    municipios: ['San Juan La Laguna', 'San Marcos La Laguna', 'Santa Cruz La Laguna', 'Jaibalito', 'Tzununá']
+    municipios: [
+      'Santa Cruz La Laguna',
+      'Tzununá',
+      'San Marcos La Laguna',
+      'Jaibalito'
+    ]
   },
   tzolojya: {
     label: 'Zona Tzolojya',
-    municipios: ['Panajachel', 'Santa Clara La Laguna', 'Santa María Visitación', 'Santa Lucía Utatlán']
-  },
-  sur: {
-    label: 'Zona Sur',
-    municipios: ['Santiago Atitlán', 'San Lucas Tolimán']
+    municipios: [
+      'Sololá',
+      'San Andrés Semetabaj',
+      'Santa Clara La Laguna',
+      'Santa Lucía Utatlán',
+      'Santa María Visitación'
+    ]
   }
 };
 
-const COVERAGE_ZONE_ORDER = ['general', 'kaqchiquel', 'lagunas', 'tzolojya', 'sur'];
+const COVERAGE_ZONE_ORDER = ['general', 'kaqchiquel', 'sur', 'lagunas', 'tzolojya'];
 const COVERAGE_NAME_KEYS = [
   'municipio', 'Municipio', 'MUNICIPIO', 'nombre', 'Nombre', 'NOMBRE',
   'NOMGEO', 'NOM_MUN', 'MUNI_NOMBRE', 'NAME_2', 'NAME', 'Name', 'name',
