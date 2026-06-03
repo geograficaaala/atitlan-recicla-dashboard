@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="es">
+<!-- VERSION: ATITLAN_RECICLA_DASHBOARD_V11_SPONSORS_COMPLIANCE_BOLD -->
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -1747,6 +1748,72 @@
 }
 </style>
 
+
+<style id="sponsor-final-and-bold-patches">
+  .program-name-bold{font-weight:800;color:inherit}
+  .sponsor-ribbon-final{
+    width:min(1700px, calc(100vw - 24px));
+    margin:28px auto 36px;
+    padding:26px 24px 28px;
+    background:rgba(255,255,255,.88);
+    border:1px solid rgba(213,226,220,.92);
+    border-radius:28px;
+    box-shadow:0 18px 42px rgba(18,42,66,.08),0 4px 14px rgba(18,42,66,.05);
+  }
+  .sponsor-ribbon-final .sponsor-title{
+    text-align:center;
+    font-size:.78rem;
+    font-weight:900;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted,#6b7f90);
+    margin:0 0 18px;
+  }
+  .sponsor-ribbon-final .sponsor-strip{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:18px 30px;
+  }
+  .sponsor-ribbon-final .sponsor-logo-link{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    background:transparent;
+    border:0;
+    box-shadow:none;
+    padding:4px 8px;
+    min-width:112px;
+    min-height:70px;
+    transition:transform .2s ease, filter .2s ease, opacity .2s ease;
+  }
+  .sponsor-ribbon-final .sponsor-logo-link:hover{
+    transform:translateY(-3px);
+    filter:brightness(1.04);
+  }
+  .sponsor-ribbon-final .sponsor-logo{
+    display:block;
+    width:auto;
+    max-width:150px;
+    max-height:66px;
+    object-fit:contain;
+    background:transparent!important;
+    filter:drop-shadow(0 8px 16px rgba(18,42,66,.12));
+  }
+  .sponsor-ribbon-final .sponsor-logo.logo-wide{max-width:190px;max-height:70px}
+  .sponsor-ribbon-final .sponsor-logo.logo-canada{max-width:230px;max-height:74px}
+  @media(max-width:760px){
+    .sponsor-ribbon-final{margin:22px auto 30px;padding:22px 16px;border-radius:22px}
+    .sponsor-ribbon-final .sponsor-strip{gap:14px 20px}
+    .sponsor-ribbon-final .sponsor-logo-link{min-width:92px;min-height:56px;padding:2px 4px}
+    .sponsor-ribbon-final .sponsor-logo{max-width:128px;max-height:54px}
+    .sponsor-ribbon-final .sponsor-logo.logo-wide{max-width:160px;max-height:58px}
+    .sponsor-ribbon-final .sponsor-logo.logo-canada{max-width:190px;max-height:60px}
+  }
+</style>
+
 </head>
 <body class="view-full">
 
@@ -2413,7 +2480,7 @@ function renderKpis(state){
         <div class="kpi-reading">
           <div class="kpi-value" data-value="${parts.number!=null?parts.number:''}" data-prefix="${escapeHtml(parts.prefix)}" data-suffix="${escapeHtml(parts.suffix)}" data-decimals="${parts.decimals}">${escapeHtml(parts.text)}</div>
           <div class="kpi-reference">${escapeHtml(item.metaTitle)}</div>
-          ${item.hasMeta?`<div class="kpi-achieved">${(item.pct||0)>100?'<span style="color:var(--green);font-weight:800">+'+((item.pct||0)-100).toFixed(1)+'% sobre la meta</span>':((item.pct||0).toFixed(1)+'% del objetivo mensual')}</div>`:''}
+          ${item.hasMeta?`<div class="kpi-achieved">${(item.pct||0)>100?'<span style="color:var(--green);font-weight:800">'+((item.pct||0).toFixed(1))+'% de cumplimiento</span>':((item.pct||0).toFixed(1)+'% del objetivo mensual')}</div>`:''}
         </div>
       </div>
       <div class="kpi-readings"></div>
@@ -7688,6 +7755,80 @@ function renderIncomeMaterialCards(state, ctx){
   }catch(e){
     console.warn('Parche mayo 2026 precalc Atitlán Recicla:', e);
   }
+})();
+</script>
+
+
+<script id="program-name-bold-and-compliance-patch">
+(function(){
+  function normalizeComplianceText(text){
+    return String(text || '').replace(/\+(\d+(?:[\.,]\d+)?)%\s+sobre la meta/gi, function(_, raw){
+      var surplus = parseFloat(String(raw).replace(',', '.'));
+      if(!Number.isFinite(surplus)) return _;
+      return (100 + surplus).toFixed(1) + '% de cumplimiento';
+    });
+  }
+
+  function enhanceText(root){
+    root = root || document.body;
+    if(!root) return;
+    var skipTags = {SCRIPT:1, STYLE:1, NOSCRIPT:1, TEXTAREA:1, INPUT:1, SVG:1, CANVAS:1};
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode:function(node){
+        var parent = node.parentElement;
+        if(!parent || skipTags[parent.tagName]) return NodeFilter.FILTER_REJECT;
+        if(parent.closest && parent.closest('.program-name-bold')) return NodeFilter.FILTER_REJECT;
+        var value = node.nodeValue || '';
+        if(!/(Atitl[áa]n Recicla|\+\d+(?:[\.,]\d+)?%\s+sobre la meta)/i.test(value)) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var nodes = [];
+    while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function(node){
+      var text = normalizeComplianceText(node.nodeValue || '');
+      var re = /Atitl[áa]n Recicla/gi;
+      if(!re.test(text)){
+        if(text !== node.nodeValue) node.nodeValue = text;
+        return;
+      }
+      re.lastIndex = 0;
+      var frag = document.createDocumentFragment();
+      var last = 0;
+      text.replace(re, function(match, offset){
+        if(offset > last) frag.appendChild(document.createTextNode(text.slice(last, offset)));
+        var strong = document.createElement('strong');
+        strong.className = 'program-name-bold';
+        strong.textContent = match;
+        frag.appendChild(strong);
+        last = offset + match.length;
+        return match;
+      });
+      if(last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+
+  var scheduled = false;
+  function scheduleEnhance(){
+    if(scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(function(){
+      scheduled = false;
+      enhanceText(document.body);
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){
+      enhanceText(document.body);
+      new MutationObserver(scheduleEnhance).observe(document.body, {childList:true, subtree:true, characterData:true});
+    });
+  }else{
+    enhanceText(document.body);
+    new MutationObserver(scheduleEnhance).observe(document.body, {childList:true, subtree:true, characterData:true});
+  }
+  window.addEventListener('load', function(){ setTimeout(function(){ enhanceText(document.body); }, 250); });
 })();
 </script>
 
