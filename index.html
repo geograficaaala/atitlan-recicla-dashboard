@@ -3,6 +3,8 @@
 <!-- VERSION: ATITLAN_RECICLA_INDEX_V7_SPONSORS_MAP_ZONES -->
 <head>
   <!-- VERSION: ATITLAN_RECICLA_INDEX_V8_RESTORED_MAYO_MAP_FIX -->
+  <!-- VERSION: ATITLAN_RECICLA_INDEX_V9_BOLD_PROGRAM_NAME -->
+  <!-- VERSION: ATITLAN_RECICLA_INDEX_V10_FULL_WIDTH_PROGRAM_CARD -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Asociación Amigos del Lago de Atitlán · Tablero dinámico institucional</title>
@@ -1839,6 +1841,32 @@
   .sponsor-logo.logo-canada { max-width: 210px; max-height: 62px; }
 }
 
+.program-bold {
+  font-weight: 900;
+}
+
+
+
+/* V10: tarjeta de Atitlán Recicla centrada y ocupando todo el ancho en su pestaña */
+#page-programas .program-grid{
+  grid-template-columns: minmax(0, 1fr) !important;
+  justify-items: center !important;
+  width: 100% !important;
+}
+#page-programas .program-card{
+  width: 100% !important;
+  max-width: none !important;
+  margin-inline: auto !important;
+}
+#page-programas .program-card .program-head{
+  justify-content: center !important;
+  text-align: center !important;
+}
+#page-programas .program-card .program-title,
+#page-programas .program-card .program-kicker{
+  text-align: center !important;
+}
+
 </style>
 </head>
 <body>
@@ -2588,6 +2616,52 @@ function renderSummary(programs){
   document.getElementById('programGrid').innerHTML = programs.map(programCard).join('');
 }
 
+
+/* ────────────────────────────────
+   RESALTAR NOMBRE DEL PROGRAMA EN TEXTO VISIBLE
+──────────────────────────────── */
+function boldProgramNameInVisibleText(root = document.body){
+  if (!root) return;
+  const pattern = /Atitl(?:á|a)n\s+Recicla/gi;
+  const excludedTags = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEXTAREA', 'INPUT', 'SVG', 'TITLE']);
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node){
+      const text = node.nodeValue || '';
+      if (!pattern.test(text)) return NodeFilter.FILTER_REJECT;
+      pattern.lastIndex = 0;
+      const parent = node.parentElement;
+      if (!parent) return NodeFilter.FILTER_REJECT;
+      if (excludedTags.has(parent.tagName)) return NodeFilter.FILTER_REJECT;
+      if (parent.closest('.program-bold')) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+
+  nodes.forEach(node => {
+    const text = node.nodeValue || '';
+    const fragment = document.createDocumentFragment();
+    let lastIndex = 0;
+    text.replace(pattern, (match, offset) => {
+      if (offset > lastIndex) {
+        fragment.appendChild(document.createTextNode(text.slice(lastIndex, offset)));
+      }
+      const strong = document.createElement('strong');
+      strong.className = 'program-bold';
+      strong.textContent = match;
+      fragment.appendChild(strong);
+      lastIndex = offset + match.length;
+      return match;
+    });
+    if (lastIndex < text.length) {
+      fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+    }
+    node.parentNode.replaceChild(fragment, node);
+  });
+}
+
 /* ────────────────────────────────
    INIT
 ──────────────────────────────── */
@@ -2607,7 +2681,9 @@ async function init(){
       }
     }
     renderSummary(programs);
+    boldProgramNameInVisibleText();
     await initCoverageMap();
+    boldProgramNameInVisibleText();
   } catch(err){
     console.error(err);
     const grid = document.getElementById('programGrid');
