@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es">
 <!-- VERSION: ATITLAN_RECICLA_INDEX_V7_SPONSORS_MAP_ZONES -->
+<!-- PATCH: TARJETA_ATITLAN_RECICLA_ALINEADA_CON_DASHBOARD_VERDAD_MAYO_2026 -->
 <head>
   <!-- VERSION: ATITLAN_RECICLA_INDEX_V8_RESTORED_MAYO_MAP_FIX -->
   <!-- VERSION: ATITLAN_RECICLA_INDEX_V9_BOLD_PROGRAM_NAME -->
@@ -2462,7 +2463,7 @@ const PROGRAMS = [
 
 const MES_LARGO = {ENE:'Enero',FEB:'Febrero',MAR:'Marzo',ABR:'Abril',MAY:'Mayo',JUN:'Junio',JUL:'Julio',AGO:'Agosto',SEP:'Septiembre',OCT:'Octubre',NOV:'Noviembre',DIC:'Diciembre'};
 
-// METAS ANUALES ATITLÁN RECICLA (basadas en los CSV de la repo)
+// METAS ATITLÁN RECICLA (alineadas con index_atitlanrecicla.html)
 const META_ANUAL_MATERIALES = 17920;   // qq — 815 TM
 const META_ANUAL_INGRESOS   = 448000;  // GTQ brutos
 const META_DIARIA_LIDERESA  = 135;     // GTQ/día (meta mensual del CSV)
@@ -2473,11 +2474,11 @@ async function loadAtitlan(cfg){
   const materialesMetaMes = 1630;
   const ingresosMes = 38314.50;
   const ingresosMetaMes = 40727;
-  const ingresoLideresaMes = 166.34;
+  const ingresoLideresaMes = 220.94;
   const ingresoLideresaMeta = META_DIARIA_LIDERESA;
 
-  const acumMateriales = 8629.10;
-  const acumIngresos = 186243.11;
+  const acumMateriales = 8628.10;
+  const acumIngresos = 178932.09;
 
   const pctMateriales = (acumMateriales / META_ANUAL_MATERIALES) * 100;
   const pctIngresos = (acumIngresos / META_ANUAL_INGRESOS) * 100;
@@ -2511,11 +2512,11 @@ async function loadAtitlan(cfg){
     },
     {
       label: 'Ingreso medio diario de Q135 por lideresa activa en comercialización.',
-      acumDisplay: `Q${fmt(ingresoLideresaMes,1)} diarios por lideresa en mayo`,
+      acumDisplay: `Q${fmt(ingresoLideresaMes,2)} diarios por lideresa en mayo`,
       pct: pctLideresa,
       pctDisplay: `${fmtPct(pctLideresa)} de cumplimiento frente a la meta mensual de Q${fmt(ingresoLideresaMeta)} diarios`,
       barPct: pctLideresa,
-      monthlyDisplay: `Q${fmt(ingresoLideresaMes,1)} / Q${fmt(ingresoLideresaMeta)} diarios · ${fmtPct(pctLideresaMes)}`,
+      monthlyDisplay: `Q${fmt(ingresoLideresaMes,2)} / Q${fmt(ingresoLideresaMeta)} diarios · ${fmtPct(pctLideresaMes)}`,
       monthlyPct: pctLideresaMes,
       isMensual: true,
       temporality: 'Este indicador tiene por temporalidad desde enero a noviembre de 2026'
@@ -2529,7 +2530,7 @@ async function loadAtitlan(cfg){
     score: score || 0,
     scoreLabel: 'Cumplimiento promedio vs metas mensuales',
     metrics: keyMetrics,
-    sourceSummary: 'Google Sheets · mayo 2026'
+    sourceSummary: 'Dashboard Atitlán Recicla · mayo 2026'
   };
 }
 
