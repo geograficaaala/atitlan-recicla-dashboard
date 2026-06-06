@@ -2,6 +2,7 @@
 <html lang="es">
 <!-- VERSION: ATITLAN_RECICLA_INDEX_V7_SPONSORS_MAP_ZONES -->
 <!-- PATCH: TARJETA_ATITLAN_RECICLA_ALINEADA_CON_DASHBOARD_VERDAD_MAYO_2026 -->
+<!-- PATCH: INDEX_EXCEL_DECIMALES_EXACTOS_ATITLAN_RECICLA -->
 <head>
   <!-- VERSION: ATITLAN_RECICLA_INDEX_V8_RESTORED_MAYO_MAP_FIX -->
   <!-- VERSION: ATITLAN_RECICLA_INDEX_V9_BOLD_PROGRAM_NAME -->
@@ -2492,7 +2493,7 @@ async function loadAtitlan(cfg){
   const keyMetrics = [
     {
       label: 'Recolección de 17,920 quintales de materiales reciclables.',
-      acumDisplay: `${fmt(acumMateriales)} / ${fmt(META_ANUAL_MATERIALES)} qq`,
+      acumDisplay: `${fmt(acumMateriales,2)} / ${fmt(META_ANUAL_MATERIALES)} qq`,
       pct: pctMateriales,
       pctDisplay: `${fmtPct(pctMateriales)} de avance acumulado hasta mayo contra la meta anual`,
       barPct: pctMateriales,
