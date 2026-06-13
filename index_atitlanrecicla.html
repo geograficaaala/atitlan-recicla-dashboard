@@ -8054,5 +8054,247 @@ function renderIncomeMaterialCards(state, ctx){
 })();
 </script>
 
+
+<!-- PATCH FINAL · ANÁLISIS DEL MES CORREGIDO ENE-MAY 2026 -->
+<script id="aala-analisis-mes-ene-may-correcto">
+(function(){
+  'use strict';
+
+  const ZONE_BY_MUNICIPIO = {
+    'Panajachel':'Kaqchikel',
+    'Santa Catarina Palopó':'Kaqchikel',
+    'San Antonio Palopó':'Kaqchikel',
+    'San Juan La Laguna':'Kaqchikel',
+    'Jaibalito':'Las Lagunas',
+    'Santa Cruz La Laguna':'Las Lagunas',
+    'Tzununá':'Las Lagunas',
+    'San Marcos La Laguna':'Las Lagunas',
+    'Sololá':'Tzolojya',
+    'Santa Clara La Laguna':'Tzolojya',
+    'Santa Lucía Utatlán':'Tzolojya',
+    'Santa María Visitación':'Tzolojya',
+    'San Andrés Semetabaj':'Tzolojya',
+    'Santiago Atitlán':'Zona Sur',
+    'San Lucas Tolimán':'Zona Sur'
+  };
+
+  const MONTH_ABBR = {1:'ENE',2:'FEB',3:'MAR',4:'ABR',5:'MAY',6:'JUN',7:'JUL',8:'AGO',9:'SEP',10:'OCT',11:'NOV',12:'DIC'};
+
+  function n(value){
+    const num = Number(value);
+    return Number.isFinite(num) ? num : 0;
+  }
+  function clone(obj){ return JSON.parse(JSON.stringify(obj)); }
+  function keyFor(period){ return period ? String(period.anio) + '|' + String(period.mes_num) : ''; }
+  function monthObjFromKey(key){
+    const parts = String(key || '').split('|');
+    const anio = Number(parts[0]);
+    const mes_num = Number(parts[1]);
+    return {anio, mes_num, mes: MONTH_ABBR[mes_num] || ''};
+  }
+  function currentPrecalc(){ return window.AALA_IMPACT_PRECALC_CDM_MAYO5 || window.ATITLAN_PRECALC || null; }
+  function zoneCount(zone){
+    return Object.values(ZONE_BY_MUNICIPIO).filter(z => z === zone).length;
+  }
+  function mrow(monthly, base){
+    monthly = monthly || {};
+    return Object.assign({
+      programa: 'atitlan_recicla',
+      materiales_lideresas_qq: n(monthly.materiales_generales) - n(monthly.ingreso_bruto_municipalidades) * 0,
+      materiales_municipalidad_qq: 0,
+      total_materiales_qq: n(monthly.materiales_generales),
+      pet_qq: n(monthly.pet),
+      vidrio_total_qq: n(monthly.vidrio),
+      ingreso_bruto_total: n(monthly.ingreso_bruto_total),
+      ingreso_bruto_lideresas: n(monthly.ingreso_bruto_mujeres),
+      ingreso_bruto_municipalidad: n(monthly.ingreso_bruto_municipalidades),
+      ingreso_diario_lideresa: n(monthly.ingreso_diario_lideresa),
+      pct_participacion_actividades: n(monthly.participacion_actividades),
+      pct_participacion_comercializacion: n(monthly.participacion_comercializacion)
+    }, base || {});
+  }
+  function rowsFromPrecalc(precalc){
+    const zoneRows = [];
+    const territoryRows = [];
+    if(!precalc || !precalc.periods) return {zoneRows, territoryRows};
+
+    (precalc.zones || []).forEach(zone => {
+      const zoneData = (precalc.byZone || {})[zone] || {};
+      Object.keys(zoneData).forEach(key => {
+        const p = monthObjFromKey(key);
+        const monthly = zoneData[key] && zoneData[key].monthly;
+        zoneRows.push(mrow(monthly, {
+          anio: p.anio,
+          mes_num: p.mes_num,
+          mes: p.mes,
+          zona: zone,
+          territorios_reportados: zoneCount(zone)
+        }));
+      });
+    });
+
+    Object.keys(precalc.byMunicipio || {}).forEach(municipio => {
+      const municipioData = precalc.byMunicipio[municipio] || {};
+      const zona = ZONE_BY_MUNICIPIO[municipio] || '';
+      Object.keys(municipioData).forEach(key => {
+        const p = monthObjFromKey(key);
+        const monthly = municipioData[key] && municipioData[key].monthly;
+        territoryRows.push(mrow(monthly, {
+          anio: p.anio,
+          mes_num: p.mes_num,
+          mes: p.mes,
+          zona,
+          territorio: municipio,
+          municipio
+        }));
+      });
+    });
+
+    zoneRows.sort((a,b) => a.anio - b.anio || a.mes_num - b.mes_num || String(a.zona).localeCompare(String(b.zona), 'es'));
+    territoryRows.sort((a,b) => a.anio - b.anio || a.mes_num - b.mes_num || String(a.zona).localeCompare(String(b.zona), 'es') || String(a.territorio).localeCompare(String(b.territorio), 'es'));
+    return {zoneRows, territoryRows};
+  }
+
+  function syncCurrentDataFromFinalPrecalc(){
+    try{
+      if(typeof currentData === 'undefined' || !currentData) return;
+      const precalc = currentPrecalc();
+      if(!precalc || !precalc.byZone || !precalc.byMunicipio) return;
+      const rows = rowsFromPrecalc(precalc);
+      if(rows.zoneRows.length) currentData.zonaMes = rows.zoneRows;
+      if(rows.territoryRows.length) currentData.territorioMes = rows.territoryRows;
+      if(typeof appState !== 'undefined' && appState){
+        appState.data = currentData;
+        appState.zones = ['__all__'].concat((precalc.zones || []).slice().sort((a,b)=>String(a).localeCompare(String(b),'es')));
+      }
+    }catch(e){ console.warn('No se pudo sincronizar análisis mensual:', e); }
+  }
+
+  function ensureAnalysisStyles(){
+    if(document.getElementById('aala-analisis-mes-style')) return;
+    const style = document.createElement('style');
+    style.id = 'aala-analisis-mes-style';
+    style.textContent = `
+      .diagnostic .diag-ranking{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:2px}
+      .diagnostic .diag-rank-item{padding:12px 14px;border-radius:14px;background:#fff;border:1px solid var(--line-soft);box-shadow:var(--shadow-sm)}
+      .diagnostic .diag-rank-item b{display:block;color:var(--blue);font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:3px}
+      .diagnostic .diag-rank-item span{display:block;color:var(--text);font-weight:800;font-size:.92rem;margin-bottom:2px}
+      .diagnostic .diag-rank-item small{display:block;color:var(--muted);font-size:.75rem;line-height:1.35}
+      @media(max-width:980px){.diagnostic .diag-ranking{grid-template-columns:repeat(2,minmax(0,1fr))}}
+      @media(max-width:620px){.diagnostic .diag-ranking{grid-template-columns:1fr}}
+    `;
+    document.head.appendChild(style);
+  }
+
+  function fmtPercentLocal(v){ return (typeof formatPercent === 'function') ? formatPercent(v) : ((n(v) * 100).toFixed(1) + '%'); }
+  function fmtUnitLocal(v, unit){ return (typeof formatByUnit === 'function') ? formatByUnit(v, unit) : (unit === 'GTQ' ? ('Q ' + n(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})) : (n(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) + (unit ? ' ' + unit : ''))); }
+  function escLocal(v){ return (typeof escapeHtml === 'function') ? escapeHtml(v) : String(v == null ? '' : v).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  function activeRows(rows){ return (rows || []).filter(r => (typeof hasActivityAggregate === 'function') ? hasActivityAggregate(r) : n(r.total_materiales_qq) > 0 || n(r.ingreso_bruto_total) > 0); }
+
+  function rankingHtml(zones, total){
+    if(!zones || !zones.length) return '';
+    return `<div class="diag-ranking">${zones.map((r,i)=>`
+      <div class="diag-rank-item">
+        <b>${i+1}. ${escLocal(r.zona || '—')}</b>
+        <span>${escLocal(fmtUnitLocal(r.total_materiales_qq, 'qq'))}</span>
+        <small>${escLocal(fmtPercentLocal(total ? n(r.total_materiales_qq) / total : 0))} del mes · ${escLocal(fmtUnitLocal(r.ingreso_bruto_total, 'GTQ'))}</small>
+      </div>`).join('')}
+    </div>`;
+  }
+
+  function correctedRenderDiagnostic(state){
+    syncCurrentDataFromFinalPrecalc();
+    ensureAnalysisStyles();
+
+    const period = getSelectedPeriod(state);
+    const metrics = getMetricsForSelection(state, period);
+    const zoneLabel = getZoneLabel(state.selectedZone);
+    const mat = metrics.materiales_generales;
+    const inc = metrics.ingreso_bruto_total;
+    const pet = metrics.pet;
+    const vid = metrics.vidrio;
+    const lbl = escLocal(periodLabel(period));
+
+    let leaderText = '', leaderDetail = '', rankBlock = '';
+    if(state.selectedZone === '__all__'){
+      const zones = activeRows(getZonaRows(state, period)).sort((a,b)=>n(b.total_materiales_qq)-n(a.total_materiales_qq));
+      const total = zones.reduce((s,r)=>s+n(r.total_materiales_qq),0) || 1;
+      if(zones.length){
+        const top = zones[0];
+        const pct = n(top.total_materiales_qq) / total;
+        leaderText = `<strong>${escLocal(top.zona || '—')}</strong> fue la zona de mayor volumen, aportando <strong>${escLocal(fmtUnitLocal(top.total_materiales_qq, 'qq'))}</strong> (${escLocal(fmtPercentLocal(pct))} del total del programa) e ingresos de <strong>${escLocal(fmtUnitLocal(top.ingreso_bruto_total, 'GTQ'))}</strong>.`;
+        if(zones.length > 1){
+          const sec = zones[1];
+          leaderDetail = ` Le sigue <strong>${escLocal(sec.zona || '—')}</strong> con <strong>${escLocal(fmtUnitLocal(sec.total_materiales_qq, 'qq'))}</strong> (${escLocal(fmtPercentLocal(n(sec.total_materiales_qq) / total))}).`;
+        }
+        rankBlock = rankingHtml(zones, total);
+      }
+    }else{
+      const territories = activeRows(getTerritoryRows(state, period).filter(r => sameZone(r, state.selectedZone))).sort((a,b)=>n(b.total_materiales_qq)-n(a.total_materiales_qq));
+      if(territories.length){
+        const topTerritory = territories[0];
+        leaderText = `Dentro de <strong>${escLocal(zoneLabel)}</strong>, el territorio con mayor recolección fue <strong>${escLocal(topTerritory.territorio || '—')}</strong> con <strong>${escLocal(fmtUnitLocal(topTerritory.total_materiales_qq, 'qq'))}</strong> e ingresos de <strong>${escLocal(fmtUnitLocal(topTerritory.ingreso_bruto_total, 'GTQ'))}</strong>.`;
+      }else{
+        leaderText = `Dentro de <strong>${escLocal(zoneLabel)}</strong>, no hay detalle territorial activo para el mes seleccionado.`;
+      }
+    }
+
+    const monthlyText = state.selectedZone === '__all__'
+      ? `Durante <strong>${lbl}</strong>, Atitlán Recicla recolectó <strong>${escLocal(fmtUnitLocal(mat?.valor, mat?.unit))}</strong> de materiales reciclables, lo que representa el <strong>${escLocal(fmtPercentLocal(mat?.monthlyPct))}</strong> de la meta mensual. El ingreso bruto generado en el mes alcanzó <strong>${escLocal(fmtUnitLocal(inc?.valor, inc?.unit))}</strong>. En materiales estratégicos, el PET acumuló <strong>${escLocal(fmtUnitLocal(pet?.valor, pet?.unit))}</strong> y el vidrio <strong>${escLocal(fmtUnitLocal(vid?.valor, vid?.unit))}</strong>.`
+      : `En <strong>${lbl}</strong>, la zona <strong>${escLocal(zoneLabel)}</strong> reportó <strong>${escLocal(fmtUnitLocal(mat?.valor, mat?.unit))}</strong> de materiales reciclables y un ingreso bruto de <strong>${escLocal(fmtUnitLocal(inc?.valor, inc?.unit))}</strong>. Esta zona concentró el <strong>${escLocal(fmtPercentLocal(mat?.sharePct))}</strong> del volumen total de materiales del programa y aportó el <strong>${escLocal(fmtPercentLocal(inc?.sharePct))}</strong> del ingreso bruto mensual consolidado.`;
+
+    const annualText = state.selectedZone === '__all__'
+      ? `En términos de avance anual, el acumulado de materiales desde enero de <strong>${escLocal(period?.anio || '—')}</strong> hasta <strong>${lbl}</strong> representa el <strong>${escLocal(fmtPercentLocal(mat?.annualPct))}</strong> de la meta proporcional esperada para ese punto del año.`
+      : `Desde el inicio del año hasta <strong>${lbl}</strong>, la participación acumulada de <strong>${escLocal(zoneLabel)}</strong> dentro del total anual del programa para materiales equivale al <strong>${escLocal(fmtPercentLocal(mat?.annualSharePct))}</strong>.`;
+
+    const riskText = state.selectedZone === '__all__' ? diagnosisRiskText(metrics) : zoneRiskText(metrics, zoneLabel);
+    const muj = metrics.ingreso_bruto_mujeres;
+    const dlid = metrics.ingreso_diario_lideresa;
+    const mujeresText = muj ? `El ingreso bruto destinado a lideresas y mujeres de Atitlán Recicla fue de <strong>${escLocal(fmtUnitLocal(muj.valor, muj.unit))}</strong> en <strong>${lbl}</strong>. El ingreso diario promedio por lideresa activa alcanzó <strong>${escLocal(fmtUnitLocal(dlid?.valor, dlid?.unit))}</strong>, frente a una meta de <strong>${escLocal(fmtUnitLocal(dlid?.meta, dlid?.unit))}</strong>.` : '';
+
+    const panel = document.getElementById('diagnosticPanel');
+    if(!panel) return;
+    panel.innerHTML = `
+      <h3 style="margin-top:0">Análisis del mes</h3>
+      <p>${monthlyText}</p>
+      <p>${annualText}</p>
+      <p>${leaderText}${leaderDetail}</p>
+      ${mujeresText ? `<p>${mujeresText}</p>` : ''}
+      <p>${riskText}</p>
+      <div class="diag-grid">
+        <div class="diag-block"><strong>Materiales del mes</strong><p>Recolectados: <strong>${escLocal(fmtUnitLocal(mat?.valor, mat?.unit))}</strong> · PET: <strong>${escLocal(fmtUnitLocal(pet?.valor, pet?.unit))}</strong> · Vidrio: <strong>${escLocal(fmtUnitLocal(vid?.valor, vid?.unit))}</strong></p></div>
+        <div class="diag-block"><strong>Ingresos del mes</strong><p>Total: <strong>${escLocal(fmtUnitLocal(inc?.valor, inc?.unit))}</strong> · Mujeres: <strong>${escLocal(fmtUnitLocal(muj?.valor, muj?.unit))}</strong></p></div>
+        <div class="diag-block"><strong>Avance vs meta mensual</strong><p>Materiales: <strong>${escLocal(fmtPercentLocal(mat?.monthlyPct))}</strong> · Ingreso: <strong>${escLocal(fmtPercentLocal(inc?.monthlyPct))}</strong></p></div>
+        <div class="diag-block"><strong>Avance acumulado 2026</strong><p>Materiales: <strong>${escLocal(fmtPercentLocal(mat?.annualPct))}</strong> · Ingreso: <strong>${escLocal(fmtPercentLocal(inc?.annualPct))}</strong></p></div>
+        ${state.selectedZone === '__all__' ? rankBlock : ''}
+      </div>
+    `;
+  }
+
+  window.syncAtitlanMonthlyAnalysisData = syncCurrentDataFromFinalPrecalc;
+  window.renderDiagnostic = correctedRenderDiagnostic;
+  if(typeof renderDiagnostic !== 'undefined') renderDiagnostic = correctedRenderDiagnostic;
+
+  if(typeof render === 'function'){
+    const previousRenderForMonthlyAnalysis = render;
+    render = function(state){
+      syncCurrentDataFromFinalPrecalc();
+      return previousRenderForMonthlyAnalysis(state);
+    };
+    window.render = render;
+  }
+
+  function applyFix(){
+    syncCurrentDataFromFinalPrecalc();
+    if(typeof appState !== 'undefined' && appState && typeof render === 'function') render(appState);
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(applyFix, 80); });
+  }else{
+    setTimeout(applyFix, 80);
+  }
+})();
+</script>
+
 </body>
 </html>
