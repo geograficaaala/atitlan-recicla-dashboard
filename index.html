@@ -1002,6 +1002,28 @@
       flex-wrap: wrap;
     }
 
+
+    .program-month-toolbar{
+      margin: 4px 0 20px;
+      padding: 16px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      background:rgba(255,255,255,.94);
+      border:1px solid rgba(213,226,220,.95);
+      border-radius:24px;
+      box-shadow:var(--shadow-sm);
+    }
+    .program-month-title{display:grid;gap:2px}
+    .program-month-title strong{font-size:.9rem;color:var(--lake-deep);letter-spacing:-.01em}
+    .program-month-title span{font-size:.78rem;color:var(--muted);font-weight:600}
+    .program-month-selector{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:5px;border-radius:999px;background:rgba(28,96,132,.08);border:1px solid rgba(28,96,132,.14)}
+    .program-month-pill{appearance:none;border:none;border-radius:999px;padding:9px 14px;background:transparent;color:var(--lake);font:800 .78rem/1 var(--font-body);cursor:pointer;transition:all .18s ease}
+    .program-month-pill:hover{background:rgba(255,255,255,.78);color:var(--lake-deep);transform:translateY(-1px)}
+    .program-month-pill.active{background:linear-gradient(135deg,var(--forest),var(--lake));color:#fff;box-shadow:0 8px 18px rgba(22,58,95,.16)}
+
     /* Barra de avance mensual por programa */
     .prog-score-wrap {
       margin: 4px 0 16px;
@@ -2186,6 +2208,14 @@
 
 <div class="page" id="page-programas">
   <div class="wrap">
+
+    <div class="program-month-toolbar" aria-label="Selector mensual de tarjetas de programa">
+      <div class="program-month-title">
+        <strong>Período de lectura de tarjetas</strong>
+        <span>Revisa el avance mensual de Atitlán Recicla de enero a junio 2026.</span>
+      </div>
+      <div class="program-month-selector" id="programMonthSelector" role="group" aria-label="Seleccionar mes"></div>
+    </div>
     <div class="program-grid" id="programGrid">
       <div class="loading-state">
         <div class="spinner"></div>
@@ -2619,17 +2649,51 @@ const META_ANUAL_MATERIALES = 17920;   // qq — 815 TM
 const META_ANUAL_INGRESOS   = 448000;  // GTQ brutos
 const META_DIARIA_LIDERESA  = 135;     // GTQ/día (meta mensual del CSV)
 
-async function loadAtitlan(cfg){
-  // Datos consolidados al corte de mayo de 2026.
-  const materialesMes = 1708.31;
+
+const ATITLAN_RECICLA_MONTH_DATA = {"1":{"label":"Enero","short":"ENE","periodKey":"2026-01","materialesMes":1893.3,"ingresosMes":41658.69,"ingresoLideresaMes":205.628769230769,"acumMateriales":1893.3,"acumIngresos":41658.69},"2":{"label":"Febrero","short":"FEB","periodKey":"2026-02","materialesMes":1563.09,"ingresosMes":32122.02,"ingresoLideresaMes":162.180166666667,"acumMateriales":3456.39,"acumIngresos":73780.71},"3":{"label":"Marzo","short":"MAR","periodKey":"2026-03","materialesMes":1779.9,"ingresosMes":34372.979999999996,"ingresoLideresaMes":156.384833333333,"acumMateriales":5236.29,"acumIngresos":108153.69},"4":{"label":"Abril","short":"ABR","periodKey":"2026-04","materialesMes":1683.5,"ingresosMes":32463.9,"ingresoLideresaMes":183.280424242424,"acumMateriales":6919.79,"acumIngresos":140617.59},"5":{"label":"Mayo","short":"MAY","periodKey":"2026-05","materialesMes":1708.31,"ingresosMes":38314.5,"ingresoLideresaMes":220.940242424242,"acumMateriales":8628.1,"acumIngresos":178932.09},"6":{"label":"Junio","short":"JUN","periodKey":"2026-06","materialesMes":1846.69,"ingresosMes":41185.61,"ingresoLideresaMes":233.592375,"acumMateriales":10474.79,"acumIngresos":220117.7}};
+const ATITLAN_RECICLA_MONTH_OPTIONS = [
+  {num:1, short:'Ene', label:'Enero'},
+  {num:2, short:'Feb', label:'Febrero'},
+  {num:3, short:'Mar', label:'Marzo'},
+  {num:4, short:'Abr', label:'Abril'},
+  {num:5, short:'May', label:'Mayo'},
+  {num:6, short:'Jun', label:'Junio'}
+];
+let selectedProgramMonth = 6;
+
+function monthLabelFromNumber(month){
+  return (ATITLAN_RECICLA_MONTH_DATA[month] || {}).label || MES_LARGO[MONTH_SHORT[month]] || '—';
+}
+
+function buildProgramMonthSelector(){
+  const rack = document.getElementById('programMonthSelector');
+  if(!rack) return;
+  rack.innerHTML = ATITLAN_RECICLA_MONTH_OPTIONS.map(m => `
+    <button class="program-month-pill ${m.num === selectedProgramMonth ? 'active' : ''}" type="button" data-program-month="${m.num}" aria-label="Ver ${m.label} 2026">${m.short}</button>
+  `).join('');
+  rack.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => setProgramMonth(Number(btn.dataset.programMonth)));
+  });
+}
+
+async function setProgramMonth(month){
+  if(!ATITLAN_RECICLA_MONTH_DATA[month]) return;
+  selectedProgramMonth = month;
+  buildProgramMonthSelector();
+  await loadAndRenderPrograms();
+}
+
+async function loadAtitlan(cfg, month = selectedProgramMonth){
+  const selected = ATITLAN_RECICLA_MONTH_DATA[month] || ATITLAN_RECICLA_MONTH_DATA[6];
+  const materialesMes = selected.materialesMes;
   const materialesMetaMes = 1630;
-  const ingresosMes = 38314.50;
+  const ingresosMes = selected.ingresosMes;
   const ingresosMetaMes = 40727;
-  const ingresoLideresaMes = 220.94;
+  const ingresoLideresaMes = selected.ingresoLideresaMes;
   const ingresoLideresaMeta = META_DIARIA_LIDERESA;
 
-  const acumMateriales = 8628.10;
-  const acumIngresos = 178932.09;
+  const acumMateriales = selected.acumMateriales;
+  const acumIngresos = selected.acumIngresos;
 
   const pctMateriales = (acumMateriales / META_ANUAL_MATERIALES) * 100;
   const pctIngresos = (acumIngresos / META_ANUAL_INGRESOS) * 100;
@@ -2639,15 +2703,16 @@ async function loadAtitlan(cfg){
   const pctIngresosMes = (ingresosMes / ingresosMetaMes) * 100;
   const pctLideresaMes = pctLideresa;
   const score = avg([pctMaterialesMes, pctIngresosMes, pctLideresaMes]);
+  const mesTxt = selected.label.toLowerCase();
 
   const keyMetrics = [
     {
       label: 'Recolección de 17,920 quintales de materiales reciclables.',
       acumDisplay: `${fmt(acumMateriales,2)} / ${fmt(META_ANUAL_MATERIALES)} qq`,
       pct: pctMateriales,
-      pctDisplay: `${fmtPct(pctMateriales)} de avance acumulado hasta mayo contra la meta anual`,
+      pctDisplay: `${fmtPct(pctMateriales)} de avance acumulado hasta ${mesTxt} contra la meta anual`,
       barPct: pctMateriales,
-      monthlyDisplay: `${fmt(materialesMes,2)} / ${fmt(materialesMetaMes)} qq en mayo · ${fmtPct(pctMaterialesMes)}`,
+      monthlyDisplay: `${fmt(materialesMes,2)} / ${fmt(materialesMetaMes)} qq en ${mesTxt} · ${fmtPct(pctMaterialesMes)}`,
       monthlyPct: pctMaterialesMes,
       temporality: 'Este indicador tiene por temporalidad desde enero a noviembre de 2026'
     },
@@ -2655,15 +2720,15 @@ async function loadAtitlan(cfg){
       label: 'Generación de Q448,000 en ingresos brutos por comercialización.',
       acumDisplay: `Q${fmt(acumIngresos,2)} / Q${fmt(META_ANUAL_INGRESOS)} GTQ`,
       pct: pctIngresos,
-      pctDisplay: `${fmtPct(pctIngresos)} de avance acumulado hasta mayo contra la meta anual`,
+      pctDisplay: `${fmtPct(pctIngresos)} de avance acumulado hasta ${mesTxt} contra la meta anual`,
       barPct: pctIngresos,
-      monthlyDisplay: `Q${fmt(ingresosMes,2)} / Q${fmt(ingresosMetaMes)} en mayo · ${fmtPct(pctIngresosMes)}`,
+      monthlyDisplay: `Q${fmt(ingresosMes,2)} / Q${fmt(ingresosMetaMes)} en ${mesTxt} · ${fmtPct(pctIngresosMes)}`,
       monthlyPct: pctIngresosMes,
       temporality: 'Este indicador tiene por temporalidad desde enero a noviembre de 2026'
     },
     {
       label: 'Ingreso medio diario de Q135 por lideresa activa en comercialización.',
-      acumDisplay: `Q${fmt(ingresoLideresaMes,2)} diarios por lideresa en mayo`,
+      acumDisplay: `Q${fmt(ingresoLideresaMes,2)} diarios por lideresa en ${mesTxt}`,
       pct: pctLideresa,
       pctDisplay: `${fmtPct(pctLideresa)} de cumplimiento frente a la meta mensual de Q${fmt(ingresoLideresaMeta)} diarios`,
       barPct: pctLideresa,
@@ -2676,12 +2741,12 @@ async function loadAtitlan(cfg){
 
   return {
     ...cfg,
-    latestLabel: 'Mayo',
-    periodKey: '2026-05',
+    latestLabel: selected.label,
+    periodKey: selected.periodKey,
     score: score || 0,
     scoreLabel: 'Cumplimiento promedio vs metas mensuales',
     metrics: keyMetrics,
-    sourceSummary: 'Dashboard Atitlán Recicla · mayo 2026'
+    sourceSummary: `Dashboard Atitlán Recicla · ${mesTxt} 2026`
   };
 }
 
@@ -2804,7 +2869,7 @@ function renderSummary(programs){
   const avgScore = avg(programs.map(p => p.score));
   const onTrack  = programs.filter(p => p.score >= 80).length;
   const alert    = programs.filter(p => p.score < 80).length;
-  const visitLabel = 'Mayo';
+  const visitLabel = monthLabelFromNumber(selectedProgramMonth) || currentVisitLabel(programs);
   const [, chipText] = statusClass(avgScore);
 
   const kpiPrograms = document.getElementById('kpiPrograms');
@@ -2885,23 +2950,33 @@ function boldProgramNameInVisibleText(root = document.body){
 /* ────────────────────────────────
    INIT
 ──────────────────────────────── */
+
+async function loadAndRenderPrograms(){
+  const grid = document.getElementById('programGrid');
+  if(grid){
+    grid.innerHTML = '<div class="loading-state"><div class="spinner"></div><span>Cargando programas y proyectos...</span></div>';
+  }
+  const programs = [];
+  for (const cfg of PROGRAMS){
+    try {
+      programs.push(await cfg.loader(cfg, selectedProgramMonth));
+    } catch(err){
+      console.error('Error cargando programa', cfg.id, err);
+      programs.push({
+        ...cfg,
+        latestLabel:'Sin datos', periodKey:'—', score:0,
+        scoreLabel:'Sin información', metrics:[], sourceSummary:cfg.source
+      });
+    }
+  }
+  renderSummary(programs);
+  boldProgramNameInVisibleText();
+}
+
 async function init(){
   try {
-    const programs = [];
-    for (const cfg of PROGRAMS){
-      try {
-        programs.push(await cfg.loader(cfg));
-      } catch(err){
-        console.error('Error cargando programa', cfg.id, err);
-        programs.push({
-          ...cfg,
-          latestLabel:'Sin datos', periodKey:'—', score:0,
-          scoreLabel:'Sin información', metrics:[], sourceSummary:cfg.source
-        });
-      }
-    }
-    renderSummary(programs);
-    boldProgramNameInVisibleText();
+    buildProgramMonthSelector();
+    await loadAndRenderPrograms();
     await initCoverageMap();
     boldProgramNameInVisibleText();
   } catch(err){
