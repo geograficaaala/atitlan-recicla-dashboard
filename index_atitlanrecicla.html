@@ -7879,7 +7879,7 @@ function renderIncomeMaterialCards(state, ctx){
   // BuildState limpio: no reagrupa zonas desde territorio ni toca datos ya oficiales del Excel.
   buildState = function(data){
     const periods = (data.totalMes||[])
-      .filter(r => n(r.anio)===2026 && n(r.mes_num)>=1 && n(r.mes_num)<=5)
+      .filter(r => n(r.anio)===2026 && n(r.mes_num)>=1 && n(r.mes_num)<=6)
       .map(r => ({anio:n(r.anio), mes_num:n(r.mes_num), mes:r.mes || (typeof monthName==='function'?monthName(n(r.mes_num)):'')}))
       .sort((a,b)=>a.mes_num-b.mes_num);
     const latestValid = periods[periods.length-1] || null;
