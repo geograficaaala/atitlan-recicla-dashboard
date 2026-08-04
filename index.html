@@ -2089,6 +2089,965 @@
   }
 </style>
 
+
+<style id="aala-institutional-visual-reference-2026">
+/* ────────────────────────────────
+   REDISEÑO VISUAL INSTITUCIONAL
+   Conserva el orden, los textos, los indicadores y el diseño interno de las tarjetas.
+──────────────────────────────── */
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #ffffff;
+  --surface-3: #eaf2fb;
+  --text: #173b6c;
+  --text-2: #3d5a80;
+  --muted: #667085;
+  --line: #dde5ef;
+  --line-soft: #edf1f6;
+  --lake-deep: #173b6c;
+  --lake: #2767a8;
+  --lake-light: #4f86c6;
+  --lake-soft: #eaf2fb;
+  --radius: 14px;
+  --radius-md: 12px;
+  --radius-sm: 10px;
+  --radius-xs: 8px;
+}
+
+html { background: #ffffff; }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: var(--text);
+}
+body::before { display: none; }
+
+.hero-copy,
+.story-lead,
+.story-columns .prose,
+.story-point p,
+.signal-copy,
+.ribbon-sub,
+.signal-stat .mini-sub,
+.signal-latest .mini-sub,
+.capsule,
+.footer-copy,
+.metric-label-text,
+.metric-note-full,
+.metric-row .mname {
+  text-align: left;
+  text-justify: auto;
+}
+
+.header {
+  min-height: 72px;
+  padding: 10px 28px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 5px 20px rgba(23, 59, 108, .06);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.header-logo-img {
+  height: 46px;
+  width: auto;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.brand-kicker { color: var(--lake); }
+.brand-title { color: var(--lake-deep); }
+
+.nav-tabs {
+  gap: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+.nav-tab {
+  position: relative;
+  padding: 12px 0;
+  border-radius: 0;
+  color: var(--text-2);
+  background: transparent;
+}
+.nav-tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3px;
+  height: 2px;
+  background: transparent;
+}
+.nav-tab:hover { color: var(--lake); background: transparent; }
+.nav-tab.active {
+  color: var(--lake-deep);
+  background: transparent;
+  box-shadow: none;
+}
+.nav-tab.active::after { background: var(--lake); }
+.nav-tab:focus-visible,
+.program-carousel-arrow:focus-visible,
+.program-carousel-dot:focus-visible,
+.program-month-btn:focus-visible,
+.coverage-filter:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid rgba(39, 103, 168, .28);
+  outline-offset: 3px;
+}
+
+.hero-shell {
+  grid-template-columns: minmax(0, 1.45fr) minmax(240px, .55fr);
+  align-items: center;
+  gap: clamp(36px, 7vw, 110px);
+  padding: clamp(54px, 7vw, 92px) 0 clamp(44px, 6vw, 76px);
+  font-family: Arial, Helvetica, sans-serif;
+}
+.hero-main,
+.hero-side {
+  padding: 0;
+  background: #ffffff;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.hero-main:hover,
+.hero-side:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+.hero-main::before,
+.hero-main::after,
+.hero-logo-card::before { display: none; }
+.eyebrow {
+  color: var(--lake);
+  margin-bottom: 18px;
+}
+.eyebrow::before { background: var(--lake); }
+.hero-title {
+  width: 100%;
+  max-width: none;
+  margin: 0 0 22px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(2.7rem, 5.1vw, 5rem);
+  line-height: .98;
+  letter-spacing: -.045em;
+  color: var(--lake-deep);
+  text-align: center;
+}
+.hero-copy {
+  width: 100%;
+  max-width: none;
+  color: var(--text-2);
+  font-size: clamp(1rem, 1.15vw, 1.12rem);
+  line-height: 1.75;
+  text-align: left;
+}
+.hero-copy strong { color: var(--lake-deep); }
+.hero-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-logo-card {
+  min-height: 0;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+.hero-logo {
+  width: min(100%, 250px);
+  max-height: none;
+  animation: none;
+  filter: drop-shadow(0 18px 24px rgba(23, 59, 108, .12));
+}
+
+.dashboard-ribbon {
+  margin: 0 0 34px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: none;
+  overflow: visible;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.dashboard-ribbon::before,
+.ribbon-item::after { display: none; }
+.ribbon-item {
+  min-height: 138px;
+  padding: 28px 30px;
+}
+.ribbon-item + .ribbon-item { border-left-color: var(--line); }
+.ribbon-value {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--lake-deep);
+}
+.ribbon-label { color: var(--lake); }
+.ribbon-sub { color: var(--text-2); }
+
+.storyboard,
+.panorama-stage {
+  margin-bottom: 28px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.story-panel,
+.narrative-stage,
+.signal-panel,
+.chart-stage {
+  padding: 42px 0;
+  background: #ffffff;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+.story-panel::before,
+.signal-panel::before { display: none; }
+.story-panel:hover,
+.narrative-stage:hover { transform: none; box-shadow: none; }
+.section-kicker,
+.story-point span,
+.coverage-section .section-kicker,
+.program-month-copy strong { color: var(--lake); }
+.section-title,
+.coverage-section .section-title {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--lake-deep);
+}
+.story-lead,
+.story-columns .prose,
+.narrative-stage .prose { color: var(--text-2); }
+.story-points { gap: 0; }
+.story-point {
+  padding: 18px 20px 18px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.story-point:hover {
+  transform: none;
+  border-color: var(--line);
+  background: transparent;
+}
+.capsule-stack { gap: 22px; }
+.capsule {
+  position: relative;
+  padding: 1px 0 1px 18px;
+  border: 0;
+  border-left: 3px solid var(--lake);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-2);
+}
+.capsule::before { display: none; }
+
+.coverage-section {
+  margin-top: 12px;
+  padding-top: 42px;
+  border-top: 1px solid var(--line);
+  font-family: Arial, Helvetica, sans-serif;
+}
+.coverage-card {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: none;
+  overflow: visible;
+}
+.coverage-card:hover { box-shadow: none; border-color: transparent; }
+.coverage-filter {
+  border-color: var(--line);
+  background: #ffffff;
+  color: var(--lake-deep);
+  box-shadow: none;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.coverage-filter:hover {
+  color: var(--lake);
+  border-color: var(--lake-light);
+  box-shadow: none;
+}
+.coverage-filter.active {
+  background: var(--lake);
+  color: #ffffff;
+  border-color: var(--lake);
+  box-shadow: none;
+}
+.coverage-map-frame {
+  border-color: var(--line);
+  background: #eaf2fb;
+  box-shadow: none;
+}
+.leaflet-container { font-family: Arial, Helvetica, sans-serif; background: #eaf2fb; }
+
+.program-month-toolbar {
+  margin: 34px 0 12px;
+  padding: 20px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: none;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.program-month-buttons {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+.program-month-btn {
+  color: var(--lake);
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.program-month-btn:hover { background: var(--lake-soft); transform: none; }
+.program-month-btn.active {
+  color: #ffffff;
+  background: var(--lake);
+  box-shadow: none;
+}
+
+/* Diseño interno aprobado de las tarjetas: tokens originales protegidos. */
+.program-card {
+  --text: #17314f;
+  --text-2: #36516a;
+  --muted: #6b7f90;
+  --line: #d5e2dc;
+  --line-soft: #e6eeea;
+  --lake-deep: #163a5f;
+  --lake: #1c6084;
+  --lake-light: #4ca5bf;
+  --lake-soft: #d9ecf1;
+  --forest: #2e6a57;
+  --forest-soft: #ddefe6;
+  --sand: #d5a34b;
+  --sand-soft: #f7ecd6;
+  --danger: #9c4242;
+  --danger-soft: #f9e5e2;
+  --shadow-xs: 0 1px 3px rgba(18, 42, 66, .04), 0 2px 10px rgba(18, 42, 66, .04);
+  --shadow-sm: 0 6px 20px rgba(18, 42, 66, .06), 0 2px 8px rgba(18, 42, 66, .04);
+  --shadow: 0 14px 34px rgba(18, 42, 66, .08), 0 4px 14px rgba(18, 42, 66, .05);
+  --radius: 24px;
+  --radius-md: 18px;
+  --radius-sm: 14px;
+  --radius-xs: 10px;
+  --font-head: 'Lora', Georgia, serif;
+  --font-body: 'Sora', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  font-family: var(--font-body);
+}
+
+.program-carousel {
+  position: relative;
+  width: 100%;
+  padding: 8px 0 30px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.program-carousel-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 0 0 14px;
+}
+.program-carousel-arrow {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--lake-deep);
+  cursor: pointer;
+  transition: border-color .18s ease, color .18s ease, background .18s ease;
+}
+.program-carousel-arrow:hover:not(:disabled) {
+  color: #ffffff;
+  border-color: var(--lake);
+  background: var(--lake);
+}
+.program-carousel-arrow:disabled { opacity: .35; cursor: default; }
+.program-carousel-arrow svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.program-carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 126px;
+}
+.program-carousel-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #cbd7e6;
+  cursor: pointer;
+  transition: width .18s ease, border-radius .18s ease, background .18s ease;
+}
+.program-carousel-dot.active {
+  width: 28px;
+  border-radius: 999px;
+  background: var(--lake);
+}
+.program-carousel-viewport {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overscroll-behavior-inline: contain;
+  touch-action: pan-x pan-y;
+  padding: 4px;
+}
+.program-carousel-viewport::-webkit-scrollbar { display: none; }
+.program-grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 0;
+}
+.program-grid > .program-card {
+  flex: 0 0 calc(100% - 8px);
+  width: calc(100% - 8px);
+  min-width: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.program-grid > .loading-state {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+.site-footer {
+  background: var(--lake-deep);
+  font-family: Arial, Helvetica, sans-serif;
+}
+.site-footer::before { display: none; }
+
+@media (max-width: 1180px) {
+  .hero-shell {
+    grid-template-columns: minmax(0, 1.25fr) minmax(210px, .55fr);
+  }
+  .hero-side { display: flex; padding: 0; }
+}
+
+@media (max-width: 860px) {
+  .header {
+    align-items: center;
+    padding: 10px 16px 0;
+  }
+  .nav-tabs {
+    gap: 22px;
+    border-top: 1px solid var(--line);
+    overflow-x: auto;
+  }
+  .hero-shell {
+    grid-template-columns: 1fr;
+    gap: 34px;
+    padding: 44px 0 46px;
+  }
+  .hero-main { padding: 0; }
+  .hero-side { padding: 0 0 4px; }
+  .hero-logo-card { min-height: 0; }
+  .hero-logo { width: min(46vw, 190px); }
+  .dashboard-ribbon { border-radius: 0; }
+  .ribbon-item + .ribbon-item {
+    border-left: 0;
+    border-top-color: var(--line);
+  }
+  .story-panel,
+  .narrative-stage { padding: 34px 0; }
+  .story-point { padding-right: 0; }
+}
+
+@media (max-width: 640px) {
+  .wrap,
+  .footer-wrap { width: min(100vw - 28px, 1580px); }
+  .header-logo-img { height: 38px; }
+  .brand-kicker { font-size: .64rem; }
+  .brand-title { font-size: .88rem; }
+  .hero-title {
+    width: 100%;
+    max-width: none;
+    font-size: clamp(2.35rem, 12vw, 3.5rem);
+    text-align: center;
+  }
+  .hero-copy { line-height: 1.68; }
+  .ribbon-item { min-height: 0; padding: 24px 0; }
+  .program-month-toolbar { align-items: stretch; }
+  .program-carousel-actions { gap: 14px; }
+  .program-carousel-arrow { width: 42px; height: 42px; }
+  .program-carousel-dots { min-width: 108px; gap: 7px; }
+  .program-carousel-dot { width: 8px; height: 8px; }
+  .program-carousel-dot.active { width: 24px; }
+  .program-carousel-viewport { padding: 3px; }
+  .program-grid { gap: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .program-carousel-viewport { scroll-behavior: auto; }
+}
+</style>
+<style id="aala-program-cards-blue-open-2026">
+/* ─────────────────────────────────────────────────────────────
+   TARJETAS DE PROGRAMAS · SISTEMA ABIERTO AZUL INSTITUCIONAL
+   Capa exclusivamente visual. No modifica estructura ni lógica.
+───────────────────────────────────────────────────────────── */
+.program-card {
+  --text: #173b6c;
+  --text-2: #365b82;
+  --muted: #6681a0;
+  --line: #d8e5f2;
+  --line-soft: #edf3f9;
+  --lake-deep: #173b6c;
+  --lake: #2767a8;
+  --lake-light: #5f91c8;
+  --lake-soft: #eaf2fb;
+  --forest: #2767a8;
+  --forest-soft: #eaf2fb;
+  --sand: #4f7fb6;
+  --sand-soft: #edf4fb;
+  --danger: #315f95;
+  --danger-soft: #e8f0f9;
+  --font-head: Arial, Helvetica, sans-serif;
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-mono: Arial, Helvetica, sans-serif;
+
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  padding: 42px 36px 36px 44px;
+  border: 0 !important;
+  border-bottom: 1px solid #d8e5f2 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  color: #173b6c;
+  animation: programCardOpenIn .24s ease-out both;
+  transition: background-color .22s ease;
+}
+
+/* La L institucional: línea vertical + línea horizontal, ambas sólidas. */
+.program-card::before,
+.program-card::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  background: #2767a8;
+  transform-origin: top left;
+}
+.program-card::before {
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 84px;
+  transform: scaleY(0);
+  animation: programLVertical .24s ease-out .03s forwards;
+}
+.program-card::after {
+  left: 0;
+  top: 0;
+  width: 132px;
+  height: 4px;
+  transform: scaleX(0);
+  animation: programLHorizontal .24s ease-out .08s forwards;
+}
+
+.program-card:hover {
+  transform: none !important;
+  border-color: #d8e5f2 !important;
+  box-shadow: none !important;
+  background: #ffffff !important;
+}
+.program-card:hover::before { height: 98px; }
+.program-card:hover::after { width: 156px; }
+
+.program-card,
+.program-card button,
+.program-card a,
+.program-card input,
+.program-card select,
+.program-card textarea,
+.program-card .program-title,
+.program-card .prog-score-value,
+.program-card .metric-primary,
+.program-card .metric-monthly-value {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+/* Encabezado abierto, con una superficie azul muy pálida solo al interactuar. */
+.program-card .program-head {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 6px;
+  padding: 4px 18px 20px 0;
+  overflow: visible;
+}
+.program-card .program-head::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: -18px;
+  top: -10px;
+  width: min(72%, 520px);
+  height: calc(100% + 10px);
+  background: #f4f8fd;
+  opacity: 0;
+  transform: scaleX(.94);
+  transform-origin: left center;
+  transition: opacity .22s ease, transform .22s ease;
+}
+.program-card:hover .program-head::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+.program-card .program-kicker {
+  margin-bottom: 8px;
+  color: #4f7fb6 !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: .71rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+}
+.program-card .program-title {
+  color: #173b6c !important;
+  font-size: clamp(1.55rem, 2.35vw, 2.15rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -.035em;
+}
+
+/* Cumplimiento general sin caja: texto, barra y divisor. */
+.program-card .prog-score-wrap {
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 0 12px;
+  padding: 15px 0 20px;
+  overflow: visible !important;
+  border: 0 !important;
+  border-bottom: 1px solid #d8e5f2 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.program-card .prog-score-header {
+  min-height: 0 !important;
+  margin-bottom: 10px;
+  align-items: flex-end !important;
+}
+.program-card .prog-score-label {
+  max-width: 42ch !important;
+  color: #4f7fb6 !important;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .11em;
+  line-height: 1.35 !important;
+}
+.program-card .prog-score-value {
+  color: #173b6c !important;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -.025em;
+}
+.program-card .prog-score-track {
+  height: 7px;
+  background: #e4edf7 !important;
+  border-radius: 999px;
+}
+.program-card .prog-score-fill {
+  background: #2767a8 !important;
+  box-shadow: none !important;
+  transition: width .48s cubic-bezier(.22,1,.36,1) !important;
+}
+.program-card .prog-score-sub {
+  margin-top: 8px;
+  color: #6681a0 !important;
+  font-size: .78rem;
+  font-weight: 600;
+  line-height: 1.45 !important;
+}
+
+/* Tabla interna: mantiene estructura y datos; cambia únicamente la piel. */
+.program-card .metric-list { color: #173b6c; }
+.program-card .metric-header {
+  padding: 0 0 11px;
+  border-bottom: 2px solid #cbdced !important;
+}
+.program-card .metric-header span {
+  color: #58789b !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: .63rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.program-card .metric-row {
+  padding: 15px 0;
+  border-bottom: 1px solid #e4edf7 !important;
+}
+.program-card .metric-row:last-child { border-bottom: 0 !important; }
+.program-card .metric-row .mname,
+.program-card .metric-label-text {
+  color: #173b6c !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: 700;
+  line-height: 1.52;
+}
+.program-card .metric-number {
+  width: 26px;
+  height: 26px;
+  background: #2767a8 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+.program-card .metric-primary,
+.program-card .metric-monthly-value {
+  color: #365b82 !important;
+  font-size: .79rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.program-card .metric-temporality,
+.program-card .metric-note,
+.program-card .metric-subcopy {
+  color: #5f83aa !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+.program-card .metric-note-full {
+  padding: 9px 0 2px 13px;
+  border: 0 !important;
+  border-left: 3px solid #7fa7d1 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #4f76a0 !important;
+}
+.program-card .metric-subindicator {
+  border-left-color: #9bbadd !important;
+}
+.program-card .metric-subcopy strong { color: #173b6c !important; }
+
+/* Barras: la clase lógica se conserva, la lectura visual usa intensidades azules sólidas. */
+.program-card .mbar,
+.program-card .bar,
+.program-card .metric-subbar {
+  background: #e5eef7 !important;
+}
+.program-card .mbar > span,
+.program-card .bar > span,
+.program-card .metric-subfill {
+  background: #8eb4dd !important;
+  box-shadow: none !important;
+  transition: width .48s cubic-bezier(.22,1,.36,1) !important;
+}
+.program-card .mbar > span.mid,
+.program-card .bar > span.mid { background: #6699cf !important; }
+.program-card .mbar > span.good,
+.program-card .bar > span.good { background: #3f7fbe !important; }
+.program-card .mbar > span.over,
+.program-card .bar > span.over { background: #173b6c !important; }
+.program-card .metric-subfill.pending {
+  background: transparent !important;
+}
+
+/* Cualquier chip de estado que aparezca dentro de una tarjeta usa azul. */
+.program-card .chip,
+.program-card .chip.good,
+.program-card .chip.warn,
+.program-card .chip.bad,
+.program-card .chip.neutral,
+.program-card .chip.sky {
+  border: 1px solid #c9dced !important;
+  background: #eaf2fb !important;
+  color: #2767a8 !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.program-card .program-footer {
+  margin-top: 12px;
+  padding-top: 20px;
+  border-top: 1px solid #d8e5f2 !important;
+}
+.program-card .btn,
+.program-card .btn.secondary {
+  min-height: 42px;
+  border: 1px solid #2767a8 !important;
+  border-radius: 999px;
+  background: #2767a8 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: 800;
+}
+.program-card .btn:hover,
+.program-card .btn.secondary:hover {
+  transform: none;
+  border-color: #173b6c !important;
+  background: #173b6c !important;
+}
+
+@keyframes programCardOpenIn {
+  from { opacity: .96; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes programLVertical { to { transform: scaleY(1); } }
+@keyframes programLHorizontal { to { transform: scaleX(1); } }
+
+@media (max-width: 860px) {
+  .program-card {
+    padding: 36px 18px 32px 34px;
+  }
+  .program-card::before { height: 70px; }
+  .program-card::after { width: 108px; }
+  .program-card:hover::before { height: 78px; }
+  .program-card:hover::after { width: 118px; }
+  .program-card .program-head::before { display: none; }
+  .program-card .program-title {
+    font-size: clamp(1.45rem, 7vw, 1.9rem);
+  }
+  .program-card .prog-score-header {
+    align-items: flex-start !important;
+  }
+  .program-card .program-footer {
+    justify-content: stretch;
+  }
+  .program-card .btn,
+  .program-card .btn.secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .program-card {
+    padding: 31px 4px 28px 26px;
+  }
+  .program-card::before {
+    width: 3px;
+    height: 58px;
+  }
+  .program-card::after {
+    width: 88px;
+    height: 3px;
+  }
+  .program-card:hover::before { height: 58px; }
+  .program-card:hover::after { width: 88px; }
+  .program-card .program-head { padding-right: 0; }
+  .program-card .program-kicker { font-size: .66rem; }
+  .program-card .prog-score-value { font-size: 1.2rem; }
+  .program-card .metric-row { padding: 14px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .program-card,
+  .program-card::before,
+  .program-card::after {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+</style>
+<style id="aala-derived-selector-compatibility-2026">
+/* Compatibilidad visual del selector mensual de esta derivación. */
+.program-month-title {
+  display: grid;
+  gap: 3px;
+  min-width: 240px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.program-month-title strong {
+  color: #2767a8 !important;
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+.program-month-title span {
+  color: #3d5a80 !important;
+  font-size: .86rem;
+  line-height: 1.45;
+}
+.program-month-selector {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+.program-month-pill {
+  appearance: none;
+  border: 1px solid transparent !important;
+  border-radius: 999px;
+  padding: 9px 15px;
+  background: transparent !important;
+  color: #2767a8 !important;
+  font: 800 .78rem/1 Arial, Helvetica, sans-serif !important;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+  white-space: nowrap;
+}
+.program-month-pill:hover {
+  background: #eaf2fb !important;
+  color: #173b6c !important;
+  transform: none !important;
+}
+.program-month-pill.active {
+  background: #2767a8 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+@media (max-width: 760px) {
+  .program-month-selector {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  .program-month-pill { flex: 0 0 auto; }
+}
+</style>
+
 </head>
 <body>
 
