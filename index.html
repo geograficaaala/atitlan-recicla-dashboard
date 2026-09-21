@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es">
 <!-- VERSION: ATITLAN_RECICLA_INDEX_V7_SPONSORS_MAP_ZONES -->
+<!-- ACTUALIZADO: ÍNDICE ATITLÁN RECICLA · AGOSTO 2026 -->
 <!-- PATCH: TARJETA_ATITLAN_RECICLA_ALINEADA_CON_DASHBOARD_VERDAD_MAYO_2026 -->
 <!-- PATCH: INDEX_EXCEL_DECIMALES_EXACTOS_ATITLAN_RECICLA -->
 <head>
@@ -3101,7 +3102,7 @@ body::before { display: none; }
     <section class="dashboard-ribbon stagger-3" aria-label="Resumen institucional">
       <article class="ribbon-item">
         <div class="ribbon-label">Avance correspondiente al mes de:</div>
-        <div class="ribbon-value" id="kpiLatest">Julio</div>
+        <div class="ribbon-value" id="kpiLatest">Agosto</div>
         <div class="ribbon-sub" id="kpiLatestSub"></div>
       </article>
     </section>
@@ -3171,7 +3172,7 @@ body::before { display: none; }
     <div class="program-month-toolbar" aria-label="Selector mensual de tarjetas de programa">
       <div class="program-month-title">
         <strong>Período de lectura de tarjetas</strong>
-        <span>Revisa el avance mensual de Atitlán Recicla de enero a julio 2026.</span>
+        <span>Revisa el avance mensual de Atitlán Recicla de enero a agosto 2026.</span>
       </div>
       <div class="program-month-selector" id="programMonthSelector" role="group" aria-label="Seleccionar mes"></div>
     </div>
@@ -3609,7 +3610,7 @@ const META_ANUAL_INGRESOS   = 448000;  // GTQ brutos
 const META_DIARIA_LIDERESA  = 135;     // GTQ/día (meta mensual del CSV)
 
 
-const ATITLAN_RECICLA_MONTH_DATA = {"1":{"label":"Enero","short":"ENE","periodKey":"2026-01","materialesMes":1893.3,"ingresosMes":41658.69,"ingresoLideresaMes":205.628769230769,"acumMateriales":1893.3,"acumIngresos":41658.69},"2":{"label":"Febrero","short":"FEB","periodKey":"2026-02","materialesMes":1563.09,"ingresosMes":32122.02,"ingresoLideresaMes":162.180166666667,"acumMateriales":3456.39,"acumIngresos":73780.71},"3":{"label":"Marzo","short":"MAR","periodKey":"2026-03","materialesMes":1779.9,"ingresosMes":34372.979999999996,"ingresoLideresaMes":156.384833333333,"acumMateriales":5236.29,"acumIngresos":108153.69},"4":{"label":"Abril","short":"ABR","periodKey":"2026-04","materialesMes":1683.5,"ingresosMes":32463.9,"ingresoLideresaMes":183.280424242424,"acumMateriales":6919.79,"acumIngresos":140617.59},"5":{"label":"Mayo","short":"MAY","periodKey":"2026-05","materialesMes":1708.31,"ingresosMes":38314.5,"ingresoLideresaMes":220.940242424242,"acumMateriales":8628.1,"acumIngresos":178932.09},"6":{"label":"Junio","short":"JUN","periodKey":"2026-06","materialesMes":1846.69,"ingresosMes":41185.61,"ingresoLideresaMes":233.592375,"acumMateriales":10474.79,"acumIngresos":220117.7},"7":{"label":"Julio","short":"JUL","periodKey":"2026-07","materialesMes":1811.71,"ingresosMes":40562.27,"ingresoLideresaMes":234.689,"acumMateriales":12286.5,"acumIngresos":260679.97}};
+const ATITLAN_RECICLA_MONTH_DATA = {"1":{"label":"Enero","short":"ENE","periodKey":"2026-01","materialesMes":1893.3,"ingresosMes":41658.69,"ingresoLideresaMes":205.628769230769,"acumMateriales":1893.3,"acumIngresos":41658.69},"2":{"label":"Febrero","short":"FEB","periodKey":"2026-02","materialesMes":1563.09,"ingresosMes":32122.02,"ingresoLideresaMes":162.180166666667,"acumMateriales":3456.39,"acumIngresos":73780.71},"3":{"label":"Marzo","short":"MAR","periodKey":"2026-03","materialesMes":1779.9,"ingresosMes":34372.979999999996,"ingresoLideresaMes":156.384833333333,"acumMateriales":5236.29,"acumIngresos":108153.69},"4":{"label":"Abril","short":"ABR","periodKey":"2026-04","materialesMes":1683.5,"ingresosMes":32463.9,"ingresoLideresaMes":183.280424242424,"acumMateriales":6919.79,"acumIngresos":140617.59},"5":{"label":"Mayo","short":"MAY","periodKey":"2026-05","materialesMes":1708.31,"ingresosMes":38314.5,"ingresoLideresaMes":220.940242424242,"acumMateriales":8628.1,"acumIngresos":178932.09},"6":{"label":"Junio","short":"JUN","periodKey":"2026-06","materialesMes":1846.69,"ingresosMes":41185.61,"ingresoLideresaMes":233.592375,"acumMateriales":10474.79,"acumIngresos":220117.7},"7":{"label":"Julio","short":"JUL","periodKey":"2026-07","materialesMes":1811.71,"ingresosMes":40562.27,"ingresoLideresaMes":234.689,"acumMateriales":12286.5,"acumIngresos":260679.97},"8":{"label":"Agosto","short":"AGO","periodKey":"2026-08","materialesMes":1727.8,"ingresosMes":35975.02,"ingresoLideresaMes":229.72868965517245,"acumMateriales":14014.3,"acumIngresos":296654.99}};
 const ATITLAN_RECICLA_MONTH_OPTIONS = [
   {num:1, short:'Ene', label:'Enero'},
   {num:2, short:'Feb', label:'Febrero'},
@@ -3617,9 +3618,10 @@ const ATITLAN_RECICLA_MONTH_OPTIONS = [
   {num:4, short:'Abr', label:'Abril'},
   {num:5, short:'May', label:'Mayo'},
   {num:6, short:'Jun', label:'Junio'},
-  {num:7, short:'Jul', label:'Julio'}
+  {num:7, short:'Jul', label:'Julio'},
+  {num:8, short:'Ago', label:'Agosto'}
 ];
-let selectedProgramMonth = 7;
+let selectedProgramMonth = 8;
 
 function monthLabelFromNumber(month){
   return (ATITLAN_RECICLA_MONTH_DATA[month] || {}).label || MES_LARGO[MONTH_SHORT[month]] || '—';
@@ -3644,7 +3646,7 @@ async function setProgramMonth(month){
 }
 
 async function loadAtitlan(cfg, month = selectedProgramMonth){
-  const selected = ATITLAN_RECICLA_MONTH_DATA[month] || ATITLAN_RECICLA_MONTH_DATA[7];
+  const selected = ATITLAN_RECICLA_MONTH_DATA[month] || ATITLAN_RECICLA_MONTH_DATA[8];
   const materialesMes = selected.materialesMes;
   const materialesMetaMes = 1630;
   const ingresosMes = selected.ingresosMes;
